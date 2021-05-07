@@ -1,0 +1,56 @@
+.t-btn__icon{
+    vertical-align: middle;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.t-btn__icon-default{
+    width: 16px;
+    height: 16px;
+}
+
+$icon-position:(
+    btnAdd:(
+        position-y: -2648px
+    )
+);
+
+.grid-toolbar .t-btn__icon{
+    background-image: url('../assets/icons/IconSprite.png');
+}
+
+.div-feedback .t-btn__icon{
+    background-image: url('../assets/icons/viewEmail.png');
+}
+
+.footer__left .t-btn__icon.icon-refresh{
+    background-image: url('../assets/icons/refresh.png');
+}
+
+$icon-names:('page-first', 'page-prev', 'page-next', 'page-last', 'Save16', 'SaveAdd16', 'Edit16', 'Disable16');
+
+@each $icon-name in $icon-names {
+    .t-btn__icon.icon-#{$icon-name}{
+        background-image: url('../assets/icons/#{$icon-name}.png');
+    }
+}
+
+$icon-map: (
+    'plus': -2648,
+    'replica': -1888,
+    'delete': -2680,
+    'help': -1600,
+);
+
+@each $icon-name, $icon-position in $icon-map {
+    @if $icon-name == help {
+        .icon-#{$icon-name}{
+            background-image: url('../assets/icons/IconSprite.png');
+        }
+    }
+    .icon-#{$icon-name} {
+        background-position: 0 #{$icon-position}px;
+    }
+}
+
+
