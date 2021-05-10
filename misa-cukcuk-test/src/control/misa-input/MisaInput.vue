@@ -1,5 +1,5 @@
 <template>
-    <input class="t-input t-input-default" type="text" @input="onInput($event)" :value="value" >
+    <input class="t-input t-input-default" :type="type" @input="onInput($event)" :value="value" >
 </template>
 <script lang="ts">
 import Vue from 'vue'

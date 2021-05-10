@@ -9,7 +9,7 @@
             {{ dialogTitle }}
           </div>
           <div class="div-close">
-            <button class="t-btn t-btn-default btn-x"></button>
+            <button class="t-btn t-btn-defaul t-btn-close"></button>
           </div>
         </div>
       </div>
@@ -24,33 +24,38 @@
             <div class="t-tab-text">Sở thích phục vụ</div>
           </a>
         </div>
-        <div class="dialog__content"></div>
+        <div class="dialog__content">
+          <div class="dialog-food">
+            <FoodInfo />
+            <FoodAddition />
+          </div>
+        </div>
       </div>
       <!-- end body -->
       <!-- begin footer -->
       <div class="dialog__footer">
         <div class="dialog__footer-btn">
           <div class="d-footer-left">
-            <div class="d-btn-footer">
+            <div class="d-btn-footer btn-help">
               <misa-button icon="icon-help" @click="btnHelpOnClick"
                 >Giúp</misa-button
               >
             </div>
           </div>
           <div class="d-footer-right">
-            <div class="d-btn-footer">
+            <div class="d-btn-footer btn-save">
               <misa-button icon="icon-Save16" @click="btnSaveOnClick"
                 >Cất</misa-button
               >
             </div>
-            <div class="d-btn-footer">
+            <div class="d-btn-footer btn-saveadd">
               <misa-button icon="icon-SaveAdd16" @click="btnSaveNewOnClick"
                 >Cất và Thêm</misa-button
               >
             </div>
-            <div class="d-btn-footer">
+            <div class="d-btn-footer btn-cancel">
               <misa-button icon="icon-Disable16" @click="btnCancelOnClick"
-                >Hủy</misa-button
+                >Hủy bỏ</misa-button
               >
             </div>
           </div>
@@ -63,9 +68,12 @@
 
 <script lang="ts">
 import MisaButton from "@/control/misa-button/MisaButton.vue";
+import FoodInfo from "@/components/page/FoodInfo.vue";
+import FoodAddition from "@/components/page/FoodAddition.vue";
+
 import Vue from "vue";
 export default Vue.extend({
-  components: { MisaButton },
+  components: { MisaButton, FoodInfo, FoodAddition },
   data() {
     return {
       dialogTitle: "Thêm món",
@@ -89,18 +97,17 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-
 @mixin x-tab-dialog($color) {
   background-color: $color;
   border-bottom: medium none;
-  border-left-color: #d3d3d3 !important;
-  border-right-color: #d3d3d3 !important;
+  border-left: 1px solid #d3d3d3 !important;
+  // border-right: 1px solid #d3d3d3 !important;
   border-top: 2px solid #0072bc !important;
-  box-shadow: 0 1px 1px 1px #d3d3d3 !important;
   margin-left: 1px !important;
 }
+
 .dialog {
-  // display: none;
+  display: none;
 }
 .dialog__modal {
   position: fixed;
@@ -108,8 +115,6 @@ export default Vue.extend({
   right: 0;
   bottom: 0;
   left: 0;
-  // background-color: #000000;
-  // opacity: 0.2;
   background-color: rgba(10, 10, 10, 0.4) !important;
   z-index: 990;
 }
@@ -131,19 +136,17 @@ export default Vue.extend({
   width: 100%;
   color: #fff;
   border-color: #0072bc !important;
-  position: relative;
 
   .food-detail-header {
-    height: 16px;
+    height: 30px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 5px solid #0072bc;
     background-color: #0072bc;
-    position: absolute;
-    left: -5px;
-    top: -5px;
+    box-sizing: border-box;
+    margin-top: -4px;
+    padding: 5px 2px 5px 5px;
   }
 
   .dialog-title {
@@ -151,21 +154,29 @@ export default Vue.extend({
     height: auto;
   }
   .div-close {
-    width: 16px;
-    height: 16px;
-    .btn-x {
-      width: 100%;
-      height: 100%;
+    width: 18px;
+    height: 18px;
+
+    .t-btn-close {
+      width: 18px;
+      height: 18px;
+      border-color: transparent;
+      overflow: hidden;
+      background-image: url("../../assets/icons/tool-sprites.png");
+      background-position: 0 0;
+      background-color: transparent;
+      background-repeat: no-repeat;
+      margin: 0;
     }
   }
 }
 
 .dialog__body {
   position: absolute;
-  top: 21px;
+  top: 25px;
   padding: 8px;
   width: calc(100% - 16px);
-  height: calc(100% - 66px);
+  height: calc(100% - 80px);
 
   .dialog__tab {
     width: 100%;
@@ -186,6 +197,9 @@ export default Vue.extend({
     .t-tab-active {
       color: #0072bc;
       @include x-tab-dialog(#fff);
+      &:hover {
+        @include x-tab-dialog(#fff);
+      }
     }
 
     .t-tab-text {
@@ -193,10 +207,9 @@ export default Vue.extend({
     }
   }
 
-  .dialog__content{
+  .dialog__content {
     width: 100%;
     height: calc(100% - 28px);
-    background-color: wheat;
   }
 }
 
@@ -205,7 +218,7 @@ export default Vue.extend({
   width: 100%;
   position: absolute;
   bottom: 0;
-  background-color: floralwhite;
+  background-color: transparent;
   display: flex;
   align-items: center;
 
@@ -223,6 +236,26 @@ export default Vue.extend({
     .d-btn-footer {
       margin-left: 8px;
     }
+    .btn-save {
+      width: 86px;
+    }
+    .btn-saveadd {
+      width: 123px;
+    }
+    .btn-cancel {
+      width: 91px;
+    }
+    .btn-help {
+      width: 75px;
+      margin-left: 0px;
+    }
   }
+}
+
+.dialog-food {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding-top: 10px;
 }
 </style>

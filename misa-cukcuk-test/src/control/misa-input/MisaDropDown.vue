@@ -29,5 +29,5 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-@import "../../styles/input";
+// @import "../../styles/input";
 </style>

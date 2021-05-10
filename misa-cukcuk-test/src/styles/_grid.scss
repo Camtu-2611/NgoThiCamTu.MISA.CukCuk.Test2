@@ -1,0 +1,66 @@
+/* Định nghĩa cho các phần bên trong content */
+.t-grid{
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    opacity: 0.9;
+    overflow: auto;
+}
+
+/* Định dạng cho grid */
+
+.t-grid table{
+position: relative;
+}
+/* Phần thead: bao gồm cả tiêu đề và phần filter */
+.t-grid .thead-text{
+    line-height: 24px;
+    padding: 4px 6px;
+}
+.t-grid thead th:hover{
+    background-image: none;
+    background-color: #eaeff4;
+}
+/* Định dạng cho phần filter */
+.t-grid .thead-filter{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0 2px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+    .thead-filter .condition{
+        width: 24px;
+        height: 24px;
+        border: 1px solid #d0d0d0;
+        padding: 10px 5px;
+        min-width: 30px;
+        max-width: 30px;
+        font-weight: 400;
+    }
+
+    .t-grid .filter-text{
+        border: 1px solid #d0d0d0;
+        height: 24px;
+        width: 100%;
+        padding-left: 8px;
+    }
+    .t-grid .filter-select{
+        border: 1px solid #d0d0d0;
+        height: 26px;
+        width: 100%;
+        padding-left: 8px;
+
+    }
+    .t-grid .filter-text:focus, .filter-select:focus{
+        border-color: #6b6f9d;
+    }
+
+/* Định dạng cho phần tbody */
+/* phần tử được chọn */
+.selected{
+    background-color: #a7afe4 !important;
+    color: #000;
+    cursor: default !important;
+}

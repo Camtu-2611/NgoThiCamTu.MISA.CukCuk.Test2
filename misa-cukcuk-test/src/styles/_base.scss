@@ -1,4 +1,32 @@
 
+@font-face {
+    font-family: 'TahomaCustom';
+    src: url('../assets/fonts/font_tahoma/Tahoma_Regular.eot');
+    src: url('../assets/fonts/font_tahoma/Tahoma_Regular.eot') format('embedded-opentype'),url('../assets/fonts/font_tahoma/Tahoma_Regular.woff') format('woff'),url('../assets/fonts/font_tahoma/Tahoma_Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal
+}
+
+@font-face {
+    font-family: 'TahomaCustom_Bold';
+    src: url('../assets/fonts/font_tahoma/Tahoma_Bold.eot');
+    src: url('../assets/fonts/font_tahoma/Tahoma_Bold.eot') format('embedded-opentype'),url('../assets/fonts/font_tahoma/Tahoma_Bold.woff') format('woff'),url('../assets/fonts/font_tahoma/Tahoma_Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: bold;
+}
+
+@font-face {
+    font-family: 'TahomaCustom_Italic';
+    src: url('../assets/fonts/font_tahoma/Tahoma_Italic.eot');
+    src: url('../assets/fonts/font_tahoma/Tahoma_Italic.eot') format('embedded-opentype'),url('../assets/fonts/font_tahoma/Tahoma_Italic.woff') format('woff'),url('../assets/fonts/font_tahoma/Tahoma_Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+*{
+    font-family: 'TahomaCustom', 'TahomaCustom_Italic', 'TahomaCustom_Bold'  !important;
+}
+
 body{
     font-size: 13px;
     line-height: 17px;
@@ -7,7 +35,7 @@ body{
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-family: Tahoma,helvetica,arial,verdana,sans-serif;
+    // font-family: Tahoma,helvetica,arial,verdana,sans-serif;
 }
 
 
@@ -30,28 +58,55 @@ p {
     margin: 0px;
 }
 
-
-// Khai báo font chữ
-@font-face {
-    font-family: TahomaCustom;
-    src: url('../assets/fonts/font_tahoma/Tahoma_Regular.eot');
-    src: url('../assets/fonts/font_tahoma/Tahoma_Regular.eot?#iefix') format('embedded-opentype');
-    font-weight: normal;
-    font-style: normal
+.mg-l4{
+    margin-left: 4px;
 }
 
-@font-face {
-    font-family: 'TahomaCustom';
-    src: url('../assets/fonts/font_tahoma/Tahoma_Bold.eot');
-    src: url('../assets/fonts/font_tahoma/Tahoma_Bold.eot?#iefix') format('embedded-opentype');
-    font-weight: bold;
-    font-style: normal
+.invalid-icon-default {
+    width: 18px;
+    height: 16px;
+    margin: 0 5px 0 5px;
+    background: url('../assets/icons/exclamation.png') no-repeat;
+    background-size: cover;
+    position: relative;
 }
 
-@font-face {
-    font-family: 'TahomaCustom';
-    src: url('../assets/fonts/font_tahoma/Tahoma_Italic.eot');
-    src: url('../assets/fonts/font_tahoma/Tahoma_Italic.eot?#iefix') format('embedded-opentype');
-    font-weight: normal;
-    font-style: italic
-}
+.tooltiptext {
+    visibility: hidden;
+    width: fit-content;
+    min-width: 150px;
+    line-height: 20px;
+    background-color: #df4646;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    padding: 4px;
+    position: absolute;
+    left: calc(50% + 15px);
+    z-index: 1;
+  }
+
+  .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -14px;
+    right: auto;
+    top: 4px;
+    bottom: auto;
+    border: 7px solid;
+    border-color: transparent #df4646 transparent transparent;
+  }
+
+//   .tooltipFoodAddition {
+//     left: calc(50% + 5px);
+//   }
+
+  .invalid-icon-default {
+    cursor: pointer;
+  }
+
+  .invalid-icon-default:hover .tooltiptext {
+    visibility: visible;
+  }

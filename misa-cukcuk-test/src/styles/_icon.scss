@@ -19,6 +19,10 @@ $icon-position:(
     background-image: url('../assets/icons/IconSprite.png');
 }
 
+.dialog .grid-dialog-toolbar .t-btn__icon{
+    background-image: url('../assets/icons/IconSprite.png');
+}
+
 .div-feedback .t-btn__icon{
     background-image: url('../assets/icons/viewEmail.png');
 }
@@ -27,7 +31,7 @@ $icon-position:(
     background-image: url('../assets/icons/refresh.png');
 }
 
-$icon-names:('page-first', 'page-prev', 'page-next', 'page-last', 'Save16', 'SaveAdd16', 'Edit16', 'Disable16');
+$icon-names:('page-first', 'page-prev', 'page-next', 'page-last', 'Save16', 'SaveAdd16', 'Edit16', 'Disable16', 'selectIconMenu');
 
 @each $icon-name in $icon-names {
     .t-btn__icon.icon-#{$icon-name}{
@@ -37,8 +41,10 @@ $icon-names:('page-first', 'page-prev', 'page-next', 'page-last', 'Save16', 'Sav
 
 $icon-map: (
     'plus': -2648,
+    'plus-addition': -2648,
     'replica': -1888,
     'delete': -2680,
+    'delete-addition': -2680,
     'help': -1600,
 );
 
@@ -53,4 +59,43 @@ $icon-map: (
     }
 }
 
+@font-face {
+    font-family: 'fontello';
+    src: url('../assets/fonts/fontello.eot');
+    src: url('../assets/fonts/fontello.eot') format('embedded-opentype'),url('../assets/fonts/fontello.woff') format('woff'),url('../assets/fonts/fontello.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal
+}
 
+.icon-remove-img::before{
+    content: "";
+    color: red;
+    font-family: "fontello";
+}
+
+.icon-upload::before{
+    content: "...";
+    font-weight: 700;
+    font-family: "fontello";
+
+}
+
+.icon-add-blue{
+    outline: none;
+    background-image: url('../assets/icons/add-blue-icon.png');
+    border-color: transparent;
+    background-position: center !important;
+    background-size: 15px;
+    background-repeat: no-repeat;
+}
+
+// .icon-warning{
+//     position: absolute;
+//     width: 16px;
+//     height: 16px;
+//     background-image: url('../assets/icons/exclamation.png');
+//     border-color: transparent;
+//     background-position: center !important;
+//     background-size: 15px;
+//     background-repeat: no-repeat;
+// }

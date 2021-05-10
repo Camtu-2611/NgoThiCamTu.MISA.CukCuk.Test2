@@ -43,6 +43,109 @@
           </div>
         </div>
         <div class="grid-table">
+          <!-- start grid -->
+          <div class="t-grid">
+            <table
+              id="tbl-list-store"
+              cellspacing="0"
+              cellpadding="0"
+              width="100%"
+            >
+              <thead>
+                <tr>
+                  <th class="col-15">
+                    <div class="thead-text">Mã món</div>
+                    <div class="thead-filter">
+                      <button class="t-btn condition">*</button>
+                      <input
+                        type="text"
+                        class="t-input filter-text"
+                        id="filter-food-code"
+                      />
+                    </div>
+                  </th>
+                  <th class="col-21">
+                    <div class="thead-text">Tên món</div>
+                    <div class="thead-filter">
+                      <button class="t-btn condition">*</button>
+                      <input
+                        type="text"
+                        class="t-input filter-text"
+                        id="filter-food-name"
+                      />
+                    </div>
+                  </th>
+                  <th class="col-4">
+                    <div class="thead-text">Nhóm thực đơn</div>
+                    <div class="thead-filter">
+                      <button class="t-btn condition">*</button>
+                      <input
+                        type="text"
+                        class="t-input filter-text"
+                        id="filter-foodcategory"
+                      />
+                    </div>
+                  </th>
+                  <th class="col-10">
+                    <div class="thead-text">Đơn vị tính</div>
+                    <div class="thead-filter">
+                      <button class="t-btn condition">*</button>
+                      <input
+                        type="text"
+                        class="t-input filter-text"
+                        id="filter-unit"
+                      />
+                    </div>
+                  </th>
+                  <th class="col-12" >
+                    <div class="thead-text">Giá bán</div>
+                    <div class="thead-filter">
+                      <select
+                        type="text"
+                        class="filter-select"
+                        id="filter-status"
+                      >
+                        <!-- <option
+                        v-for="option in storeStatus"
+                        :key="option.value"
+                        :value="option.value"
+                      >
+                        {{ option.statusName }}
+                      </option> -->
+                      </select>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+
+              <div class="loading">
+                <div class="loader"></div>
+                <div class="text">Đang nạp dữ liệu</div>
+              </div>
+
+              <div class="not-find">
+                <i class="notify">Không tìm thấy kết quả</i>
+              </div>
+
+              <!-- <tbody v-if="shops && shops.length" class="tbl-scroll">
+              <tr
+                class="row-data"
+                v-for="shop in shops"
+                :key="shop.storeId"
+                @click="clickRow(shop.storeId)"
+                @dblclick="openEditDialog(shop.storeId)"
+                v-bind:class="isSelected(shop.storeId) ? 'selected' : ''"
+              >
+                <td class="col-15">{{ shop.storeCode }}</td>
+                <td class="col-21">{{ shop.storeName }}</td>
+                <td class="col-42">{{ shop.address }}</td>
+                <td class="col-10">{{ shop.phoneNumber }}</td>
+                <td class="col-12">{{ getStatusStoreName(shop.status) }}</td>
+              </tr>
+            </tbody> -->
+            </table>
+          </div>
+          <!-- end grid -->
           <div>
             <!-- <misa-table :columns="columns" :data="data" @request="msTableOnRequest($event)"></misa-table> -->
 
@@ -56,6 +159,7 @@
         </div>
       </div>
       <!-- endlist -->
+
       <!-- begin footer -->
       <div class="content__footer">
         <the-footer></the-footer>
@@ -208,13 +312,12 @@ $height-toolbar: 25px;
   border-style: solid;
   border-color: #c1c1c1;
   overflow: hidden;
-  background-image: -webkit-linear-gradient(top,#f9f9f9,#e3e4e6);
+  background-image: -webkit-linear-gradient(top, #f9f9f9, #e3e4e6);
 
-  .t-toolbar{
+  .t-toolbar {
     height: 22px;
     display: flex;
     align-items: center;
-
   }
   .toolbar-btn {
     display: flex;
@@ -230,12 +333,12 @@ $height-toolbar: 25px;
   border-style: solid;
   border-color: #ccc;
   box-sizing: border-box;
+  background-color: cadetblue;
 }
 
 .content__footer {
   height: 27px;
   width: calc(100% - 16px);
   margin-left: 8px;
-  
 }
 </style>

@@ -85,7 +85,7 @@ export default Vue.extend({
     background-color: #fff;
   }
 }
-.feedback-btn .t-btn, .dialog__footer-btn .t-btn {
+.feedback-btn .t-btn, .dialog .t-btn{
   &:hover {
     background-color: #eef6fb;
   }
@@ -114,7 +114,7 @@ export default Vue.extend({
   }
 }
 
-.footer__btn .t-btn .t-btn__text {
+.footer__btn .t-btn .t-btn__text, .upfile-button .t-btn .t-btn__text{
   display: none;
 }
 </style>
