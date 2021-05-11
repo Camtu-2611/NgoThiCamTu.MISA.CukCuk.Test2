@@ -45,105 +45,883 @@
         <div class="grid-table">
           <!-- start grid -->
           <div class="t-grid">
-            <table
-              id="tbl-list-store"
-              cellspacing="0"
-              cellpadding="0"
-              width="100%"
-            >
-              <thead>
-                <tr>
-                  <th class="col-15">
-                    <div class="thead-text">Mã món</div>
-                    <div class="thead-filter">
-                      <button class="t-btn condition">*</button>
-                      <input
-                        type="text"
-                        class="t-input filter-text"
-                        id="filter-food-code"
-                      />
+            <div class="grid-scroll">
+              <div class="t-table-head">
+                <div class="t-cell w-160">
+                  <div class="title">Loại món</div>
+                  <div class="filter">
+                    <div class="select-btn">
+                      <span class="t-select-arrow"></span>
                     </div>
-                  </th>
-                  <th class="col-21">
-                    <div class="thead-text">Tên món</div>
-                    <div class="thead-filter">
-                      <button class="t-btn condition">*</button>
-                      <input
-                        type="text"
-                        class="t-input filter-text"
-                        id="filter-food-name"
-                      />
+                    <select
+                      name="foodcategory"
+                      id="foodcategory"
+                      class="t-select filter-content"
+                    >
+                      <option value="0">Tất cả</option>
+                      <option value="1">Món ăn</option>
+                      <option value="2">Đồ uống</option>
+                      <option value="3">Combo</option>
+                      <option value="4">Set đồ ăn</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="t-cell w-180">
+                  <div class="title">Mã món</div>
+                  <div class="filter">
+                    <div class="filter-type">*</div>
+                    <div class="filter-content">
+                      <misa-input></misa-input>
                     </div>
-                  </th>
-                  <th class="col-4">
-                    <div class="thead-text">Nhóm thực đơn</div>
-                    <div class="thead-filter">
-                      <button class="t-btn condition">*</button>
-                      <input
-                        type="text"
-                        class="t-input filter-text"
-                        id="filter-foodcategory"
-                      />
+                  </div>
+                </div>
+                <div class="t-cell w-150">
+                  <div class="title">Tên món</div>
+                  <div class="filter">
+                    <div class="filter-type">*</div>
+                    <div class="filter-content">
+                      <misa-input></misa-input>
                     </div>
-                  </th>
-                  <th class="col-10">
-                    <div class="thead-text">Đơn vị tính</div>
-                    <div class="thead-filter">
-                      <button class="t-btn condition">*</button>
-                      <input
-                        type="text"
-                        class="t-input filter-text"
-                        id="filter-unit"
-                      />
+                  </div>
+                </div>
+                <div class="t-cell w-150">
+                  <div class="title">Nhóm thực đơn</div>
+                  <div class="filter">
+                    <div class="filter-type">*</div>
+                    <div class="filter-content">
+                      <misa-input></misa-input>
                     </div>
-                  </th>
-                  <th class="col-12" >
-                    <div class="thead-text">Giá bán</div>
-                    <div class="thead-filter">
-                      <select
-                        type="text"
-                        class="filter-select"
-                        id="filter-status"
-                      >
-                        <!-- <option
-                        v-for="option in storeStatus"
-                        :key="option.value"
-                        :value="option.value"
-                      >
-                        {{ option.statusName }}
-                      </option> -->
-                      </select>
+                  </div>
+                </div>
+                <div class="t-cell w-90">
+                  <div class="title">Đơn vị tính</div>
+                  <div class="filter">
+                    <div class="filter-type">*</div>
+                    <div class="filter-content">
+                      <misa-input></misa-input>
                     </div>
-                  </th>
-                </tr>
-              </thead>
-
-              <div class="loading">
-                <div class="loader"></div>
-                <div class="text">Đang nạp dữ liệu</div>
+                  </div>
+                </div>
+                <div class="t-cell w-120">
+                  <div class="title">Giá bán</div>
+                  <div class="filter">
+                    <div class="filter-type">≤</div>
+                    <div class="filter-content">
+                      <misa-input></misa-input>
+                    </div>
+                  </div>
+                </div>
+                <div class="t-cell w-150">
+                  <div class="title">Thay đổi theo thời giá</div>
+                  <div class="filter">
+                    <div class="select-btn">
+                      <span class="t-select-arrow"></span>
+                    </div>
+                    <select
+                      name="changetotimeprice"
+                      id="changetotimeprice"
+                      class="t-select filter-content"
+                    >
+                      <option value="0">Có</option>
+                      <option value="1">Không</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="t-cell w-150">
+                  <div class="title">Điều chỉnh giá tự do</div>
+                  <div class="filter">
+                    <div class="select-btn">
+                      <span class="t-select-arrow"></span>
+                    </div>
+                    <select
+                      name="adjust-price"
+                      id="adjust-price"
+                      class="t-select filter-content"
+                    >
+                      <option value="0">Có</option>
+                      <option value="1">Không</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="t-cell w-140">
+                  <div class="title">Định lượng NVL</div>
+                  <div class="filter">
+                    <div class="select-btn">
+                      <span class="t-select-arrow"></span>
+                    </div>
+                    <select name="" id="" class="t-select filter-content">
+                      <option value="0">Đã thiết lập</option>
+                      <option value="1">Chưa thiết lập</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="t-cell w-150">
+                  <div class="title">Hiển thị trên thực đơn</div>
+                  <div class="filter">
+                    <div class="select-btn">
+                      <span class="t-select-arrow"></span>
+                    </div>
+                    <select name="" id="" class="t-select filter-content">
+                      <option value="0">Có</option>
+                      <option value="1">Không</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="t-cell w-110">
+                  <div class="title">Ngừng bán</div>
+                  <div class="filter">
+                    <div class="select-btn">
+                      <span class="t-select-arrow"></span>
+                    </div>
+                    <select name="" id="" class="t-select filter-content">
+                      <option value="0">Có</option>
+                      <option value="1">Không</option>
+                    </select>
+                  </div>
+                </div>
               </div>
+              <div class="t-table-body">
+                <!-- Loading mask -->
+                <div class="loading" style="display: none">
+                  <div class="loader"></div>
+                  <div class="text">Đang nạp dữ liệu</div>
+                </div>
+                <!-- notify when no data -->
+                <div class="not-find" style="display: none">
+                  <i class="notify">Không tìm thấy kết quả</i>
+                </div>
 
-              <div class="not-find">
-                <i class="notify">Không tìm thấy kết quả</i>
+                <table class="t-table">
+                  <tbody ref="t-tbody">
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="t-row">
+                      <td class="w-160">Món ăn</td>
+                      <td class="w-180">CRTC</td>
+                      <td class="w-150">Cơm rang thập cẩm</td>
+                      <td class="w-150">Cơm</td>
+                      <td class="w-90">Đĩa</td>
+                      <td class="w-120 txt-num">50000</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-1" />
+                        </div>
+                      </td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-2" />
+                        </div>
+                      </td>
+                      <td class="w-140">Chưa thiết lập</td>
+                      <td class="w-150">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-3" />
+                        </div>
+                      </td>
+                      <td class="w-110">
+                        <div class="checkbox-data">
+                          <img src="#" alt="" class="cb-4" />
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-
-              <!-- <tbody v-if="shops && shops.length" class="tbl-scroll">
-              <tr
-                class="row-data"
-                v-for="shop in shops"
-                :key="shop.storeId"
-                @click="clickRow(shop.storeId)"
-                @dblclick="openEditDialog(shop.storeId)"
-                v-bind:class="isSelected(shop.storeId) ? 'selected' : ''"
-              >
-                <td class="col-15">{{ shop.storeCode }}</td>
-                <td class="col-21">{{ shop.storeName }}</td>
-                <td class="col-42">{{ shop.address }}</td>
-                <td class="col-10">{{ shop.phoneNumber }}</td>
-                <td class="col-12">{{ getStatusStoreName(shop.status) }}</td>
-              </tr>
-            </tbody> -->
-            </table>
+            </div>
           </div>
           <!-- end grid -->
           <div>
@@ -175,11 +953,13 @@ import Vue from "vue";
 import TheFooter from "@/components/layout/TheFooter.vue";
 import FoodDetail from "@/components/page/FoodDetail.vue";
 import MisaButton from "@/control/misa-button/MisaButton.vue";
+import MisaInput from "@/control/misa-input/MisaInput.vue";
 export default Vue.extend({
   components: {
     "the-footer": TheFooter,
     "food-detail": FoodDetail,
     MisaButton,
+    MisaInput,
   },
   data() {
     return {
@@ -299,7 +1079,6 @@ $height-toolbar: 25px;
 .content__body {
   width: calc(100% - 16px);
   height: calc(100% - 93px);
-  background-color: cornflowerblue;
   margin: 0 8px;
 }
 .grid-toolbar {
@@ -328,14 +1107,110 @@ $height-toolbar: 25px;
 .grid-table {
   width: 100%;
   height: calc(100% - 25px);
-  background: #fff;
+  background-color: #fff;
   border-width: 1px;
   border-style: solid;
   border-color: #ccc;
   box-sizing: border-box;
-  background-color: cadetblue;
+  border-bottom: none;
 }
 
+/* Định nghĩa cho các phần bên trong content */
+.t-grid {
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+
+  .grid-scroll {
+    overflow-x: auto;
+    overflow-y: hidden !important;
+    width: 100%;
+    height: 100%;
+  }
+  .t-table-head {
+    width: 100%;
+    height: 56px;
+    display: flex;
+    background-color: #ededed;
+  }
+  .t-table-head .t-cell {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #c5c5c5;
+    border-bottom: 1px solid #cccccc;
+    background: #f0f0f0;
+    height: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+  }
+  .t-cell .title {
+    padding: 7px 10px;
+    white-space: nowrap;
+    color: #212121;
+    text-align: center;
+    height: 29px;
+    box-sizing: border-box;
+
+    &:hover {
+      background-color: #eef6fb;
+      cursor: default;
+    }
+  }
+  .t-cell .filter {
+    display: flex;
+    align-items: center;
+    height: 26px;
+    margin: 0 1px;
+    position: relative;
+  }
+  .filter .filter-type {
+    box-sizing: border-box;
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    min-height: 24px;
+    background-color: #fcfcfc;
+    padding: 4px 3px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  .filter .filter-content {
+    border-color: #c1c1c1 #d9d9d9 #d9d9d9;
+    outline: none;
+    width: 100%;
+    height: 24px;
+  }
+
+  .t-table-body {
+    width: fit-content;
+    height: calc(100% - 56px);
+    overflow: auto;
+    .t-row {
+      display: flex;
+      // margin-left: 2px;
+      height: 24px;
+    }
+    .checkbox-data {
+      width: 100%;
+      height: 100%;
+    }
+    .txt-num {
+      text-align: right;
+    }
+  }
+}
+
+/* Định dạng cho phần tbody */
+
+/* phần tử được chọn */
+.selected {
+  background-color: #c1ddf1 !important;
+  color: #000;
+  cursor: default !important;
+}
 .content__footer {
   height: 27px;
   width: calc(100% - 16px);

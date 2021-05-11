@@ -51,7 +51,6 @@
 .footer {
   height: 100%;
   width: 100%;
-  //   background-color: darkgrey;
   display: flex;
   align-items: center;
   position: relative;
@@ -64,6 +63,7 @@
 .x-toolbar-text-default {
   padding: 0 4px;
   color: #333f49;
+  margin: 0px 4px 0px 4px;
 }
 
 .t-toolbar-separator{
@@ -71,9 +71,10 @@
     border-style: solid;
     border-width: 0 0 0 1px;
     border-color: #ccc !important;
+    margin: 0px 4px;
 }
 .footer__left {
-  overflow: hidden;
+  // overflow: hidden;
   height: 24px;
 
   .footer__btn {
@@ -87,6 +88,7 @@
     .t-btn-footer {
       height: 22px;
       width: 24px;
+      margin: 0px 3px 0 3px;
     }
   }
 
@@ -100,6 +102,7 @@
   right: 8px;
 
   .footer__right-text {
+    white-space: nowrap;
   }
 }
 </style>

@@ -73,11 +73,24 @@ $icon-map: (
     font-family: "fontello";
 }
 
+
 .icon-upload::before{
     content: "...";
     font-weight: 700;
     font-family: "fontello";
 
+}
+
+.icon-notify{
+    font-size: 24px;
+    color: #fff !important;
+    background-color: #0973b9;
+    border: none;
+    &::before{
+        content: "";
+        font-family: "fontello";
+        
+      }
 }
 
 .icon-add-blue{
