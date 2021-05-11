@@ -219,17 +219,20 @@
       display: flex;
       justify-content: center;
       margin-left: 8px;
-      padding-left: 4px;
+      padding-left: 12px;
       box-sizing: border-box;
     }
     .user-control {
-      // width: 160px;
+      width: 120px;
+      .t-select-arrow {
+        right: 4px;
+      }
     }
     .cb-user {
       height: 28px;
       background-color: #0973b9;
       border-color: #0973b9;
-      padding: 0 2px 0 4px;
+      padding: 0 4px;
     }
     .user-img {
       width: 28px;

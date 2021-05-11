@@ -193,7 +193,7 @@
 
                 <table class="t-table">
                   <tbody ref="t-tbody">
-                    <tr class="t-row">
+                    <tr class="t-row selected">
                       <td class="w-160">Món ăn</td>
                       <td class="w-180">CRTC</td>
                       <td class="w-150">Cơm rang thập cẩm</td>
