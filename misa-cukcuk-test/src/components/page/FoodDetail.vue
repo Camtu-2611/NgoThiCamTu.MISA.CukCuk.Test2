@@ -1,6 +1,6 @@
 <template>
   <div class="dialog">
-    <div class="dialog__modal"></div>
+    <div class="dialog__modal" @click="closeDialog"></div>
     <div class="dialog__form">
       <!-- begin header -->
       <div class="dialog__header">
@@ -9,7 +9,7 @@
             {{ dialogTitle }}
           </div>
           <div class="div-close">
-            <button class="t-btn t-btn-defaul t-btn-close"></button>
+            <button class="t-btn t-btn-defaul t-btn-close" @click="closeDialog"></button>
           </div>
         </div>
       </div>
@@ -17,17 +17,17 @@
       <!-- begin body -->
       <div class="dialog__body">
         <div class="dialog__tab">
-          <a class="t-tab t-tab-active">
+          <a class="t-tab" :class="{'t-tab-active' : isShowFoodInfo}" @click="closeFoodAddition()">
             <div class="t-tab-text">Thông tin chung</div>
           </a>
-          <a class="t-tab">
-            <div class="t-tab-text">Sở thích phục vụ</div>
+          <a class="t-tab" :class="{'t-tab-active' : isShowFoodAddition}" @click="showFoodAddition()">
+            <div class="t-tab-text" >Sở thích phục vụ</div>
           </a>
         </div>
         <div class="dialog__content">
           <div class="dialog-food">
-            <FoodInfo />
-            <FoodAddition />
+            <FoodInfo v-if="isShowFoodInfo" />
+            <FoodAddition v-if="isShowFoodAddition" />
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
               >
             </div>
             <div class="d-btn-footer btn-cancel">
-              <misa-button icon="icon-Disable16" @click="btnCancelOnClick"
+              <misa-button icon="icon-Disable16" @click="closeDialog"
                 >Hủy bỏ</misa-button
               >
             </div>
@@ -74,23 +74,45 @@ import FoodAddition from "@/components/page/FoodAddition.vue";
 import Vue from "vue";
 export default Vue.extend({
   components: { MisaButton, FoodInfo, FoodAddition },
+  props:{
+    
+  },
   data() {
     return {
       dialogTitle: "Thêm món",
+      isShowFoodInfo: true,
+      isShowFoodAddition: false,
     };
   },
   methods: {
+    closeDialog() {
+      console.log("Đóng Dialog");
+      this.$emit('closeDialog');
+      this.resetDialog();
+    },
+    showFoodAddition(){
+      console.log("mở sở thích phục vụ");
+      this.isShowFoodAddition = true;
+      this.isShowFoodInfo = false;
+    },
+    closeFoodAddition(){
+      console.log("đóng sở thích phục vụ");
+      this.isShowFoodAddition = false;
+      this.isShowFoodInfo = true;
+    },
+    resetDialog(){
+      this.isShowFoodInfo = true;
+      this.isShowFoodAddition = false;
+    },
     btnHelpOnClick() {
       console.log("Giúp");
     },
+
     btnSaveOnClick() {
       console.log("Cất");
     },
     btnSaveNewOnClick() {
       console.log("Cất và thêm");
-    },
-    btnCancelOnClick() {
-      console.log("xóa");
     },
   },
 });
@@ -107,7 +129,7 @@ export default Vue.extend({
 }
 
 .dialog {
-  display: none;
+  // display: none;
 }
 .dialog__modal {
   position: fixed;

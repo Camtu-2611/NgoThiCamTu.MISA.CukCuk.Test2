@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\CAM TU\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\CAM TU\\.nuget\\packages"
+    ]
+  }
+}

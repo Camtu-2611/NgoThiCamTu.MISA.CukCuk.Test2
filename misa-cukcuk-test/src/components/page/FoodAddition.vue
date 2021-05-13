@@ -66,7 +66,7 @@ export default Vue.extend({
 </script>
 <style lang="scss" scoped>
 .food-additon {
-    display: none;
+    // display: none;
   width: 100%;
   height: auto;
   font-size: 13px !important;
@@ -84,7 +84,6 @@ export default Vue.extend({
 .grid-addition-food{
     width: 100%;
     height: 215px;
-    background-color: wheat;
     margin-bottom: 4px;
     border: 1px solid #ccc!important;
     box-sizing: border-box;

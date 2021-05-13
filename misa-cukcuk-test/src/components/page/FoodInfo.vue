@@ -124,7 +124,9 @@
             type="button"
             name="d-checkbox"
             id="d-checkbox"
-            class="d-checkbox-default"
+            class="checkbox-default"
+            :class="{'checkbox-checking' : isChecked }"
+            @click="cbOnClick()"
           />
           <span class="label-checkbox">Không hiển thị lên thực đơn</span>
         </div>
@@ -173,6 +175,22 @@
   </div>
 </template>
 
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
+  data(){
+    return{
+      isChecked: false,
+    }
+  },
+  methods:{
+    cbOnClick(){
+      this.isChecked = !this.isChecked;
+    }
+  }
+})
+</script>
+
 <style lang="scss" scoped>
 .food-info {
   width: 100%;
@@ -199,16 +217,6 @@
   .row-checkbox {
     display: flex;
     margin-top: 8px;
-
-    .d-checkbox-default {
-      width: 15px;
-      height: 15px;
-      border: none;
-      margin: 0 4px 0 -2px;
-      outline: 0;
-      background-image: url("../../assets/icons/checkbox.png");
-      background-color: transparent;
-    }
   }
 
   .row-label {

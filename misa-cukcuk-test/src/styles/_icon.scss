@@ -112,3 +112,20 @@ $icon-map: (
 //     background-size: 15px;
 //     background-repeat: no-repeat;
 // }
+
+.checkbox-default {
+    width: 15px;
+    height: 15px;
+    border: none;
+    margin: 0 4px 0 -2px;
+    outline: 0;
+    background-image: url("../assets/icons/checkbox.png");
+    background-color: transparent;
+}
+  .checkbox-checking{
+    background-position: -15px -15px;
+  }
+
+  .checkbox-checked{
+    background-position: 0 -15px;
+  }

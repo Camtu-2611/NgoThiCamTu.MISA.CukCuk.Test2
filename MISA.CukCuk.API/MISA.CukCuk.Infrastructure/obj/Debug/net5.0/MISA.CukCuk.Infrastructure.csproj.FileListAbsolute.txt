@@ -1,0 +1,15 @@
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Infrastructure\bin\Debug\net5.0\MISA.CukCuk.Common.dll
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Infrastructure\obj\Debug\net5.0\MISA.CukCuk.Infrastructure.csprojAssemblyReference.cache
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Infrastructure\obj\Debug\net5.0\MISA.CukCuk.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Infrastructure\obj\Debug\net5.0\MISA.CukCuk.Infrastructure.AssemblyInfoInputs.cache
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Infrastructure\obj\Debug\net5.0\MISA.CukCuk.Infrastructure.AssemblyInfo.cs
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Infrastructure\bin\Debug\net5.0\MISA.CukCuk.Infrastructure.deps.json
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Infrastructure\bin\Debug\net5.0\MISA.CukCuk.Infrastructure.dll
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Infrastructure\bin\Debug\net5.0\ref\MISA.CukCuk.Infrastructure.dll
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Infrastructure\bin\Debug\net5.0\MISA.CukCuk.Infrastructure.pdb
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Infrastructure\bin\Debug\net5.0\MISA.CukCuk.Common.pdb
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Infrastructure\obj\Debug\net5.0\MISA.CukCuk.Infrastructure.csproj.CoreCompileInputs.cache
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Infrastructure\obj\Debug\net5.0\MISA.CukCuk.Infrastructure.csproj.CopyComplete
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Infrastructure\obj\Debug\net5.0\MISA.CukCuk.Infrastructure.dll
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Infrastructure\obj\Debug\net5.0\ref\MISA.CukCuk.Infrastructure.dll
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Infrastructure\obj\Debug\net5.0\MISA.CukCuk.Infrastructure.pdb

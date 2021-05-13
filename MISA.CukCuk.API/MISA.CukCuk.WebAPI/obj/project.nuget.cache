@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "qYcqh3zhSXuZSy/iy+a2/HkkB7WZC0ov9FSbcpDu6Tp8pRFHJAcSctWiqribhR293NxOGyOu44EDLdW2EP9hmQ==",
+  "success": true,
+  "projectFilePath": "D:\\MISA\\MISA\\Part2\\Test_Part2\\Project\\NgoThiCamTu.MISA.CukCuk.Test2\\MISA.CukCuk.API\\MISA.CukCuk.WebAPI\\MISA.CukCuk.WebAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\CAM TU\\.nuget\\packages\\dapper\\2.0.90\\dapper.2.0.90.nupkg.sha512",
+    "C:\\Users\\CAM TU\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\CAM TU\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\CAM TU\\.nuget\\packages\\mysqlconnector\\1.3.8\\mysqlconnector.1.3.8.nupkg.sha512",
+    "C:\\Users\\CAM TU\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
+    "C:\\Users\\CAM TU\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "C:\\Users\\CAM TU\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "C:\\Users\\CAM TU\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.3\\swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}
