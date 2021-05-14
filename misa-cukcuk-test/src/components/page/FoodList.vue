@@ -28,7 +28,7 @@
             <div class="toolbar-btn">
               <misa-button
                 icon="icon-replica"
-                @click="showDialogFood('replicar')"
+                @click="showDialogFood('replica')"
                 >Nhân bản</misa-button
               >
             </div>
@@ -112,7 +112,7 @@
                   <div class="filter">
                     <div class="filter-type">≤</div>
                     <div class="filter-content">
-                      <misa-input v-model="filterFields.salePrice"></misa-input>
+                      <misa-input v-model="filterFields.salePrice" class="txt-num"></misa-input>
                     </div>
                   </div>
                 </div>
@@ -223,6 +223,9 @@
                       class="t-row"
                       v-for="(food, index) in foods"
                       :key="index"
+                      @click="rowOnClick(index, food.inventoryItemId)"
+                      @dblclick="showDialogFood('put')"
+                      :class="{selected: (rowSelected==index)}"
                     >
                       <td class="w-160">{{ food.inventoryItemTypeName }}</td>
                       <td class="w-180">{{ food.inventoryItemCode }}</td>
@@ -317,6 +320,7 @@
   </div>
 </template>
 
+
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
@@ -338,6 +342,8 @@ export default Vue.extend({
       msg: "post",
       isShowDialogFood: false,
       isShowDialogDelete: false,
+      rowSelected: null,
+
       typeFoods: constFood.TYPEFOODS,
       statusFoods: constFood.STATUSYESNO,
       filterFields: entity.filterFields,
@@ -346,7 +352,14 @@ export default Vue.extend({
   created() {
     this.$store.dispatch("getFoods");
   },
-  computed: mapState(["foods"]),
+  computed: {
+
+    ...mapState({
+      foods:"foods",
+    }),
+      // mapState(["foods"])
+    
+  },
   methods: {
     // msTableOnRequest(request: any) {
     //   inventoryItemService.getPaging()
@@ -354,14 +367,17 @@ export default Vue.extend({
     // typeFood(){
     //   return constFood.TYPEFOODS;
     // },
-
+    rowOnClick(index: any, foodId: string){
+      this.rowSelected = index;
+      this.$store.dispatch('getFoodById', foodId);
+    },
     closeDialog() {
       this.isShowDialogFood = false;
     },
     btnFeedbackOnClick() {
       console.log("feedback");
     },
-    showDialogFood(text: any) {
+    showDialogFood(text: string) {
       console.log("Mở dialog");
       this.isShowDialogFood = true;
       this.msg = text;

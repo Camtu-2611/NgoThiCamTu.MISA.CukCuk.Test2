@@ -7,7 +7,8 @@
           <span class="text-red"> (*)</span>
         </div>
         <div class="row-input">
-          <misa-input type="text"></misa-input>
+          <misa-input type="text" v-model="food.inventoryItemName"></misa-input>
+           <!-- v-model="food.inventoryItemName" -->
         </div>
       </div>
       <div class="dialog-row">
@@ -16,7 +17,8 @@
           <span class="text-red"> (*)</span>
         </div>
         <div class="row-input">
-          <misa-input type="text"></misa-input>
+          <misa-input type="text" v-model="food.inventoryItemCode"></misa-input>
+          <!-- v-model="food.inventoryItemCode"ryItemCode" -->
         </div>
       </div>
       <div class="dialog-row">
@@ -34,8 +36,9 @@
             name="areacook"
             id="area-cook"
             class="t-select t-select-default"
+            v-model="food.inventoryItemCategoryName"
           >
-            <option value="1">Chọn nhóm thực đơn</option>
+            <option v-for="(cateName,index) in foodCategories" :key="index" :value="cateName">{{cateName}}</option>
           </select>
         </div>
       </div>
@@ -51,8 +54,9 @@
               <button class="t-btn t-btn-default icon-add-blue"></button>
             </div>
           </div>
-          <select name="areacook" id="area-cook" class="t-select">
-            <option value="1">Chọn đơn vị tính</option>
+          <select name="areacook" id="area-cook" class="t-select" v-model="food.unit">
+            <!-- v-model="food.unit" -->
+            <option v-for="(unit, index) in units" :key="index" :value="unit">{{unit}}</option>
           </select>
         </div>
       </div>
@@ -67,7 +71,9 @@
               type="text"
               class="input-number"
               :value="0"
+              v-model="food.salePrice"
             ></misa-input>
+            <!-- v-model="food.salePrice" -->
           </div>
         </div>
       </div>
@@ -81,7 +87,9 @@
               type="text"
               class="input-number"
               :value="0"
+              v-model="food.realPrice"
             ></misa-input>
+            <!-- v-model="food.realPrice" -->
           </div>
         </div>
       </div>
@@ -96,7 +104,9 @@
             class="t-text-area"
             cols="5"
             rows="3"
+            v-model="food.description"
           ></textarea>
+          <!-- v-model="food.description" -->
         </div>
       </div>
       <div class="dialog-row">
@@ -110,8 +120,11 @@
               <button class="t-btn t-btn-default icon-add-blue"></button>
             </div>
           </div>
-          <select name="areacook" id="area-cook" class="t-select">
-            <option value="1">Bếp</option>
+          <select name="areacook" id="area-cook" class="t-select"
+            v-model="food.kitchen"
+           >
+           <!-- v-model="food.kitchen" -->
+            <option v-for="(kitchen, index) in kitchenName" :key="index" :value="kitchen">{{kitchen}}</option>
           </select>
         </div>
       </div>
@@ -125,9 +138,11 @@
             name="d-checkbox"
             id="d-checkbox"
             class="checkbox-default"
-            :class="{'checkbox-checking' : isChecked }"
+            :class="{'checkbox-checking' : (food.isShowOnMenu==1)}"
             @click="cbOnClick()"
+            
           />
+          <!-- v-model="food.isShowOnMenu" -->
           <span class="label-checkbox">Không hiển thị lên thực đơn</span>
         </div>
       </div>
@@ -147,6 +162,7 @@
               </div>
               <div class="food-img-default">
                 <img
+
                   src="../../assets/images/ImageHandler.png"
                   alt="Ảnh đại diện món ăn"
                 />
@@ -177,17 +193,37 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import constFood from '../../common/constFood';
+
 export default Vue.extend({
+  props:{
+    food: {
+      type: Object,
+    },
+    validate:{
+      type: Object,
+    }
+  },
   data(){
     return{
-      isChecked: false,
+      // isChecked: false,
+      foodCategories: constFood.FOOD_CATEGORY,
+      units: constFood.UNIT,
+      kitchenName: constFood.KITCHEN_AREA,
     }
   },
   methods:{
     cbOnClick(){
-      this.isChecked = !this.isChecked;
-    }
-  }
+      // this.isChecked = !this.isChecked;
+      if(this.food.isShowOnMenu == 0){
+        this.food.isShowOnMenu = 1;
+      }
+      else if(this.food.isShowOnMenu == 1){
+        this.food.isShowOnMenu = 0;
+      }
+    },
+
+  },
 })
 </script>
 

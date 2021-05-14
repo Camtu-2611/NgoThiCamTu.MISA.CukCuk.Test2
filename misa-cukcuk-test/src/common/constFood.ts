@@ -46,12 +46,54 @@ const STATUSYESNO = [
     },
 ]
 
-const TYPE_MSG={
-    INSERT:"post",
-    UPDATE:"put",
-    REPLICA:"replicat"
+const TYPE_MSG = {
+    INSERT: "post",
+    UPDATE: "put",
+    REPLICA: "replicat"
 }
+
+const KITCHEN_AREA = [
+    "Bếp",
+    "Bếp chung",
+    "Bếp tầng 1",
+    "Bếp tầng 2",
+    "Bếp tầng 3",
+    "Quầy",
+    "Tiệm",
+]
+
+const UNIT = [
+    "Cốc",
+    "Bát",
+    "Gói",
+    "Suất",
+    "Nồi",
+    "Chiếc",
+    "Thùng",
+    "Lon",
+    "Đĩa",
+    "Ấm",
+]
+
+const FOOD_CATEGORY = [
+    "Đồ uống", 
+    "Món Nhật", 
+    "Món Hàn", 
+    "Món Trung",
+    "Món Việt",
+    "Gà-chim", 
+    "Rau củ", 
+    "Dê", 
+    "Lẩu", 
+    "Tráng miệng",
+    "Khai vị",
+    "Hải sản",
+    "Cá"
+]
 export default {
     TYPEFOODS,
     STATUSYESNO,
+    FOOD_CATEGORY,
+    KITCHEN_AREA,
+    UNIT,
 }

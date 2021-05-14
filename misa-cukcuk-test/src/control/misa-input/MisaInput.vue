@@ -1,5 +1,5 @@
 <template>
-    <input class="t-input t-input-default" :type="type" @input="onInput($event)" :value="value" >
+    <input class="t-input t-input-default" :type="type" @input="$emit('input', $event.target.value)" :value="value" >
 </template>
 <script lang="ts">
 import Vue from 'vue'
@@ -10,20 +10,21 @@ export default Vue.extend({
         label: String,
         type: String,
         format: String,
-        required: Boolean
+        required: Boolean,
+        value: [String, Number]
     },
 
-    data() {
-        return {
-            value: ''
-        }
-    },
+    // data() {
+    //     return {
+    //         value: ''
+    //     }
+    // },
 
     methods: {
-        onInput(event: InputEvent) {
-            const input = event.target as HTMLInputElement;
-            this.$emit('input', input.value);
-        }
+        // onInput(event: InputEvent) {
+        //     const input = event.target as HTMLInputElement;
+        //     this.$emit('input', input.value);
+        // }
     }
 })
 </script>

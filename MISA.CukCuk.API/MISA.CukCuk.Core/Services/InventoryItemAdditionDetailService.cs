@@ -16,7 +16,12 @@ namespace MISA.CukCuk.Core.Services
         {
             _itemRepository = itemRepository;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inventoryItemId"></param>
+        /// <param name="inventoryItemAdditionId"></param>
+        /// <returns></returns>
         public ServiceResult DeleteInventoryItemAdditionDetail(Guid inventoryItemId, Guid inventoryItemAdditionId)
         {
             var result = new ServiceResult();

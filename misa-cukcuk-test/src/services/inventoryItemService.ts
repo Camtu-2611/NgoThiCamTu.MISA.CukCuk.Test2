@@ -1,7 +1,6 @@
 import Service from './baseService';
 import filterData from '../common/filterData';
 const resource = "/inventoryitems";
-
 export default {
     get() {
         return Service.get(`${resource}`);
@@ -24,13 +23,13 @@ export default {
     getById(itemId:string){
         return Service.get(`${resource}/${itemId}`);
     },
-    post(payload: Object){
-        return Service.post(`${resource}`, payload);
-    },
-    put(itemId: string, payload:Object){
-        return Service.put(`${resource}/${itemId}`, payload);
-    },
+    // post(payload: any){
+    //     return Service.post(`${resource}`, payload);
+    // },
+    // put(itemId: string, payload:any){
+    //     return Service.put(`${resource}/${itemId}`, payload);
+    // },
     delete(itemId:string){
         return Service.delete(`${resource}/${itemId}`);
-    }
+    },
 }

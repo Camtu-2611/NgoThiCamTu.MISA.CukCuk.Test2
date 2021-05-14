@@ -26,7 +26,7 @@
         </div>
         <div class="dialog__content">
           <div class="dialog-food">
-            <FoodInfo v-if="isShowFoodInfo" />
+            <FoodInfo v-if="isShowFoodInfo" :food="foodById" :validate="validate" />
             <FoodAddition v-if="isShowFoodAddition" />
           </div>
         </div>
@@ -70,19 +70,34 @@
 import MisaButton from "@/control/misa-button/MisaButton.vue";
 import FoodInfo from "@/components/page/FoodInfo.vue";
 import FoodAddition from "@/components/page/FoodAddition.vue";
-
+import entity from '../../common/entity';
 import Vue from "vue";
+import { mapState } from "vuex";
+import { mapGetters } from 'vuex'
+
+
 export default Vue.extend({
   components: { MisaButton, FoodInfo, FoodAddition },
   props:{
-    
+    msg: String,
   },
   data() {
     return {
       dialogTitle: "Thêm món",
       isShowFoodInfo: true,
       isShowFoodAddition: false,
+      validate:{
+        foodCode: true,
+        foodName: true,
+        unit: true,
+        salePrice: true,
+      }
     };
+  },
+  computed: {
+      ...mapGetters({
+        foodById:"getFoodById",
+      }),
   },
   methods: {
     closeDialog() {
@@ -101,6 +116,7 @@ export default Vue.extend({
       this.isShowFoodInfo = true;
     },
     resetDialog(){
+      this.dialogTitle="Thêm món";
       this.isShowFoodInfo = true;
       this.isShowFoodAddition = false;
     },
@@ -115,6 +131,19 @@ export default Vue.extend({
       console.log("Cất và thêm");
     },
   },
+  watch:{
+    isShowDialog(){
+      if(this.msg=='post'){
+        this.dialogTitle="Thêm món";
+      }
+      else if(this.msg=='put'){
+        this.dialogTitle="Sửa món";
+      }
+      else if(this.msg=='replica'){
+        this.dialogTitle="Thêm món";
+      }
+    }
+  }
 });
 </script>
 

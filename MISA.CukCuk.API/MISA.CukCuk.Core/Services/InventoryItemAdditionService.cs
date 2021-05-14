@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Core.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class InventoryItemAdditionService:BaseService<InventoryItemAddition>, IInventoryItemAdditionService
     {
         private IInventoryItemAdditionRepository _itemRepository;

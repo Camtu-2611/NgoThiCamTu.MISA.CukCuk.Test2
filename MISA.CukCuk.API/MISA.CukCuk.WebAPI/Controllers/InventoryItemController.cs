@@ -18,7 +18,23 @@ namespace MISA.CukCuk.WebAPI.Controllers
         {
             _inventoryService = inventoryService;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="inventoryItemTypeName"></param>
+        /// <param name="inventoryItemCode"></param>
+        /// <param name="inventoryItemName"></param>
+        /// <param name="inventoryItemCategoryName"></param>
+        /// <param name="unit"></param>
+        /// <param name="salePrice"></param>
+        /// <param name="changeOutwardPrice"></param>
+        /// <param name="allowAdjustPrice"></param>
+        /// <param name="measureInventoryItemStatus"></param>
+        /// <param name="isShowOnMenu"></param>
+        /// <param name="inActive"></param>
+        /// <returns></returns>
         [HttpGet("paging")]
         public IActionResult Get(int pageSize,
             int pageIndex,
@@ -58,7 +74,11 @@ namespace MISA.CukCuk.WebAPI.Controllers
 
             return Ok(responseResult);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inventoryItemCode"></param>
+        /// <returns></returns>
         [HttpGet("bycode/{inventoryItemCode}")]
         public IActionResult Get(string inventoryItemCode)
         {
