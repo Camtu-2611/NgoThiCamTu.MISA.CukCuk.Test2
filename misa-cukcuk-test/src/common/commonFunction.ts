@@ -6,7 +6,8 @@
  */
 function formatMoney(value:number){
     // var patternRegex="/(\d)(?=(\d{3})+(?!\d))/g";
-    const result = value.toFixed(1).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    const result = String(value).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    
     return result;
 }
 

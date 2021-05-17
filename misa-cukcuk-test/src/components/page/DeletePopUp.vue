@@ -14,12 +14,13 @@
         </div>
       </div>
       <div class="dialog-body">
-          <div class="icon-question"></div>
-          <div class="msg-popup">
-              <span>
-               Bạn có chắc chắn muốn xóa món   <i> {{foodselectedCode}} - {{foodselectedName}} </i> không?
-              </span>
-          </div>
+        <div class="icon-question"></div>
+        <div class="msg-popup">
+          <span>
+            Bạn có chắc chắn muốn xóa món
+            <i> {{ foodselectedCode }} - {{ foodselectedName }} </i> không?
+          </span>
+        </div>
       </div>
       <div class="dialog-footer">
         <div class="dialog-footer-btn">
@@ -76,8 +77,14 @@ export default Vue.extend({
     },
 
     btnDeleteFood() {
-      inventoryItemService.delete(this.foodselectedId);
-      this.closeDialogDelete();
+      inventoryItemService.delete(this.foodselectedId)
+      .then(() => {
+        this.closeDialogDelete();
+        console.log("xóa xong");
+        this.$emit("reloadData");
+      }).catch((error)=>{
+        console.log(error);
+      });
     },
   },
   watch: {
@@ -162,12 +169,12 @@ export default Vue.extend({
   padding: 8px;
   display: flex;
   align-items: center;
-  
-  .icon-question{
-      width: 32px;
-      height: 32px;
-      background-image: url('../../assets/icons/icon-question.png');
-      margin-right: 8px;
+
+  .icon-question {
+    width: 32px;
+    height: 32px;
+    background-image: url("../../assets/icons/icon-question.png");
+    margin-right: 8px;
   }
 }
 
@@ -194,7 +201,8 @@ export default Vue.extend({
     .d-btn-footer {
       margin-left: 8px;
     }
-    .btn-save, .btn-cancel {
+    .btn-save,
+    .btn-cancel {
       width: 75px;
     }
     .t-btn-deletepopup {

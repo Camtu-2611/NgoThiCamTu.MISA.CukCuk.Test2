@@ -42,6 +42,12 @@
                 >Xóa</misa-button
               >
             </div>
+            <div class="t-toolbar-separator"></div>
+            <div class="toolbar-btn btn-reload">
+              <misa-button icon="icon-refresh" @click="reloadData()"
+                >Nạp</misa-button
+              >
+            </div>
           </div>
         </div>
         <div class="grid-table">
@@ -358,7 +364,7 @@
                   @keydown.13="changePage"
                 ></misa-input>
               </div>
-              <div class="x-toolbar-text-default">trên {{ totalPage }}</div>
+              <div class="x-toolbar-text-default">trên {{ getTotalPage() }}</div>
               <div class="t-toolbar-separator"></div>
 
               <div class="t-btn-footer">
@@ -382,8 +388,8 @@
 
               <div class="t-btn-footer">
                 <misa-button
-                  icon="icon-refresh"
-                  @click="reload()"
+                  icon="icon-loading"
+                  @click="reloadData()"
                 ></misa-button>
               </div>
               <div class="t-toolbar-separator"></div>
@@ -409,7 +415,7 @@
                   startPosition + availableFood
                 }}</span>
                 trên
-                <span class="total-record"> {{ getTotalRecord(foods) }} </span>
+                <span class="total-record"> {{ totalRecord }} </span>
                 kết quả
               </div>
             </div>
@@ -424,7 +430,7 @@
       :msg="msg"
       :isShowDialog="isShowDialogFood"
       @reloadData="reloadData"
-      ref="firstFocus"
+      ref="Dialog"
     ></food-detail>
     <DeletePopUp
       v-show="isShowDialogDelete"
@@ -445,6 +451,10 @@ import FoodDetail from "@/components/page/FoodDetail.vue";
 import DeletePopUp from "@/components/page/DeletePopUp.vue";
 import MisaButton from "@/control/misa-button/MisaButton.vue";
 import MisaInput from "@/control/misa-input/MisaInput.vue";
+import filterFields from "@/common/filterData";
+import inventoryItemService from "@/services/inventoryItemService";
+
+declare var filterPaging: filterFields;
 
 export default Vue.extend({
   components: {
@@ -480,29 +490,29 @@ export default Vue.extend({
   created() {
     this.$store.dispatch("getFoods");
 
-    /* var filterPaging: filterFields = {
-      pageIndex: this.index,
-      pageSize: this.offset,
-      inventoryItemTypeName: this.filters.inventoryItemTypeName,
-      invenrotyItemCode: this.filters.invenrotyItemCode,
-      invenrotyItemName: this.filters.invenrotyItemName,
-      invenrotyItemCategoryName: this.filters.invenrotyItemCategoryName,
-      unit: this.filters.unit,
-      salePrice: this.filters.salePrice,
-      changeOutwardPrice: this.filters.changeOutwardPrice,
-      allowAdjustPrice: this.filters.allowAdjustPrice,
-      measureInventoryItemStatus: this.filters.measureInventoryItemStatus,
-      isShowOnMenu: this.filters.isShowOnMenu,
-      inActive: this.filters.inActive,
-    };
+      // filterPaging = {
+      // pageIndex: this.index,
+      // pageSize: this.offset,
+      // inventoryItemTypeName: this.filters.inventoryItemTypeName,
+      // invenrotyItemCode: this.filters.invenrotyItemCode,
+      // invenrotyItemName: this.filters.invenrotyItemName,
+      // invenrotyItemCategoryName: this.filters.invenrotyItemCategoryName,
+      // unit: this.filters.unit,
+      // salePrice: this.filters.salePrice,
+      // changeOutwardPrice: this.filters.changeOutwardPrice,
+      // allowAdjustPrice: this.filters.allowAdjustPrice,
+      // measureInventoryItemStatus: this.filters.measureInventoryItemStatus,
+      // isShowOnMenu: this.filters.isShowOnMenu,
+      // inActive: this.filters.inActive,
+    // };
 
-    this.$store.dispatch("getFoodPaging", filterPaging);
-    */
+    // this.$store.dispatch("getFoodPaging", filterPaging);
   },
   computed: {
     ...mapState({
       foods: "foods",
       isLoaded: "loadData",
+      totalRecord:"totalRecord",
     }),
     // mapState(["foods"])
   },
@@ -511,10 +521,15 @@ export default Vue.extend({
       Hàm lấy lại dữ liệu khi thực hiện xong thêm sửa xóa
      */
     reloadData() {
-      // this.$store.commit("setFoods");
-      this.$store.dispatch("getFoods");
-      this.$store.commit("setFoods");
-      console.log("reload");
+      this.$store.commit("loading");
+      inventoryItemService.get().then((response) => {
+        this.$store.commit("loaded");
+        this.$store.commit("setFoods", response.data.data);
+        this.rowSelected = null;
+        console.log("reload");
+      }).catch((error)=>{
+        console.log(error);
+      })
     },
 
     /**
@@ -583,19 +598,14 @@ export default Vue.extend({
     formatPrice(value: number) {
       return commonFunction.formatMoney(value);
     },
-
-    getTotalRecord(foods: []) {
-      var total = foods.length;
-      return total;
-    },
-
     /**
      * Tính tổng số trang
      * CreatedBy: nctu 15.05.2021
      */
     getTotalPage() {
-      var recordLastPage = this.getTotalRecord(this.foods) % this.recordPerPage;
-      var lastIndex = this.getTotalRecord(this.foods) / this.recordPerPage;
+      var recordLastPage =  this.totalRecord % this.recordPerPage;
+      console.log(recordLastPage);
+      var lastIndex = Math.floor(this.totalRecord / this.recordPerPage);
       if (recordLastPage == 0) {
         return lastIndex;
       } else {
@@ -612,7 +622,7 @@ export default Vue.extend({
       this.startPosition = 0;
       this.changePage();
     },
-    
+
     /**
      * Sự kiện khi click vào trang trước
      * CreatedBy: nctu 15.05.2021
@@ -669,7 +679,9 @@ export default Vue.extend({
 
       // thay đổi vị trí bắt đầu
       this.startPosition = (this.currentPage - 1) * this.recordPerPage;
-      this.$store.commit("setFoodsPaging", this.filters);
+      // inventoryItemService.getpaging().then(()=>{
+        // this.$store.commit("setFoodsPaging", this.filters);
+      // })
       console.log("changepaging");
     },
   },
@@ -760,6 +772,10 @@ $height-toolbar: 25px;
   .toolbar-btn {
     display: flex;
     margin: 0 8px 0 0;
+  }
+
+  .btn-reload {
+    margin-left: 4px;
   }
 }
 
@@ -900,14 +916,6 @@ $height-toolbar: 25px;
     color: #333f49;
     margin: 0px 4px 0px 4px;
   }
-
-  .t-toolbar-separator {
-    height: 14px;
-    border-style: solid;
-    border-width: 0 0 0 1px;
-    border-color: #ccc !important;
-    margin: 0px 4px;
-  }
   .footer__left {
     // overflow: hidden;
     height: 24px;
@@ -940,6 +948,13 @@ $height-toolbar: 25px;
       white-space: nowrap;
     }
   }
+}
+.t-toolbar-separator {
+  height: 14px;
+  border-style: solid;
+  border-width: 0 0 0 1px;
+  border-color: #ccc !important;
+  margin: 0px 4px;
 }
 
 .loading {

@@ -27,7 +27,7 @@ $icon-position:(
     background-image: url('../assets/icons/viewEmail.png');
 }
 
-.footer__left .t-btn__icon.icon-refresh{
+.footer__left .t-btn__icon.icon-loading{
     background-image: url('../assets/icons/refresh.png');
 }
 
@@ -46,6 +46,7 @@ $icon-map: (
     'delete': -2680,
     'delete-addition': -2680,
     'help': -1600,
+    'refresh': -2584,
 );
 
 @each $icon-name, $icon-position in $icon-map {

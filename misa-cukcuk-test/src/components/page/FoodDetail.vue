@@ -38,7 +38,13 @@
         <div class="dialog__content">
           <div class="dialog-food">
             <!-- <span tabindex="1" @focus="tabIndexLast()"></span> -->
-            <FoodInfo v-if="isShowFoodInfo" :food="food" :validate="validate" :msgValidate="msgValidate"/>
+            <FoodInfo
+              v-if="isShowFoodInfo"
+              :food="food"
+              :validate="validate"
+              :msgValidate="msgValidate"
+              ref="foodInfo"
+            />
             <FoodAddition v-if="isShowFoodAddition" />
           </div>
         </div>
@@ -200,6 +206,10 @@ export default Vue.extend({
       this.food.kitchen = "";
       this.food.imgUrl = "";
       this.food.isShowOnMenu = 0;
+      this.validate.foodName = true;
+      this.validate.foodCode = true;
+      this.validate.unit = true;
+      this.validate.salePrice = true;
     },
 
     btnHelpOnClick() {
@@ -217,28 +227,33 @@ export default Vue.extend({
         case "replica": {
           var valid = this.checkValidEmpty();
           if (valid) {
-            inventoryItemService.post(this.food);
-            console.log("post");
-            if (text == "save") {
-              this.closeDialog();
-            } else if (text == "saveadd") {
-              this.resetDialog();
-            }
-            this.$emit("reloadData");
-          }else{
+            inventoryItemService.post(this.food).then((response) => {
+              console.log("post");
+              console.log(response);
+              if (text == "save") {
+                this.closeDialog();
+              } else if (text == "saveadd") {
+                this.resetDialog();
+              }
+              this.$emit("reloadData");
+            });
+          } else {
             alert("Không thể xóa");
           }
           break;
         }
         case "put": {
-          inventoryItemService.put(this.food.inventoryItemId, this.food);
-
-          if (text == "save") {
-            this.closeDialog();
-          } else if (text == "saveadd") {
-            this.resetDialog();
-          }
-          this.$emit("reloadData");
+          inventoryItemService
+            .put(this.food.inventoryItemId, this.food)
+            .then((response) => {
+              console.log(response);
+              if (text == "save") {
+                this.closeDialog();
+              } else if (text == "saveadd") {
+                this.resetDialog();
+              }
+              this.$emit("reloadData");
+            });
           break;
         }
       }
@@ -250,85 +265,16 @@ export default Vue.extend({
      */
     checkValidEmpty() {
       if (
-        this.checkFoodNameEmpty() &&
-        this.checkFoodCodeEmpty() &&
-        this.checkUnitEmpty() &&
-        this.checkSalePriceEmpty()
+        this.validate.foodName &&
+        this.validate.foodCode &&
+        this.validate.unit &&
+        this.validate.salePrice
       ) {
         return true;
       } else {
         return false;
       }
     },
-
-    /**
-     * Kiểm tra mã món trống
-     * CreatedBy: nctu 15.05.2021
-     */
-    checkFoodCodeEmpty() {
-      var valid = true;
-      if (!this.food.inventoryItemCode) {
-        this.validate.foodCode = false;
-        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
-        valid = false;
-      } else {
-        this.validate.foodCode = true;
-        valid = true;
-      }
-      return valid;
-    },
-
-    /**
-     * Kiểm tra tên món trống
-     * CreatedBy: nctu 15.05.2021
-     */
-    checkFoodNameEmpty() {
-      var valid = true;
-      if (!this.food.inventoryItemName) {
-        this.validate.foodName = false;
-        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
-        valid = false;
-      } else {
-        this.validate.foodName = true;
-        valid = true;
-      }
-      return valid;
-    },
-
-    /**
-     * Kiểm tra đơn vị trống
-     * CreatedBy: nctu 15.05.2021
-     */
-    checkUnitEmpty() {
-      var valid = true;
-      if (!this.food.unit) {
-        this.validate.unit = false;
-        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
-        valid = false;
-      } else {
-        this.validate.unit = true;
-        valid = true;
-      }
-      return valid;
-    },
-
-    /**
-     * Kiểm tra giá bán trống
-     * CreatedBy: nctu 15.05.2021
-     */
-    checkSalePriceEmpty() {
-      var valid = true;
-      if (!this.food.salePrice) {
-        this.validate.salePrice = false;
-        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
-        valid = false;
-      } else {
-        this.validate.salePrice = true;
-        valid = true;
-      }
-      return valid;
-    },
-
   },
   watch: {
     /**
@@ -363,9 +309,13 @@ export default Vue.extend({
           this.food.inventoryItemId = "00000000-0000-0000-0000-000000000000";
         }
       }
+      // this.$nextTick(()=>{
+      //   let dialogInfo = this.$refs.foodInfo as any;
+      //   dialogInfo.focusFirstElement();
+      // })
       // this.$nextTick(() => this.focusFirstElement());
     },
-  },
+  }
 });
 </script>
 

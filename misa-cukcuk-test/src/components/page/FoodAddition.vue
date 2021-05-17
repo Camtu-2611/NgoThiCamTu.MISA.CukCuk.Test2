@@ -18,26 +18,52 @@
     </div>
     <div class="grid-addition-food">
         <div class="tbl-addition-list">
-            <table>
+            <!-- <table>
                 <thead>
+                  <th>
                     <td>Sở thích phục vụ</td>
                     <td>Thu thêm</td>
+                  </th>
                 </thead>
                 <div class="tbl-body">
                     <tbody>
                         <tr>
+                            <td>
+                                <input type="text" v-model="select" name="addition-food" >
+                            </td>
                             <td>
                                 <input type="text" name="addition-food" >
                             </td>
                         </tr>
                     </tbody>
                 </div>
-            </table>
+            </table> -->
+
+            <table :key="key">
+              <thead>
+                <tr>
+                <th>Company</th>
+                <th>Company</th>
+                </tr>
+              </thead>
+              <div>
+              <tbody id="stocksTerminal">
+              <tr :key="item.key" v-for="(item, index) in data">
+                <td>
+                  <input type="text" v-model="item.name">
+                  <div :id="item.id" v-for="item2 in data2.filter(el => el.name.includes(item.name))" :key="item2.id" @click="chooseItem(index, item2)">{{item2.name}}</div>
+                </td>
+                <td >{{ item.price }}</td>
+              </tr>
+              </tbody>
+
+              </div>
+              </table>
         </div>
     </div>
     <div class="grid-dialog-toolbar">
         <div class="btn-food-addition btn-addrow">
-            <misa-button icon="icon-plus-addition"> Thêm dòng</misa-button>
+            <misa-button icon="icon-plus-addition" @click="addRow"> Thêm dòng</misa-button>
         </div>
         <div class="btn-food-addition btn-deleterow">
             <misa-button icon="icon-delete-addition"> Xóa dòng </misa-button>
@@ -59,9 +85,61 @@ export default Vue.extend({
   },
   data() {
     return {
+      key: 0,
       foodName: "Gà hấp lá chanh",
+      select: "",
+      data : [{
+        id: 1,
+        name: "Gà hấp lá chanh2",
+        price: 200
+      },
+      {
+        id: 2,
+        name: "Gà hấp lá chanh3",
+        price: 200
+      },
+      {
+        id:3,
+        name: "Gà hấp lá chanh4",
+        price: 200
+      }
+      ],
+      data2 : [{
+        id: 1,
+        name: "Gà hấp lá chanh2",
+        price: 200
+      },
+      {
+        id: 2,
+        name: "Gà hấp lá chanh3",
+        price: 200
+      },
+      {
+        id:3,
+        name: "Gà hấp lá chanh4",
+        price: 200
+      }
+      ]
     };
   },
+  methods: {
+    chooseItem(index: number, item: any){
+      console.log(index);
+      console.log(item);
+      console.log(this.data);
+      
+      this.data[index].name = item.name;
+      this.data[index].price = item.price;
+      this.key++;
+    },
+    addRow(){
+      this.data.push({
+        id: 5,
+        name: "",
+        price: 0
+      })
+    }
+  }
 });
 </script>
 <style lang="scss" scoped>

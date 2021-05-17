@@ -3,9 +3,11 @@
     class="t-input t-input-default"
     :id="id"
     :type="type"
+    ref="input"
     @input="$emit('input', $event.target.value)"
     @keypress="$emit('keypress', $event.target.value)"
     @blur="$emit('blur', $event.target.value)"
+    @focus="$emit('focus', $event.target.value)"
     :disabled="disabled"
     :value="value"
   />

@@ -27,12 +27,12 @@
     invenrotyItemName:"",
     invenrotyItemCategoryName:"",
     unit:"",
-    salePrice: 0,
+    salePrice: null,
     realPrice: null,
-    changeOutwardPrice: 0,
-    allowAdjustPrice: 0,
-    measureInventoryItemStatus: 0,
-    isShowOnMenu: 0,
+    changeOutwardPrice: null,
+    allowAdjustPrice: null,
+    measureInventoryItemStatus: null,
+    isShowOnMenu: null,
     inActive: 0
 }
 

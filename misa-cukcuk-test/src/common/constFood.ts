@@ -34,7 +34,7 @@ const TYPEFOODS = [
 const STATUSYESNO = [
     {
         statusName: "",
-        value: ""
+        value: undefined
     },
     {
         statusName: "Có",

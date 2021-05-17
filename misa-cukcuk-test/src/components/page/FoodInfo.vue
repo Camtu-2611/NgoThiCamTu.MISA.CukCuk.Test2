@@ -11,7 +11,6 @@
             type="text"
             v-model="food.inventoryItemName"
             tabindex="2"
-            ref="foodName"
             id="foodName"
             :class="{ 'border-warning': !validate.foodName }"
             @blur="checkFoodNameEmpty()"
@@ -115,7 +114,16 @@
         </div>
         <div class="row-input">
           <div class="row-30 field-required">
-            <misa-input
+            <misa-input-money
+              class="input-number"
+              :value="0"
+              v-model="food.salePrice"
+              tabindex="6"
+              :class="{ 'border-warning': !validate.salePrice }"
+              @blur="checkSalePriceEmpty()"
+              type="text"
+            ></misa-input-money>
+            <!-- <misa-input
               type="text"
               class="input-number"
               :value="0"
@@ -124,7 +132,7 @@
               tabindex="6"
               :class="{ 'border-warning': !validate.salePrice }"
               @blur="checkSalePriceEmpty()"
-            ></misa-input>
+            ></misa-input> -->
             <span v-show="!validate.salePrice" class="invalid-icon-default">
               <span class="tooltiptext tooltipFoodAddition">
                 {{ msgValidate.msgWarningEmpty }}
@@ -266,16 +274,18 @@
 import commonFunction from "@/common/commonFunction";
 import Vue from "vue";
 import constFood from "@/common/constFood";
+import MisaInputMoney from "@/control/misa-input/MisaInputMoney.vue";
 
 export default Vue.extend({
+  components: { MisaInputMoney },
   props: {
     food: {
       type: Object,
     },
-    validate:{
+    validate: {
       type: Object,
     },
-    msgValidate:{
+    msgValidate: {
       type: Object,
     },
   },
@@ -285,16 +295,22 @@ export default Vue.extend({
       foodCategories: constFood.FOOD_CATEGORY,
       units: constFood.UNIT,
       kitchenName: constFood.KITCHEN_AREA,
-      
-      
     };
   },
+  mounted(){
+    console.log(this.$refs);
+  },
   computed: {
-    firstFocus() {
-      return (this.$refs.foodName as Vue & { focus: () => boolean }).focus();
-    },
+    // firstFocus() {
+    //   return (this.$refs.foodName as Vue & { focus: () => boolean });
+    // },
   },
   methods: {
+    firstForcus(){
+      // let firstFocusEl =  this.$refs.input as HTMLInputElement;
+      return (this.$refs.foodName as Vue & { focus: () => boolean });
+      
+    },
     /**
      * Xử lý sự kiện khi click vào checkbox
      * CreatedBy: nctu 14.05.2021
@@ -307,7 +323,7 @@ export default Vue.extend({
         this.food.isShowOnMenu = 0;
       }
     },
-    
+
     /**
      * Hàm xử lý chỉ cho phép nhập số trong ô giá tiền
      * CreatedBy: nctu 14.05.2021
@@ -321,6 +337,74 @@ export default Vue.extend({
      */
     formatPrice(value: number) {
       return commonFunction.formatMoney(value);
+    },
+
+    /**
+     * Kiểm tra mã món trống
+     * CreatedBy: nctu 15.05.2021
+     */
+    checkFoodCodeEmpty() {
+      var valid = true;
+      if (!this.food.inventoryItemCode) {
+        this.validate.foodCode = false;
+        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
+        valid = false;
+      } else {
+        this.validate.foodCode = true;
+        valid = true;
+      }
+      return valid;
+    },
+
+    /**
+     * Kiểm tra tên món trống
+     * CreatedBy: nctu 15.05.2021
+     */
+    checkFoodNameEmpty() {
+      var valid = true;
+      if (!this.food.inventoryItemName) {
+        this.validate.foodName = false;
+        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
+        valid = false;
+      } else {
+        this.validate.foodName = true;
+        valid = true;
+      }
+      return valid;
+    },
+
+    /**
+     * Kiểm tra đơn vị trống
+     * CreatedBy: nctu 15.05.2021
+     */
+    checkUnitEmpty() {
+      var valid = true;
+      if (!this.food.unit) {
+        this.validate.unit = false;
+        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
+        valid = false;
+      } else {
+        this.validate.unit = true;
+        valid = true;
+      }
+      return valid;
+    },
+
+    /**
+     * Kiểm tra giá bán trống
+     * CreatedBy: nctu 15.05.2021
+     */
+    checkSalePriceEmpty() {
+      var valid = true;
+      if (!this.food.salePrice) {
+        this.validate.salePrice = false;
+        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
+        valid = false;
+      } else {
+        this.validate.salePrice = true;
+        valid = true;
+      }
+      return valid;
     },
   },
 });
@@ -361,7 +445,7 @@ export default Vue.extend({
     flex: 1;
     height: 100%;
   }
-  .select-input{
+  .select-input {
     width: 100%;
     height: 100%;
   }
@@ -370,7 +454,7 @@ export default Vue.extend({
     position: relative;
   }
   .input-number {
-    text-align: right;
+    text-align: right !important;
   }
   .row-30 {
     width: 30%;
