@@ -6,9 +6,22 @@
           <span class="d-label">Tên món</span>
           <span class="text-red"> (*)</span>
         </div>
-        <div class="row-input">
-          <misa-input type="text" v-model="food.inventoryItemName"></misa-input>
-           <!-- v-model="food.inventoryItemName" -->
+        <div class="row-input field-required">
+          <misa-input
+            type="text"
+            v-model="food.inventoryItemName"
+            tabindex="2"
+            ref="foodName"
+            id="foodName"
+            :class="{ 'border-warning': !validate.foodName }"
+            @blur="checkFoodNameEmpty()"
+          ></misa-input>
+          <span v-show="!validate.foodName" class="invalid-icon-default">
+            <span class="tooltiptext tooltipFoodAddition">
+              {{ msgValidate.msgWarningEmpty }}
+            </span>
+          </span>
+          <!-- v-model="food.inventoryItemName" -->
         </div>
       </div>
       <div class="dialog-row">
@@ -16,8 +29,19 @@
           <span class="d-label">Mã món</span>
           <span class="text-red"> (*)</span>
         </div>
-        <div class="row-input">
-          <misa-input type="text" v-model="food.inventoryItemCode"></misa-input>
+        <div class="row-input field-required">
+          <misa-input
+            type="text"
+            v-model="food.inventoryItemCode"
+            tabindex="3"
+            :class="{ 'border-warning': !validate.foodCode }"
+            @blur="checkFoodCodeEmpty()"
+          ></misa-input>
+          <span v-show="!validate.foodCode" class="invalid-icon-default">
+            <span class="tooltiptext tooltipFoodAddition">
+              {{ msgValidate.msgWarningEmpty }}
+            </span>
+          </span>
           <!-- v-model="food.inventoryItemCode"ryItemCode" -->
         </div>
       </div>
@@ -37,8 +61,15 @@
             id="area-cook"
             class="t-select t-select-default"
             v-model="food.inventoryItemCategoryName"
+            tabindex="4"
           >
-            <option v-for="(cateName,index) in foodCategories" :key="index" :value="cateName">{{cateName}}</option>
+            <option
+              v-for="(cateName, index) in foodCategories"
+              :key="index"
+              :value="cateName"
+            >
+              {{ cateName }}
+            </option>
           </select>
         </div>
       </div>
@@ -47,17 +78,34 @@
           <span class="d-label">Đơn vị tính</span>
           <span class="text-red"> (*)</span>
         </div>
-        <div class="row-input">
-          <div class="select-btn">
-            <span class="t-select-arrow-default"></span>
-            <div class="btn-add">
-              <button class="t-btn t-btn-default icon-add-blue"></button>
+        <div class="row-input field-required">
+          <div class="select-input">
+            <div class="select-btn">
+              <span class="t-select-arrow-default"></span>
+              <div class="btn-add">
+                <button class="t-btn t-btn-default icon-add-blue"></button>
+              </div>
             </div>
+            <select
+              name="areacook"
+              id="area-cook"
+              class="t-select"
+              v-model="food.unit"
+              tabindex="5"
+              :class="{ 'border-warning': !validate.unit }"
+              @blur="checkUnitEmpty()"
+            >
+              <!-- v-model="food.unit" -->
+              <option v-for="(unit, index) in units" :key="index" :value="unit">
+                {{ unit }}
+              </option>
+            </select>
           </div>
-          <select name="areacook" id="area-cook" class="t-select" v-model="food.unit">
-            <!-- v-model="food.unit" -->
-            <option v-for="(unit, index) in units" :key="index" :value="unit">{{unit}}</option>
-          </select>
+          <span v-show="!validate.unit" class="invalid-icon-default">
+            <span class="tooltiptext tooltipFoodAddition">
+              {{ msgValidate.msgWarningEmpty }}
+            </span>
+          </span>
         </div>
       </div>
       <div class="dialog-row">
@@ -66,13 +114,22 @@
           <span class="text-red"> (*)</span>
         </div>
         <div class="row-input">
-          <div class="row-30">
+          <div class="row-30 field-required">
             <misa-input
               type="text"
               class="input-number"
               :value="0"
               v-model="food.salePrice"
+              @keypress="onlyForCurrency()"
+              tabindex="6"
+              :class="{ 'border-warning': !validate.salePrice }"
+              @blur="checkSalePriceEmpty()"
             ></misa-input>
+            <span v-show="!validate.salePrice" class="invalid-icon-default">
+              <span class="tooltiptext tooltipFoodAddition">
+                {{ msgValidate.msgWarningEmpty }}
+              </span>
+            </span>
             <!-- v-model="food.salePrice" -->
           </div>
         </div>
@@ -88,6 +145,7 @@
               class="input-number"
               :value="0"
               v-model="food.realPrice"
+              tabindex="7"
             ></misa-input>
             <!-- v-model="food.realPrice" -->
           </div>
@@ -105,6 +163,7 @@
             cols="5"
             rows="3"
             v-model="food.description"
+            tabindex="8"
           ></textarea>
           <!-- v-model="food.description" -->
         </div>
@@ -120,11 +179,21 @@
               <button class="t-btn t-btn-default icon-add-blue"></button>
             </div>
           </div>
-          <select name="areacook" id="area-cook" class="t-select"
+          <select
+            name="areacook"
+            id="area-cook"
+            class="t-select"
             v-model="food.kitchen"
-           >
-           <!-- v-model="food.kitchen" -->
-            <option v-for="(kitchen, index) in kitchenName" :key="index" :value="kitchen">{{kitchen}}</option>
+            tabindex="9"
+          >
+            <!-- v-model="food.kitchen" -->
+            <option
+              v-for="(kitchen, index) in kitchenName"
+              :key="index"
+              :value="kitchen"
+            >
+              {{ kitchen }}
+            </option>
           </select>
         </div>
       </div>
@@ -138,9 +207,9 @@
             name="d-checkbox"
             id="d-checkbox"
             class="checkbox-default"
-            :class="{'checkbox-checking' : (food.isShowOnMenu==1)}"
+            :class="{ 'checkbox-checking': food.isShowOnMenu == 1 }"
             @click="cbOnClick()"
-            
+            tabindex="10"
           />
           <!-- v-model="food.isShowOnMenu" -->
           <span class="label-checkbox">Không hiển thị lên thực đơn</span>
@@ -162,7 +231,6 @@
               </div>
               <div class="food-img-default">
                 <img
-
                   src="../../assets/images/ImageHandler.png"
                   alt="Ảnh đại diện món ăn"
                 />
@@ -175,12 +243,15 @@
             <div class="upfile-button">
               <div class="btn-upload-img">
                 <div class="btn-upload">
-                  <misa-button icon="icon-upload"></misa-button>
+                  <misa-button icon="icon-upload" tabindex="11"></misa-button>
                 </div>
               </div>
               <div class="btn-remove-img">
                 <div class="btn-remove-img">
-                  <misa-button icon="icon-remove-img"></misa-button>
+                  <misa-button
+                    icon="icon-remove-img"
+                    tabindex="12"
+                  ></misa-button>
                 </div>
               </div>
             </div>
@@ -192,39 +263,67 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import constFood from '../../common/constFood';
+import commonFunction from "@/common/commonFunction";
+import Vue from "vue";
+import constFood from "@/common/constFood";
 
 export default Vue.extend({
-  props:{
+  props: {
     food: {
       type: Object,
     },
     validate:{
       type: Object,
-    }
+    },
+    msgValidate:{
+      type: Object,
+    },
   },
-  data(){
-    return{
+  data() {
+    return {
       // isChecked: false,
       foodCategories: constFood.FOOD_CATEGORY,
       units: constFood.UNIT,
       kitchenName: constFood.KITCHEN_AREA,
-    }
+      
+      
+    };
   },
-  methods:{
-    cbOnClick(){
+  computed: {
+    firstFocus() {
+      return (this.$refs.foodName as Vue & { focus: () => boolean }).focus();
+    },
+  },
+  methods: {
+    /**
+     * Xử lý sự kiện khi click vào checkbox
+     * CreatedBy: nctu 14.05.2021
+     */
+    cbOnClick() {
       // this.isChecked = !this.isChecked;
-      if(this.food.isShowOnMenu == 0){
+      if (this.food.isShowOnMenu == 0) {
         this.food.isShowOnMenu = 1;
-      }
-      else if(this.food.isShowOnMenu == 1){
+      } else if (this.food.isShowOnMenu == 1) {
         this.food.isShowOnMenu = 0;
       }
     },
-
+    
+    /**
+     * Hàm xử lý chỉ cho phép nhập số trong ô giá tiền
+     * CreatedBy: nctu 14.05.2021
+     */
+    onlyForCurrency() {
+      console.log("curreny");
+    },
+    /**
+     * Hàm định dạng giá tiền
+     * CreatedBy: nctu 14.05.2021
+     */
+    formatPrice(value: number) {
+      return commonFunction.formatMoney(value);
+    },
   },
-})
+});
 </script>
 
 <style lang="scss" scoped>
@@ -233,7 +332,7 @@ export default Vue.extend({
   height: auto;
   display: flex;
 
-//   display: none;
+  //   display: none;
 }
 
 .dialog-left {
@@ -260,6 +359,10 @@ export default Vue.extend({
   }
   .row-input {
     flex: 1;
+    height: 100%;
+  }
+  .select-input{
+    width: 100%;
     height: 100%;
   }
 
@@ -353,5 +456,10 @@ export default Vue.extend({
       margin-bottom: 4px;
     }
   }
+}
+
+.field-required {
+  display: flex;
+  align-items: center;
 }
 </style>

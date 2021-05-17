@@ -5,9 +5,9 @@ export default {
     get() {
         return Service.get(`${resource}`);
     },
-    getpaging(pageIndex: number, pageSize: number, dataFilter: filterData) {
-        return Service.get(`${resource}/paging?pageIndex=${pageIndex}
-                            &pageSize=${pageSize}
+    getpaging(dataFilter: filterData) {
+        return Service.get(`${resource}/paging?pageIndex=${dataFilter.pageIndex}
+                            &pageSize=${dataFilter.pageSize}
                             &inventoryItemTypeName=${dataFilter.inventoryItemTypeName}
                             &inventoryItemCode=${dataFilter.invenrotyItemCode}
                             &inventoryItemName=${dataFilter.invenrotyItemName}
@@ -23,12 +23,12 @@ export default {
     getById(itemId:string){
         return Service.get(`${resource}/${itemId}`);
     },
-    // post(payload: any){
-    //     return Service.post(`${resource}`, payload);
-    // },
-    // put(itemId: string, payload:any){
-    //     return Service.put(`${resource}/${itemId}`, payload);
-    // },
+    post(payload: any){
+        return Service.post(`${resource}`, payload);
+    },
+    put(itemId: string, payload:any){
+        return Service.put(`${resource}/${itemId}`, payload);
+    },
     delete(itemId:string){
         return Service.delete(`${resource}/${itemId}`);
     },

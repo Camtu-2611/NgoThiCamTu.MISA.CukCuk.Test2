@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 namespace MISA.CukCuk.Core.Services
 {
     /// <summary>
-    /// 
+    /// Lớp lưu trữ các Service xử lý nghiệp vụ cho thực thể Sở thích phục vụ
+    /// CreatedBy: nctu 13.05.2021
     /// </summary>
     public class InventoryItemAdditionService:BaseService<InventoryItemAddition>, IInventoryItemAdditionService
     {
@@ -20,6 +21,12 @@ namespace MISA.CukCuk.Core.Services
             _itemRepository = itemRepository;
         }
 
+        /// <summary>
+        /// Service lấy danh sách sở thích phục vụ theo ID món
+        /// </summary>
+        /// <param name="inventoryItemId">ID món</param>
+        /// <returns>ServiceResult với data là danh sách các sở thích phục vụ</returns>
+        /// CreatedBy: nctu 13.05.2021
         public ServiceResult GetInventoryItemAdditionByInventoryItemId(Guid inventoryItemId)
         {
             var result = new ServiceResult();

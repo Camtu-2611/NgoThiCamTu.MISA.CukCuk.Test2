@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Core.Services
 {
+    /// <summary>
+    /// Lớp lưu trữ các service xử lý nghiệp vụ chung
+    /// </summary>
+    /// <typeparam name="T">Thực thể cần xử lý</typeparam>
+    /// CreatedBy: nctu 12.05.2021
     public class BaseService<T> : IBaseService<T>
     {
         protected IBaseRepository<T> _baseRespository;
@@ -17,6 +22,13 @@ namespace MISA.CukCuk.Core.Services
         {
             _baseRespository = baseRespository;
         }
+
+        /// <summary>
+        /// Service lấy thông tin 1 thực thể theo khóa chính
+        /// </summary>
+        /// <param name="entityId">Khóa chính của thực thể</param>
+        /// <returns>ServiceResult</returns>
+        /// CreatedBy: nctu 12.05.2021
         public ServiceResult GetById(Guid entityId)
         {
             var result = new ServiceResult();
@@ -38,6 +50,11 @@ namespace MISA.CukCuk.Core.Services
             return result;
         }
 
+        /// <summary>
+        /// Service lấy danh sách thực thể
+        /// </summary>
+        /// <returns>ServiceResult</returns>
+        /// CreatedBy: nctu 12.05.2021
         public ServiceResult GetEntities()
         {
             var entities = _baseRespository.GetEntities();
@@ -60,6 +77,12 @@ namespace MISA.CukCuk.Core.Services
             return result; 
         }
 
+        /// <summary>
+        /// Service thêm thực thể
+        /// </summary>
+        /// <param name="entity">Thực thể cần thêm</param>
+        /// <returns>ServiceResult</returns>
+        /// CreatedBy: nctu 12.05.2021
         public ServiceResult Insert(T entity)
         {
             var result = new ServiceResult();
@@ -91,6 +114,13 @@ namespace MISA.CukCuk.Core.Services
             return result;
         }
 
+        /// <summary>
+        /// Service cập nhật thông tin 1 thực thể
+        /// </summary>
+        /// <param name="entity">Thông tin cần cập nhật</param>
+        /// <param name="entityId">Khóa chính của thực thể</param>
+        /// <returns>ServiceResult</returns>
+        /// CreatedBy: nctu 12.05.2021
         public ServiceResult Update(T entity, Guid entityId)
         {
             var result = new ServiceResult();
@@ -123,6 +153,13 @@ namespace MISA.CukCuk.Core.Services
             }
             return result;
         }
+
+        /// <summary>
+        /// Service xóa 1 thực thể
+        /// </summary>
+        /// <param name="entityId">Khóa chính của thực thể cần xóa</param>
+        /// <returns>ServiceResult</returns>
+        /// CreatedBy: nctu 12.05.2021
         public ServiceResult Delete(Guid entityId)
         {
             var result = new ServiceResult();
@@ -153,6 +190,7 @@ namespace MISA.CukCuk.Core.Services
         /// <param name="entity">Đối tượng cần validate</param>
         /// <param name="entityID">Khóa chính của đối tượng</param>
         /// <param name="functionName">Tên phương thức gọi hàm validate (insert hay update)</param>
+        /// CreatedBy: nctu 13.05.2021
         public virtual void Validate(ServiceResult response, T entity, Guid? entityID, string functionName)
         {
             /* var properties = typeof(T).GetProperties();

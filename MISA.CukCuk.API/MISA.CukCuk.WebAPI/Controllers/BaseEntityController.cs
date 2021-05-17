@@ -103,7 +103,7 @@ namespace MISA.CukCuk.WebAPI.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(int.Parse(responseResult.ErrorCode.ToString()), responseResult);
+                //return StatusCode(int.Parse(responseResult.ErrorCode.ToString()), responseResult);
                 throw;
             }
             return StatusCode(StatusCodes.Status200OK, responseResult);

@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Core.Services
 {
+    /// <summary>
+    /// Lớp lưu trữ các Service xử lý nghiệp vụ chi tiết sở thích phục vụ
+    /// CreatedBy: nctu 13.05.2021
+    /// </summary>
     public class InventoryItemAdditionDetailService : BaseService<InventoryItemAdditionDetail>, IInventoryItemAdditionDetailService
     {
         private IInventoryItemAdditionDetailRepository _itemRepository;
@@ -17,11 +21,12 @@ namespace MISA.CukCuk.Core.Services
             _itemRepository = itemRepository;
         }
         /// <summary>
-        /// 
+        /// Service xóa chi tiết sở thích phục vụ theo id món và id sở thích phục vụ
         /// </summary>
-        /// <param name="inventoryItemId"></param>
-        /// <param name="inventoryItemAdditionId"></param>
-        /// <returns></returns>
+        /// <param name="inventoryItemId">ID món </param>
+        /// <param name="inventoryItemAdditionId">ID sở thích phục vụ</param>
+        /// <returns>ServiceResult</returns>
+        /// CreatedBy: nctu 13.05.2021
         public ServiceResult DeleteInventoryItemAdditionDetail(Guid inventoryItemId, Guid inventoryItemAdditionId)
         {
             var result = new ServiceResult();

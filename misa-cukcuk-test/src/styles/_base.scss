@@ -63,41 +63,49 @@ p {
 }
 
 .invalid-icon-default {
-    width: 18px;
+    width: 20px;
     height: 16px;
     margin: 0 5px 0 5px;
     background: url('../assets/icons/exclamation.png') no-repeat;
-    background-size: cover;
+    background-size: 16px;
     position: relative;
+    box-sizing: border-box;
 }
 
 .tooltiptext {
     visibility: hidden;
-    width: fit-content;
-    min-width: 150px;
-    line-height: 20px;
-    background-color: #df4646;
+    width: auto;
+    min-width: 200px;
+    line-height: 22px;
     border-radius: 5px;
-    color: #fff;
+    color: #000;
     text-align: center;
     padding: 4px;
+    padding-left: 20px;
+    background: url('../assets/icons/exclamation.png') no-repeat;
+    background-size: 16px;
+    background-position-y: center;
+    background-position-x: 4px ;
+    background-color: #dceaf3;
     position: absolute;
     left: calc(50% + 15px);
-    z-index: 1;
+    z-index: 10000;
+    box-shadow: rgb(136 136 136) -1px 1px 3px;
+
   }
 
-  .tooltiptext::after {
-    content: " ";
-    position: absolute;
-    width: 0;
-    height: 0;
-    left: -14px;
-    right: auto;
-    top: 4px;
-    bottom: auto;
-    border: 7px solid;
-    border-color: transparent #df4646 transparent transparent;
-  }
+//   .tooltiptext::after {
+//     content: " ";
+//     position: absolute;
+//     width: 0;
+//     height: 0;
+//     left: -14px;
+//     right: auto;
+//     top: 4px;
+//     bottom: auto;
+//     border: 7px solid;
+//     border-color: transparent #ebf1f5 transparent transparent;
+//   }
 
 //   .tooltipFoodAddition {
 //     left: calc(50% + 5px);

@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog">
+  <div class="dialog" ref="DetailDialog">
     <div class="dialog__modal" @click="closeDialog"></div>
     <div class="dialog__form">
       <!-- begin header -->
@@ -9,7 +9,10 @@
             {{ dialogTitle }}
           </div>
           <div class="div-close">
-            <button class="t-btn t-btn-defaul t-btn-close" @click="closeDialog"></button>
+            <button
+              class="t-btn t-btn-defaul t-btn-close"
+              @click="closeDialog"
+            ></button>
           </div>
         </div>
       </div>
@@ -17,16 +20,25 @@
       <!-- begin body -->
       <div class="dialog__body">
         <div class="dialog__tab">
-          <a class="t-tab" :class="{'t-tab-active' : isShowFoodInfo}" @click="closeFoodAddition()">
+          <a
+            class="t-tab"
+            :class="{ 't-tab-active': isShowFoodInfo }"
+            @click="closeFoodAddition()"
+          >
             <div class="t-tab-text">Thông tin chung</div>
           </a>
-          <a class="t-tab" :class="{'t-tab-active' : isShowFoodAddition}" @click="showFoodAddition()">
-            <div class="t-tab-text" >Sở thích phục vụ</div>
+          <a
+            class="t-tab"
+            :class="{ 't-tab-active': isShowFoodAddition }"
+            @click="showFoodAddition()"
+          >
+            <div class="t-tab-text">Sở thích phục vụ</div>
           </a>
         </div>
         <div class="dialog__content">
           <div class="dialog-food">
-            <FoodInfo v-if="isShowFoodInfo" :food="foodById" :validate="validate" />
+            <!-- <span tabindex="1" @focus="tabIndexLast()"></span> -->
+            <FoodInfo v-if="isShowFoodInfo" :food="food" :validate="validate" :msgValidate="msgValidate"/>
             <FoodAddition v-if="isShowFoodAddition" />
           </div>
         </div>
@@ -37,24 +49,37 @@
         <div class="dialog__footer-btn">
           <div class="d-footer-left">
             <div class="d-btn-footer btn-help">
-              <misa-button icon="icon-help" @click="btnHelpOnClick"
+              <misa-button
+                icon="icon-help"
+                @click="btnHelpOnClick"
+                tabindex="13"
                 >Giúp</misa-button
               >
             </div>
           </div>
           <div class="d-footer-right">
             <div class="d-btn-footer btn-save">
-              <misa-button icon="icon-Save16" @click="btnSaveOnClick"
+              <misa-button
+                icon="icon-Save16"
+                @click="btnSaveOnClick('save')"
+                tabindex="14"
                 >Cất</misa-button
               >
             </div>
             <div class="d-btn-footer btn-saveadd">
-              <misa-button icon="icon-SaveAdd16" @click="btnSaveNewOnClick"
+              <misa-button
+                icon="icon-SaveAdd16"
+                @click="btnSaveOnClick('saveadd')"
+                tabindex="15"
                 >Cất và Thêm</misa-button
               >
             </div>
             <div class="d-btn-footer btn-cancel">
-              <misa-button icon="icon-Disable16" @click="closeDialog"
+              <misa-button
+                icon="icon-Disable16"
+                @click="closeDialog"
+                tabindex="16"
+                ref="cancelBtn"
                 >Hủy bỏ</misa-button
               >
             </div>
@@ -62,6 +87,7 @@
         </div>
       </div>
       <!-- end footer -->
+      <!-- <span tabindex="17" @focus="tabIndexFirst()"></span> -->
     </div>
   </div>
 </template>
@@ -70,80 +96,276 @@
 import MisaButton from "@/control/misa-button/MisaButton.vue";
 import FoodInfo from "@/components/page/FoodInfo.vue";
 import FoodAddition from "@/components/page/FoodAddition.vue";
-import entity from '../../common/entity';
+import entity from "../../common/entity";
 import Vue from "vue";
-import { mapState } from "vuex";
-import { mapGetters } from 'vuex'
-
+import commonFunction from "../../common/commonFunction";
+import { mapGetters } from "vuex";
+import inventoryItemService from "@/services/inventoryItemService";
 
 export default Vue.extend({
   components: { MisaButton, FoodInfo, FoodAddition },
-  props:{
+  props: {
     msg: String,
+    isShowDialog: Boolean,
   },
   data() {
     return {
       dialogTitle: "Thêm món",
       isShowFoodInfo: true,
       isShowFoodAddition: false,
-      validate:{
+      food: {
+        inventoryItemId: "00000000-0000-0000-0000-000000000000",
+        inventoryItemCode: "",
+        inventoryItemName: "",
+        inventoryItemCategoryName: "",
+        inventoryItemTypeName: "",
+        unit: "",
+        salePrice: 0,
+        realPrice: 0,
+        description: "",
+        kitchen: "",
+        imgUrl: "",
+        isShowOnMenu: 0,
+        // createdBy: "nctu",
+        // createdDate: Date.now(),
+        // modifiedBy: "nctu",
+        // modifiedDate: Date.now(),
+      },
+      validate: {
         foodCode: true,
         foodName: true,
         unit: true,
         salePrice: true,
-      }
+      },
+      msgValidate: {
+        msgWarningEmpty: "",
+      },
     };
   },
   computed: {
-      ...mapGetters({
-        foodById:"getFoodById",
-      }),
+    ...mapGetters({
+      foodById: "getFoodById",
+    }),
   },
   methods: {
+    // focusFirstElement(){
+    //   this.$refs.foodName.focus()
+    // },
+    /**
+     * Xử lý việc đóng form chi tiết
+     * CreatedBy: nctu 13.05.2021
+     */
     closeDialog() {
       console.log("Đóng Dialog");
-      this.$emit('closeDialog');
+      this.$emit("closeDialog");
       this.resetDialog();
     },
-    showFoodAddition(){
+    /**
+     * Xử lý sự kiện hiện màn hình sở thích phục vụ
+     * CreatedBy: nctu 13.05.2021
+     */
+    showFoodAddition() {
       console.log("mở sở thích phục vụ");
       this.isShowFoodAddition = true;
       this.isShowFoodInfo = false;
     },
-    closeFoodAddition(){
+    /**
+     * Xử lý sự kiện ẩn màn hình sở thích phục vụ
+     * CreatedBy: nctu 13.05.2021
+     */
+    closeFoodAddition() {
       console.log("đóng sở thích phục vụ");
       this.isShowFoodAddition = false;
       this.isShowFoodInfo = true;
     },
-    resetDialog(){
-      this.dialogTitle="Thêm món";
+
+    /**
+     * Thiết lập lại trạng thái ban đầu khi đóng Dialog
+     * CreatedBy: nctu 13.05.2021
+     * ModifiedBy: nctu 14.05.2021
+     */
+    resetDialog() {
+      this.dialogTitle = "Thêm món";
       this.isShowFoodInfo = true;
       this.isShowFoodAddition = false;
+      this.food.inventoryItemId = "00000000-0000-0000-0000-000000000000";
+      this.food.inventoryItemCode = "";
+      this.food.inventoryItemName = "";
+      this.food.inventoryItemCategoryName = "";
+      this.food.inventoryItemTypeName = "";
+      this.food.unit = "";
+      this.food.salePrice = 0;
+      this.food.realPrice = 0;
+      this.food.description = "";
+      this.food.kitchen = "";
+      this.food.imgUrl = "";
+      this.food.isShowOnMenu = 0;
     },
+
     btnHelpOnClick() {
       console.log("Giúp");
     },
 
-    btnSaveOnClick() {
+    /**
+     * Sự kiện khi click vào nút Cất hoặc Cất và thêm.
+     * CreatedBy: nctu 15.05.2021
+     */
+    btnSaveOnClick(text: string) {
       console.log("Cất");
+      switch (this.msg) {
+        case "post":
+        case "replica": {
+          var valid = this.checkValidEmpty();
+          if (valid) {
+            inventoryItemService.post(this.food);
+            console.log("post");
+            if (text == "save") {
+              this.closeDialog();
+            } else if (text == "saveadd") {
+              this.resetDialog();
+            }
+            this.$emit("reloadData");
+          }else{
+            alert("Không thể xóa");
+          }
+          break;
+        }
+        case "put": {
+          inventoryItemService.put(this.food.inventoryItemId, this.food);
+
+          if (text == "save") {
+            this.closeDialog();
+          } else if (text == "saveadd") {
+            this.resetDialog();
+          }
+          this.$emit("reloadData");
+          break;
+        }
+      }
     },
-    btnSaveNewOnClick() {
-      console.log("Cất và thêm");
+
+    /**
+     * Kiểm tra dữ liệu trống trước khi lưu
+     * CreatedBy: nctu 17.05.2021
+     */
+    checkValidEmpty() {
+      if (
+        this.checkFoodNameEmpty() &&
+        this.checkFoodCodeEmpty() &&
+        this.checkUnitEmpty() &&
+        this.checkSalePriceEmpty()
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
+    /**
+     * Kiểm tra mã món trống
+     * CreatedBy: nctu 15.05.2021
+     */
+    checkFoodCodeEmpty() {
+      var valid = true;
+      if (!this.food.inventoryItemCode) {
+        this.validate.foodCode = false;
+        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
+        valid = false;
+      } else {
+        this.validate.foodCode = true;
+        valid = true;
+      }
+      return valid;
+    },
+
+    /**
+     * Kiểm tra tên món trống
+     * CreatedBy: nctu 15.05.2021
+     */
+    checkFoodNameEmpty() {
+      var valid = true;
+      if (!this.food.inventoryItemName) {
+        this.validate.foodName = false;
+        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
+        valid = false;
+      } else {
+        this.validate.foodName = true;
+        valid = true;
+      }
+      return valid;
+    },
+
+    /**
+     * Kiểm tra đơn vị trống
+     * CreatedBy: nctu 15.05.2021
+     */
+    checkUnitEmpty() {
+      var valid = true;
+      if (!this.food.unit) {
+        this.validate.unit = false;
+        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
+        valid = false;
+      } else {
+        this.validate.unit = true;
+        valid = true;
+      }
+      return valid;
+    },
+
+    /**
+     * Kiểm tra giá bán trống
+     * CreatedBy: nctu 15.05.2021
+     */
+    checkSalePriceEmpty() {
+      var valid = true;
+      if (!this.food.salePrice) {
+        this.validate.salePrice = false;
+        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
+        valid = false;
+      } else {
+        this.validate.salePrice = true;
+        valid = true;
+      }
+      return valid;
+    },
+
+  },
+  watch: {
+    /**
+     * Theo dõi việc mở form với từng mục đích: Thêm, sửa, nhân bản
+     * CreatedBy: nctu 14.05.2021
+     */
+    isShowDialog() {
+      if (this.msg == "post") {
+        this.dialogTitle = "Thêm món";
+        this.resetDialog();
+      } else {
+        var foodselected = this.$store.getters.getFoodById;
+        // this.food = foodselected;
+        this.food.inventoryItemCode = foodselected.inventoryItemCode;
+        this.food.inventoryItemName = foodselected.inventoryItemName;
+        this.food.inventoryItemCategoryName =
+          foodselected.inventoryItemCategoryName;
+        this.food.inventoryItemTypeName = foodselected.inventoryItemTypeName;
+        this.food.unit = foodselected.unit;
+        this.food.salePrice = foodselected.salePrice;
+        this.food.realPrice = foodselected.realPrice;
+        this.food.description = foodselected.description;
+        this.food.kitchen = foodselected.kitchen;
+        this.food.imgUrl = foodselected.imgUrl;
+        this.food.isShowOnMenu = foodselected.isShowOnMenu;
+
+        if (this.msg == "put") {
+          this.dialogTitle = "Sửa món";
+          this.food.inventoryItemId = foodselected.inventoryItemId;
+        } else if (this.msg == "replica") {
+          this.dialogTitle = "Thêm món";
+          this.food.inventoryItemId = "00000000-0000-0000-0000-000000000000";
+        }
+      }
+      // this.$nextTick(() => this.focusFirstElement());
     },
   },
-  watch:{
-    isShowDialog(){
-      if(this.msg=='post'){
-        this.dialogTitle="Thêm món";
-      }
-      else if(this.msg=='put'){
-        this.dialogTitle="Sửa món";
-      }
-      else if(this.msg=='replica'){
-        this.dialogTitle="Thêm món";
-      }
-    }
-  }
 });
 </script>
 

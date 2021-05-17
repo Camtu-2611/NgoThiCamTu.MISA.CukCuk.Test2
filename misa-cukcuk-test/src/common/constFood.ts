@@ -49,7 +49,7 @@ const STATUSYESNO = [
 const TYPE_MSG = {
     INSERT: "post",
     UPDATE: "put",
-    REPLICA: "replicat"
+    REPLICA: "replica"
 }
 
 const KITCHEN_AREA = [
@@ -88,7 +88,9 @@ const FOOD_CATEGORY = [
     "Tráng miệng",
     "Khai vị",
     "Hải sản",
-    "Cá"
+    "Cá",
+    "Heo",
+    "Bò",
 ]
 export default {
     TYPEFOODS,

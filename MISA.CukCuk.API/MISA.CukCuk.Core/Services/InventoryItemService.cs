@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Core.Services
 {
+    /// <summary>
+    /// Lớp lưu trữ các service xử lý nghiệp vụ cho thực thể món
+    /// </summary>
     public class InventoryItemService : BaseService<InventoryItem>, IInventoryItemService
     {
         private IInventoryItemRepository _itemRepository;
@@ -17,6 +20,12 @@ namespace MISA.CukCuk.Core.Services
             _itemRepository = itemRepository;
         }
 
+        /// <summary>
+        /// Service lấy thông tin món theo mã món
+        /// </summary>
+        /// <param name="inventoryItemCode">Mã món</param>
+        /// <returns>ServiceResult</returns>
+        /// CreatedBy: nctu 13.05.2021
         public ServiceResult GetInventoryItemByCode(string inventoryItemCode)
         {
             var result = new ServiceResult();
@@ -40,6 +49,24 @@ namespace MISA.CukCuk.Core.Services
             return result;
         }
 
+        /// <summary>
+        /// Service xử lý phân trang và lọc dữ liệu
+        /// </summary>
+        /// <param name="pageSize">Số bản ghi 1 trang</param>
+        /// <param name="pageIndex">Chỉ số trang</param>
+        /// <param name="inventoryItemTypeName">Loại món</param>
+        /// <param name="inventoryItemCode">Mã món</param>
+        /// <param name="inventoryItemName">Tên món</param>
+        /// <param name="inventoryItemCategoryName">Nhóm thực đơn</param>
+        /// <param name="unit">Đơn vị tính</param>
+        /// <param name="salePrice">Giá bán</param>
+        /// <param name="changeOutwardPrice">Thay đổi theo thời giá</param>
+        /// <param name="allowAdjustPrice">Điều chỉnh giá tự do</param>
+        /// <param name="measureInventoryItemStatus">Định lượng NVL</param>
+        /// <param name="isShowOnMenu">Hiển thị trên menu</param>
+        /// <param name="inActive">Ngừng bán</param>
+        /// <returns>ServiceResult với data là kết quả phân trang - PagingResult</returns>
+        /// CreatedBy: nctu 13.05.2021
         public ServiceResult GetInventoryItemFilterPaging(
             int pageSize,
             int pageIndex,
@@ -85,7 +112,16 @@ namespace MISA.CukCuk.Core.Services
             return result;
         }
 
-        public override void Validate(ServiceResult responseResult, InventoryItem item, Guid? itemId, string functionName)
+
+        /// <summary>
+        /// Service validate dữ liệu khi thêm hoặc sửa
+        /// </summary>
+        /// <param name="result">Kết quả khi validate</param>
+        /// <param name="item">Thông tin cần validate</param>
+        /// <param name="itemId">khóa chính của thực thể </param>
+        /// <param name="functionName">tên hàm</param>
+        /// CreatedBy: nctu 13.05.2021
+        public override void Validate(ServiceResult result, InventoryItem item, Guid? itemId, string functionName)
         {
             var propertyUnique = "Mã món";
             var propertyRequired = new Dictionary<string, string>();
@@ -98,10 +134,10 @@ namespace MISA.CukCuk.Core.Services
             {
                 if (string.IsNullOrEmpty(property.Value))
                 {
-                    responseResult.IsSuccess = false;
-                    responseResult.ErrorCode = ErrorCode.BADREQUEST;
-                    responseResult.DevMsg = property.Key + " " + Common.Resources.Messages.Error_Required;
-                    responseResult.UserMsg = property.Key + " " + Common.Resources.Messages.Error_Required;
+                    result.IsSuccess = false;
+                    result.ErrorCode = ErrorCode.BADREQUEST;
+                    result.DevMsg = property.Key + " " + Common.Resources.Messages.Error_Required;
+                    result.UserMsg = property.Key + " " + Common.Resources.Messages.Error_Required;
                 }
             }
 
@@ -111,10 +147,10 @@ namespace MISA.CukCuk.Core.Services
 
             if (checkDuplicateCode)
             {
-                responseResult.IsSuccess = false;
-                responseResult.ErrorCode = ErrorCode.BADREQUEST;
-                responseResult.DevMsg = propertyUnique + " " + Common.Resources.Messages.Error_Duplicate;
-                responseResult.UserMsg = propertyUnique + " " + Common.Resources.Messages.Error_Duplicate;
+                result.IsSuccess = false;
+                result.ErrorCode = ErrorCode.BADREQUEST;
+                result.DevMsg = propertyUnique + " " + Common.Resources.Messages.Error_Duplicate;
+                result.UserMsg = propertyUnique + " " + Common.Resources.Messages.Error_Duplicate;
             }
 
         }

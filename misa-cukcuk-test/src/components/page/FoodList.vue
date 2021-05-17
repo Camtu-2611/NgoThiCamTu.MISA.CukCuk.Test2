@@ -38,7 +38,7 @@
               >
             </div>
             <div class="toolbar-btn">
-              <misa-button icon="icon-delete" @click="btnDeleteMenuOnClick"
+              <misa-button icon="icon-delete" @click="btnDeleteMenuOnClick()"
                 >Xóa</misa-button
               >
             </div>
@@ -59,7 +59,7 @@
                       name="foodcategory"
                       id="foodcategory"
                       class="t-select filter-content"
-                      v-model="filterFields.inventoryItemTypeName"
+                      v-model="filters.inventoryItemTypeName"
                     >
                       <option
                         v-for="(typefood, index) in typeFoods"
@@ -76,7 +76,9 @@
                   <div class="filter">
                     <div class="filter-type">*</div>
                     <div class="filter-content">
-                      <misa-input v-model="filterFields.invenrotyItemCode"></misa-input>
+                      <misa-input
+                        v-model="filters.invenrotyItemCode"
+                      ></misa-input>
                     </div>
                   </div>
                 </div>
@@ -85,7 +87,9 @@
                   <div class="filter">
                     <div class="filter-type">*</div>
                     <div class="filter-content">
-                      <misa-input v-model="filterFields.invenrotyItemName"></misa-input>
+                      <misa-input
+                        v-model="filters.invenrotyItemName"
+                      ></misa-input>
                     </div>
                   </div>
                 </div>
@@ -94,7 +98,9 @@
                   <div class="filter">
                     <div class="filter-type">*</div>
                     <div class="filter-content">
-                      <misa-input v-model="filterFields.invenrotyItemCategoryName"></misa-input>
+                      <misa-input
+                        v-model="filters.invenrotyItemCategoryName"
+                      ></misa-input>
                     </div>
                   </div>
                 </div>
@@ -103,7 +109,7 @@
                   <div class="filter">
                     <div class="filter-type">*</div>
                     <div class="filter-content">
-                      <misa-input v-model="filterFields.unit"></misa-input>
+                      <misa-input v-model="filters.unit"></misa-input>
                     </div>
                   </div>
                 </div>
@@ -112,7 +118,10 @@
                   <div class="filter">
                     <div class="filter-type">≤</div>
                     <div class="filter-content">
-                      <misa-input v-model="filterFields.salePrice" class="txt-num"></misa-input>
+                      <misa-input
+                        v-model="filters.salePrice"
+                        class="txt-num"
+                      ></misa-input>
                     </div>
                   </div>
                 </div>
@@ -126,7 +135,7 @@
                       name="changetotimeprice"
                       id="changetotimeprice"
                       class="t-select filter-content"
-                      v-model="filterFields.changeOutwardPrice"
+                      v-model="filters.changeOutwardPrice"
                     >
                       <option
                         v-for="(status, index) in statusFoods"
@@ -148,7 +157,7 @@
                       name="adjust-price"
                       id="adjust-price"
                       class="t-select filter-content"
-                      v-model="filterFields.allowAdjustPrice"
+                      v-model="filters.allowAdjustPrice"
                     >
                       <option
                         v-for="(status, index) in statusFoods"
@@ -166,8 +175,11 @@
                     <div class="select-btn">
                       <span class="t-select-arrow"></span>
                     </div>
-                    <select name="" id="" class="t-select filter-content"
-                      v-model="filterFields.measureInventoryItemStatus"
+                    <select
+                      name=""
+                      id=""
+                      class="t-select filter-content"
+                      v-model="filters.measureInventoryItemStatus"
                     >
                       <option value="0">Đã thiết lập</option>
                       <option value="1">Chưa thiết lập</option>
@@ -180,8 +192,12 @@
                     <div class="select-btn">
                       <span class="t-select-arrow"></span>
                     </div>
-                    <select name="" id="" class="t-select filter-content"
-                    v-model="filterFields.isShowOnMenu">
+                    <select
+                      name=""
+                      id=""
+                      class="t-select filter-content"
+                      v-model="filters.isShowOnMenu"
+                    >
                       <option
                         v-for="(status, index) in statusFoods"
                         :key="index"
@@ -198,8 +214,12 @@
                     <div class="select-btn">
                       <span class="t-select-arrow"></span>
                     </div>
-                    <select name="" id="" class="t-select filter-content"
-                    v-model="filterFields.inActive">
+                    <select
+                      name=""
+                      id=""
+                      class="t-select filter-content"
+                      v-model="filters.inActive"
+                    >
                       <option value="0">Không</option>
                       <option value="1">Có</option>
                     </select>
@@ -208,8 +228,8 @@
               </div>
               <div class="t-table-body">
                 <!-- Loading mask -->
-                <div class="loading" style="display: none">
-                  <div class="loader"></div>
+                <div v-show="!isLoaded" class="loading" style="display: none">
+                  <!-- <div class="loader"></div> -->
                   <div class="text">Đang nạp dữ liệu</div>
                 </div>
                 <!-- notify when no data -->
@@ -225,7 +245,7 @@
                       :key="index"
                       @click="rowOnClick(index, food.inventoryItemId)"
                       @dblclick="showDialogFood('put')"
-                      :class="{selected: (rowSelected==index)}"
+                      :class="{ selected: rowSelected == index }"
                     >
                       <td class="w-160">{{ food.inventoryItemTypeName }}</td>
                       <td class="w-180">{{ food.inventoryItemCode }}</td>
@@ -234,7 +254,9 @@
                         {{ food.inventoryItemCategoryName }}
                       </td>
                       <td class="w-90">{{ food.unit }}</td>
-                      <td class="w-120 txt-num">{{ food.salePrice }}</td>
+                      <td class="w-120 txt-num">
+                        {{ formatPrice(food.salePrice) }}
+                      </td>
                       <td class="w-150">
                         <div class="checkbox-data">
                           <input
@@ -261,7 +283,7 @@
                       </td>
                       <td class="w-140">
                         {{
-                          fomatMeasureInventoryItemStatus(
+                          formatMeasureInventoryItemStatus(
                             food.measureInventoryItemStatus
                           )
                         }}
@@ -309,31 +331,126 @@
 
       <!-- begin footer -->
       <div class="content__footer">
-        <the-footer></the-footer>
+        <div class="footer">
+          <div class="footer__left">
+            <div class="footer__btn">
+              <div class="t-btn-footer">
+                <misa-button
+                  icon="icon-page-first"
+                  @click="firstPage"
+                  :class="{ disable: disablePrevPage }"
+                  ref="firstPage"
+                ></misa-button>
+              </div>
+              <div class="t-btn-footer">
+                <misa-button
+                  icon="icon-page-prev"
+                  @click="prevPage"
+                  :class="{ disable: disablePrevPage }"
+                  ref="prevPage"
+                ></misa-button>
+              </div>
+              <div class="t-toolbar-separator"></div>
+              <div class="x-toolbar-text-default">Trang</div>
+              <div class="page-index">
+                <misa-input
+                  v-model="currentPage"
+                  @keydown.13="changePage"
+                ></misa-input>
+              </div>
+              <div class="x-toolbar-text-default">trên {{ totalPage }}</div>
+              <div class="t-toolbar-separator"></div>
+
+              <div class="t-btn-footer">
+                <misa-button
+                  icon="icon-page-next"
+                  @click="nextPage"
+                  ref="nextPage"
+                  :class="{ disable: disableNextPage }"
+                ></misa-button>
+              </div>
+              <div class="t-btn-footer">
+                <misa-button
+                  icon="icon-page-last"
+                  @click="lastPage"
+                  :class="{ disable: disableNextPage }"
+                  :aria-disabled="disableNextPage"
+                  ref="lastPage"
+                ></misa-button>
+              </div>
+              <div class="t-toolbar-separator"></div>
+
+              <div class="t-btn-footer">
+                <misa-button
+                  icon="icon-refresh"
+                  @click="reload()"
+                ></misa-button>
+              </div>
+              <div class="t-toolbar-separator"></div>
+              <div class="t-select-paging">
+                <select name="" id="" class="t-select" v-model="recordPerPage">
+                  <option value="15">15</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="footer__right">
+            <div class="footer__right-text">
+              <div class="x-toolbar-text-default">
+                Hiển thị
+                <span class="first-record">{{
+                  startPosition + availableFood > 0 ? startPosition + 1 : 0
+                }}</span>
+                -
+                <span class="last-record">{{
+                  startPosition + availableFood
+                }}</span>
+                trên
+                <span class="total-record"> {{ getTotalRecord(foods) }} </span>
+                kết quả
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <!-- end footer -->
     </div>
     <food-detail
       v-show="isShowDialogFood"
       @closeDialog="closeDialog"
+      :msg="msg"
+      :isShowDialog="isShowDialogFood"
+      @reloadData="reloadData"
+      ref="firstFocus"
     ></food-detail>
+    <DeletePopUp
+      v-show="isShowDialogDelete"
+      :isShowDialogDelete="isShowDialogDelete"
+      @closeDialogDelete="closeDialogDelete"
+    ></DeletePopUp>
   </div>
 </template>
 
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState } from "vuex";
-import constFood from "../../common/constFood";
-import entity from '../../common/entity';
-import TheFooter from "@/components/layout/TheFooter.vue";
+import { mapGetters, mapState } from "vuex";
+import commonFunction from "@/common/commonFunction";
+import constFood from "@/common/constFood";
+import entity from "@/common/entity";
 import FoodDetail from "@/components/page/FoodDetail.vue";
+import DeletePopUp from "@/components/page/DeletePopUp.vue";
 import MisaButton from "@/control/misa-button/MisaButton.vue";
 import MisaInput from "@/control/misa-input/MisaInput.vue";
+
 export default Vue.extend({
   components: {
-    "the-footer": TheFooter,
+    // "the-footer": TheFooter,
     "food-detail": FoodDetail,
+    DeletePopUp,
     MisaButton,
     MisaInput,
   },
@@ -346,48 +463,214 @@ export default Vue.extend({
 
       typeFoods: constFood.TYPEFOODS,
       statusFoods: constFood.STATUSYESNO,
-      filterFields: entity.filterFields,
+      filters: entity.filterFields,
+
+      noContent: true,
+      index: 1,
+      offset: 15,
+      disableNextPage: false,
+      disablePrevPage: true,
+      startPosition: 0,
+      recordPerPage: 15,
+      availableFood: 15,
+      currentPage: 1,
+      totalPage: 0,
     };
   },
   created() {
     this.$store.dispatch("getFoods");
+
+    /* var filterPaging: filterFields = {
+      pageIndex: this.index,
+      pageSize: this.offset,
+      inventoryItemTypeName: this.filters.inventoryItemTypeName,
+      invenrotyItemCode: this.filters.invenrotyItemCode,
+      invenrotyItemName: this.filters.invenrotyItemName,
+      invenrotyItemCategoryName: this.filters.invenrotyItemCategoryName,
+      unit: this.filters.unit,
+      salePrice: this.filters.salePrice,
+      changeOutwardPrice: this.filters.changeOutwardPrice,
+      allowAdjustPrice: this.filters.allowAdjustPrice,
+      measureInventoryItemStatus: this.filters.measureInventoryItemStatus,
+      isShowOnMenu: this.filters.isShowOnMenu,
+      inActive: this.filters.inActive,
+    };
+
+    this.$store.dispatch("getFoodPaging", filterPaging);
+    */
   },
   computed: {
-
     ...mapState({
-      foods:"foods",
+      foods: "foods",
+      isLoaded: "loadData",
     }),
-      // mapState(["foods"])
-    
+    // mapState(["foods"])
   },
   methods: {
-    // msTableOnRequest(request: any) {
-    //   inventoryItemService.getPaging()
-    // }
-    // typeFood(){
-    //   return constFood.TYPEFOODS;
-    // },
-    rowOnClick(index: any, foodId: string){
-      this.rowSelected = index;
-      this.$store.dispatch('getFoodById', foodId);
+    /**
+      Hàm lấy lại dữ liệu khi thực hiện xong thêm sửa xóa
+     */
+    reloadData() {
+      // this.$store.commit("setFoods");
+      this.$store.dispatch("getFoods");
+      this.$store.commit("setFoods");
+      console.log("reload");
     },
+
+    /**
+     * Hàm xử lý sự kiện khi click chọn 1 hàng trên dánh sách
+     * CreatedBy: nctu 14.05.2021
+     */
+    rowOnClick(index: any, foodId: string) {
+      this.rowSelected = index;
+      this.$store.dispatch("getFoodById", foodId);
+    },
+
+    /**
+     * Hàm xử lý sự kiện đóng form chi tiết món
+     * CreatedBy: nctu 13.05.2021
+     */
     closeDialog() {
       this.isShowDialogFood = false;
     },
+
+    closeDialogDelete() {
+      this.isShowDialogDelete = false;
+      console.log("đóng dialog xóa");
+    },
+
     btnFeedbackOnClick() {
       console.log("feedback");
     },
+
+    /**
+     * Hàm xử lý sự kiện hiện form chi tiết món
+     * CreatedBy: nctu 13.05.2021
+     */
     showDialogFood(text: string) {
       console.log("Mở dialog");
       this.isShowDialogFood = true;
       this.msg = text;
     },
+
+    /**
+     * Hàm xử lý sự kiện khi click vào nút Xóa
+     * CreatedBy: nctu 12.05.2021
+     * ModifiedBy: nctu 14.05.2021
+     */
     btnDeleteMenuOnClick() {
-      console.log("Xóa món");
+      if (this.rowSelected == null) {
+        console.log("please select a record");
+      } else {
+        console.log("Xóa món");
+        this.isShowDialogDelete = true;
+      }
     },
-    fomatMeasureInventoryItemStatus(status: number) {
+
+    /**
+     * Hàm định dạng trạng thái định lượng NVL
+     * CreatedBy: nctu 14.05.2021
+     */
+    formatMeasureInventoryItemStatus(status: number) {
       if (status == 0) return "Chưa thiết lập";
       else return "Đã thiết lập";
+    },
+
+    /**
+     * Hàm định dạng giá tiền
+     * CreatedBy: nctu 14.05.2021
+     */
+    formatPrice(value: number) {
+      return commonFunction.formatMoney(value);
+    },
+
+    getTotalRecord(foods: []) {
+      var total = foods.length;
+      return total;
+    },
+
+    /**
+     * Tính tổng số trang
+     * CreatedBy: nctu 15.05.2021
+     */
+    getTotalPage() {
+      var recordLastPage = this.getTotalRecord(this.foods) % this.recordPerPage;
+      var lastIndex = this.getTotalRecord(this.foods) / this.recordPerPage;
+      if (recordLastPage == 0) {
+        return lastIndex;
+      } else {
+        return lastIndex + 1;
+      }
+    },
+
+    /**
+     * Sự kiện khi click vào trang đầu tiên
+     * CreatedBy: nctu 15.05.2021
+     */
+    firstPage() {
+      this.currentPage = 1;
+      this.startPosition = 0;
+      this.changePage();
+    },
+    
+    /**
+     * Sự kiện khi click vào trang trước
+     * CreatedBy: nctu 15.05.2021
+     */
+    prevPage() {
+      this.currentPage--;
+      this.changePage();
+    },
+
+    /**
+     * Sự kiện khi click vào trang tiếp theo
+     * CreatedBy: nctu 15.05.2021
+     */
+    nextPage() {
+      this.currentPage++;
+      this.changePage();
+    },
+
+    /**
+     * Sự kiện khi click vào trang cuối cùng
+     * CreatedBy: nctu 15.05.2021
+     */
+    lastPage() {
+      this.currentPage = this.getTotalPage();
+      this.startPosition = (this.currentPage - 1) * this.recordPerPage;
+      this.changePage();
+    },
+
+    /**
+     * Sự kiện khi click vào các nút thay đổi trang
+     * CreatedBy: nctu 15.05.2021
+     */
+    changePage() {
+      // kiểm tra trang hợp lệ
+      if (this.currentPage < 1) this.currentPage = 1;
+      if (this.currentPage > this.getTotalPage())
+        this.currentPage = this.getTotalPage();
+
+      // kiểm tra trang đầu tiên
+      if (this.currentPage <= 1) {
+        // vô hiệu hóa nút prev và first page
+        this.disablePrevPage = true;
+      } else {
+        this.disablePrevPage = false;
+      }
+
+      // kiểm tra trang cuối cùng
+      if (this.currentPage >= this.getTotalPage()) {
+        // vô hiệu hóa nút prev và first page
+        this.disableNextPage = true;
+      } else {
+        this.disableNextPage = false;
+      }
+
+      // thay đổi vị trí bắt đầu
+      this.startPosition = (this.currentPage - 1) * this.recordPerPage;
+      this.$store.commit("setFoodsPaging", this.filters);
+      console.log("changepaging");
     },
   },
 });
@@ -591,5 +874,89 @@ $height-toolbar: 25px;
   height: 27px;
   width: calc(100% - 16px);
   margin-left: 8px;
+
+  .disable {
+    opacity: 0.5;
+    cursor: context-menu;
+  }
+  .disable:hover {
+    background-color: transparent;
+  }
+
+  .footer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #c1c1c1;
+    box-sizing: border-box;
+    padding: 2px;
+  }
+
+  .x-toolbar-text-default {
+    padding: 0 4px;
+    color: #333f49;
+    margin: 0px 4px 0px 4px;
+  }
+
+  .t-toolbar-separator {
+    height: 14px;
+    border-style: solid;
+    border-width: 0 0 0 1px;
+    border-color: #ccc !important;
+    margin: 0px 4px;
+  }
+  .footer__left {
+    // overflow: hidden;
+    height: 24px;
+
+    .footer__btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      width: 100%;
+      white-space: nowrap;
+
+      .t-btn-footer {
+        height: 22px;
+        width: 24px;
+        margin: 0px 3px 0 3px;
+      }
+    }
+
+    .page-index {
+      height: 22px;
+    }
+  }
+
+  .footer__right {
+    position: absolute;
+    right: 8px;
+
+    .footer__right-text {
+      white-space: nowrap;
+    }
+  }
+}
+
+.loading {
+  width: calc(100% - 248px);
+  height: calc(100vh - 230px);
+  position: fixed;
+  top: 195px;
+  background-image: url("../../assets/images/loading.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  text-align: center;
+}
+.loading .text {
+  position: fixed;
+  left: calc(50% + 70px);
+  top: calc(50% + 100px);
 }
 </style>
