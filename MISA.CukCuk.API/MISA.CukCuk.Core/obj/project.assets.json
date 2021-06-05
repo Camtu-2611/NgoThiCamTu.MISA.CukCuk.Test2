@@ -1,0 +1,188 @@
+{
+  "version": 3,
+  "targets": {
+    "net5.0": {
+      "Dapper/2.0.90": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/Dapper.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/Dapper.dll": {}
+        }
+      },
+      "MySqlConnector/1.3.8": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/MySqlConnector.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/MySqlConnector.dll": {}
+        }
+      },
+      "MISA.CukCuk.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/MISA.CukCuk.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MISA.CukCuk.Common.dll": {}
+        }
+      },
+      "MISA.CukCuk.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Dapper": "2.0.90",
+          "MISA.CukCuk.Common": "1.0.0",
+          "MySqlConnector": "1.3.8"
+        },
+        "compile": {
+          "bin/placeholder/MISA.CukCuk.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MISA.CukCuk.Infrastructure.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Dapper/2.0.90": {
+      "sha512": "e4YjOLJptnpwHIbP8HxjaYf7So9lhUC43rvvGMEkH4Q4CiVlm4rOxYDo0HyuHlMQKj0U5Ob/nCMm52TUhTaZQg==",
+      "type": "package",
+      "path": "dapper/2.0.90",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Dapper.png",
+        "dapper.2.0.90.nupkg.sha512",
+        "dapper.nuspec",
+        "lib/net461/Dapper.dll",
+        "lib/net461/Dapper.xml",
+        "lib/net5.0/Dapper.dll",
+        "lib/net5.0/Dapper.xml",
+        "lib/netstandard2.0/Dapper.dll",
+        "lib/netstandard2.0/Dapper.xml"
+      ]
+    },
+    "MySqlConnector/1.3.8": {
+      "sha512": "zxE+MDrpfPLEUvkUR73brSLiWwDtp5yoNmEk5vEj0vzoVJmR2lBJcOPowigbkR305lM2IKgCL8TP1iIC9xSi7A==",
+      "type": "package",
+      "path": "mysqlconnector/1.3.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net45/MySqlConnector.dll",
+        "lib/net45/MySqlConnector.xml",
+        "lib/net461/MySqlConnector.dll",
+        "lib/net461/MySqlConnector.xml",
+        "lib/net471/MySqlConnector.dll",
+        "lib/net471/MySqlConnector.xml",
+        "lib/net5.0/MySqlConnector.dll",
+        "lib/net5.0/MySqlConnector.xml",
+        "lib/netcoreapp2.1/MySqlConnector.dll",
+        "lib/netcoreapp2.1/MySqlConnector.xml",
+        "lib/netcoreapp3.1/MySqlConnector.dll",
+        "lib/netcoreapp3.1/MySqlConnector.xml",
+        "lib/netstandard1.3/MySqlConnector.dll",
+        "lib/netstandard1.3/MySqlConnector.xml",
+        "lib/netstandard2.0/MySqlConnector.dll",
+        "lib/netstandard2.0/MySqlConnector.xml",
+        "lib/netstandard2.1/MySqlConnector.dll",
+        "lib/netstandard2.1/MySqlConnector.xml",
+        "logo.png",
+        "mysqlconnector.1.3.8.nupkg.sha512",
+        "mysqlconnector.nuspec"
+      ]
+    },
+    "MISA.CukCuk.Common/1.0.0": {
+      "type": "project",
+      "path": "../MISA.CukCuk.Common/MISA.CukCuk.Common.csproj",
+      "msbuildProject": "../MISA.CukCuk.Common/MISA.CukCuk.Common.csproj"
+    },
+    "MISA.CukCuk.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../MISA.CukCuk.Infrastructure/MISA.CukCuk.Infrastructure.csproj",
+      "msbuildProject": "../MISA.CukCuk.Infrastructure/MISA.CukCuk.Infrastructure.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net5.0": [
+      "Dapper >= 2.0.90",
+      "MISA.CukCuk.Common >= 1.0.0",
+      "MISA.CukCuk.Infrastructure >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\CAM TU\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\MISA\\MISA\\Part2\\Test_Part2\\Project\\NgoThiCamTu.MISA.CukCuk.Test2\\MISA.CukCuk.API\\MISA.CukCuk.Core\\MISA.CukCuk.Core.csproj",
+      "projectName": "MISA.CukCuk.Core",
+      "projectPath": "D:\\MISA\\MISA\\Part2\\Test_Part2\\Project\\NgoThiCamTu.MISA.CukCuk.Test2\\MISA.CukCuk.API\\MISA.CukCuk.Core\\MISA.CukCuk.Core.csproj",
+      "packagesPath": "C:\\Users\\CAM TU\\.nuget\\packages\\",
+      "outputPath": "D:\\MISA\\MISA\\Part2\\Test_Part2\\Project\\NgoThiCamTu.MISA.CukCuk.Test2\\MISA.CukCuk.API\\MISA.CukCuk.Core\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\CAM TU\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net5.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "projectReferences": {
+            "D:\\MISA\\MISA\\Part2\\Test_Part2\\Project\\NgoThiCamTu.MISA.CukCuk.Test2\\MISA.CukCuk.API\\MISA.CukCuk.Common\\MISA.CukCuk.Common.csproj": {
+              "projectPath": "D:\\MISA\\MISA\\Part2\\Test_Part2\\Project\\NgoThiCamTu.MISA.CukCuk.Test2\\MISA.CukCuk.API\\MISA.CukCuk.Common\\MISA.CukCuk.Common.csproj"
+            },
+            "D:\\MISA\\MISA\\Part2\\Test_Part2\\Project\\NgoThiCamTu.MISA.CukCuk.Test2\\MISA.CukCuk.API\\MISA.CukCuk.Infrastructure\\MISA.CukCuk.Infrastructure.csproj": {
+              "projectPath": "D:\\MISA\\MISA\\Part2\\Test_Part2\\Project\\NgoThiCamTu.MISA.CukCuk.Test2\\MISA.CukCuk.API\\MISA.CukCuk.Infrastructure\\MISA.CukCuk.Infrastructure.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net5.0": {
+        "targetAlias": "net5.0",
+        "dependencies": {
+          "Dapper": {
+            "target": "Package",
+            "version": "[2.0.90, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

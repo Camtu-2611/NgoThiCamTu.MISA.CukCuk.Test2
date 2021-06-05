@@ -1,0 +1,40 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th {
+    padding: 18px 8px 10px 17px;
+    // white-space: pre;
+    text-align: left;
+    
+  }
+  
+  
+  tr {
+    border-bottom: 1px solid #c5c5c5;
+    width: 100% !important;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f6f6f6;;
+  }
+  tr:hover {
+    /* background-color: #e2e4f1; */
+    background-color: #e2eff8;
+  }
+  tr:visited {
+    background-color: #e2e4f1;
+  }
+  td {
+    padding: 5px 10px 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+    color: #212121;
+    font-weight: 300;
+    border-right: 1px solid #cccccc;
+    box-sizing: border-box;
+  }
+

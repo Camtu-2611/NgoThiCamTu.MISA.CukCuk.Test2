@@ -1,7 +1,7 @@
 @font-face {
     font-family: TahomaCustom;
     src: url('../assets/fonts/font_tahoma/Tahoma_Regular.eot');
-    src: url('../assets/fonts/font_tahoma/Tahoma_Regular.eot?#iefix') format('embedded-opentype');
+    src: url('../assets/fonts/font_tahoma/Tahoma_Regular.eot') format('embedded-opentype'),url('../assets/fonts/font_tahoma/Tahoma_Regular.woff') format('woff'),url('../assets/fonts/font_tahoma/Tahoma_Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal
 }
@@ -9,15 +9,15 @@
 @font-face {
     font-family: 'TahomaCustom';
     src: url('../assets/fonts/font_tahoma/Tahoma_Bold.eot');
-    src: url('../assets/fonts/font_tahoma/Tahoma_Bold.eot?#iefix') format('embedded-opentype');
-    font-weight: bold;
-    font-style: normal
+    src: url('../assets/fonts/font_tahoma/Tahoma_Bold.eot') format('embedded-opentype'),url('../assets/fonts/font_tahoma/Tahoma_Bold.woff') format('woff'),url('../assets/fonts/font_tahoma/Tahoma_Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: bold;
 }
 
 @font-face {
     font-family: 'TahomaCustom';
-    src: url('../assets/fonts/font_tahoma/Tahoma_Italic.eot');
-    src: url('../assets/fonts/font_tahoma/Tahoma_Italic.eot?#iefix') format('embedded-opentype');
+    src: url('../assets/fonts/font_tahoma/Tahoma_Italiceot');
+    src: url('../assets/fonts/font_tahoma/Tahoma_Italic.eot') format('embedded-opentype'),url('../assets/fonts/font_tahoma/TTahoma_Italic.woff') format('woff'),url('../assets/fonts/font_tahoma/Tahoma_Italic.ttf') format('truetype');
     font-weight: normal;
     font-style: italic
 }

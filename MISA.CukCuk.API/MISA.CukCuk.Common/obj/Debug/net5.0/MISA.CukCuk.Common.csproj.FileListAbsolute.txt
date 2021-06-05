@@ -1,0 +1,13 @@
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Common\bin\Debug\net5.0\MISA.CukCuk.Common.deps.json
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Common\bin\Debug\net5.0\MISA.CukCuk.Common.dll
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Common\bin\Debug\net5.0\ref\MISA.CukCuk.Common.dll
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Common\bin\Debug\net5.0\MISA.CukCuk.Common.pdb
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Common\obj\Debug\net5.0\MISA.CukCuk.Common.Resources.Messages.resources
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Common\obj\Debug\net5.0\MISA.CukCuk.Common.csproj.GenerateResource.cache
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Common\obj\Debug\net5.0\MISA.CukCuk.Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Common\obj\Debug\net5.0\MISA.CukCuk.Common.AssemblyInfoInputs.cache
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Common\obj\Debug\net5.0\MISA.CukCuk.Common.AssemblyInfo.cs
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Common\obj\Debug\net5.0\MISA.CukCuk.Common.csproj.CoreCompileInputs.cache
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Common\obj\Debug\net5.0\MISA.CukCuk.Common.dll
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Common\obj\Debug\net5.0\ref\MISA.CukCuk.Common.dll
+D:\MISA\MISA\Part2\Test_Part2\Project\NgoThiCamTu.MISA.CukCuk.Test2\MISA.CukCuk.API\MISA.CukCuk.Common\obj\Debug\net5.0\MISA.CukCuk.Common.pdb
