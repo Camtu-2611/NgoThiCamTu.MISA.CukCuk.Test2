@@ -322,14 +322,6 @@
           </div>
           <!-- end grid -->
           <div>
-            <!-- <misa-table :columns="columns" :data="data" @request="msTableOnRequest($event)"></misa-table> -->
-
-            <!-- <misa-input v-model="name"></misa-input>{{ name }}
-            <misa-dropdown
-              v-model="selectedFruit"
-              :options="optionsFruits"
-            ></misa-dropdown
-            >{{ selectedFruit }} -->
           </div>
         </div>
       </div>
@@ -424,6 +416,7 @@
       </div>
       <!-- end footer -->
     </div>
+    <!-- begin Dialog -->
     <food-detail
       v-show="isShowDialogFood"
       @closeDialog="closeDialog"
@@ -432,11 +425,15 @@
       @reloadData="reloadData"
       ref="Dialog"
     ></food-detail>
+    <!-- end Dialog -->
+    <!-- begin PopUp xóa -->
     <DeletePopUp
       v-show="isShowDialogDelete"
       :isShowDialogDelete="isShowDialogDelete"
       @closeDialogDelete="closeDialogDelete"
+      @reloadData="reloadData"
     ></DeletePopUp>
+    <!-- end PopUp xóa -->
   </div>
 </template>
 
@@ -489,24 +486,7 @@ export default Vue.extend({
   },
   created() {
     this.$store.dispatch("getFoods");
-
-      // filterPaging = {
-      // pageIndex: this.index,
-      // pageSize: this.offset,
-      // inventoryItemTypeName: this.filters.inventoryItemTypeName,
-      // invenrotyItemCode: this.filters.invenrotyItemCode,
-      // invenrotyItemName: this.filters.invenrotyItemName,
-      // invenrotyItemCategoryName: this.filters.invenrotyItemCategoryName,
-      // unit: this.filters.unit,
-      // salePrice: this.filters.salePrice,
-      // changeOutwardPrice: this.filters.changeOutwardPrice,
-      // allowAdjustPrice: this.filters.allowAdjustPrice,
-      // measureInventoryItemStatus: this.filters.measureInventoryItemStatus,
-      // isShowOnMenu: this.filters.isShowOnMenu,
-      // inActive: this.filters.inActive,
-    // };
-
-    // this.$store.dispatch("getFoodPaging", filterPaging);
+    this.getTotalPage();
   },
   computed: {
     ...mapState({
@@ -604,7 +584,7 @@ export default Vue.extend({
      */
     getTotalPage() {
       var recordLastPage =  this.totalRecord % this.recordPerPage;
-      console.log(recordLastPage);
+      // console.log(recordLastPage);
       var lastIndex = Math.floor(this.totalRecord / this.recordPerPage);
       if (recordLastPage == 0) {
         return lastIndex;
@@ -684,6 +664,29 @@ export default Vue.extend({
       // })
       console.log("changepaging");
     },
+    /**
+      Lấy danh sách món phân trang + lọc
+     */
+    getDataPaging(){
+    //   filterPaging = {
+    //   pageIndex: this.index,
+    //   pageSize: this.offset,
+    //   inventoryItemTypeName: this.filters.inventoryItemTypeName,
+    //   invenrotyItemCode: this.filters.invenrotyItemCode,
+    //   invenrotyItemName: this.filters.invenrotyItemName,
+    //   invenrotyItemCategoryName: this.filters.invenrotyItemCategoryName,
+    //   unit: this.filters.unit,
+    //   salePrice: this.filters.salePrice,
+    //   changeOutwardPrice: this.filters.changeOutwardPrice,
+    //   allowAdjustPrice: this.filters.allowAdjustPrice,
+    //   measureInventoryItemStatus: this.filters.measureInventoryItemStatus,
+    //   isShowOnMenu: this.filters.isShowOnMenu,
+    //   inActive: this.filters.inActive,
+    // };
+
+    // this.$store.dispatch("getFoodPaging", filterPaging);
+      this.$store.dispatch('getFoodsPaging', this.filters);
+    }
   },
 });
 </script>

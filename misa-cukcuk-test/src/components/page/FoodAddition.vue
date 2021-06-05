@@ -18,40 +18,19 @@
     </div>
     <div class="grid-addition-food">
         <div class="tbl-addition-list">
-            <!-- <table>
-                <thead>
-                  <th>
-                    <td>Sở thích phục vụ</td>
-                    <td>Thu thêm</td>
-                  </th>
-                </thead>
-                <div class="tbl-body">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <input type="text" v-model="select" name="addition-food" >
-                            </td>
-                            <td>
-                                <input type="text" name="addition-food" >
-                            </td>
-                        </tr>
-                    </tbody>
-                </div>
-            </table> -->
-
             <table :key="key">
               <thead>
                 <tr>
-                <th>Company</th>
-                <th>Company</th>
+                <th>Sở thích phục vụ</th>
+                <th>Thu thêm</th>
                 </tr>
               </thead>
               <div>
-              <tbody id="stocksTerminal">
+              <tbody id="stocksTerminal" style="width: 100%; height: 100%;">
               <tr :key="item.key" v-for="(item, index) in data">
                 <td>
-                  <input type="text" v-model="item.name">
-                  <div :id="item.id" v-for="item2 in data2.filter(el => el.name.includes(item.name))" :key="item2.id" @click="chooseItem(index, item2)">{{item2.name}}</div>
+                  <input type="text" v-model="item.name" class="t-input t-input-default">
+                  <div class="list-addition" :id="item.id" v-for="item2 in data2.filter(el => el.name.includes(item.name))" :key="item2.id" @click="chooseItem(index, item2)">{{item2.name}}</div>
                 </td>
                 <td >{{ item.price }}</td>
               </tr>
@@ -144,7 +123,6 @@ export default Vue.extend({
 </script>
 <style lang="scss" scoped>
 .food-additon {
-    // display: none;
   width: 100%;
   height: auto;
   font-size: 13px !important;
@@ -166,6 +144,9 @@ export default Vue.extend({
     border: 1px solid #ccc!important;
     box-sizing: border-box;
 }
+.tbl-addition-list{
+  font-weight: normal;
+}
 .grid-dialog-toolbar{
     width: 100%;
     height: 25px;
@@ -173,5 +154,9 @@ export default Vue.extend({
     .btn-food-addition{
         margin: 0 2px;
     }
+}
+
+.list-addition{
+  display: none;
 }
 </style>

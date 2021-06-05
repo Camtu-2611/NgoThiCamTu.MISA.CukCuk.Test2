@@ -11,6 +11,7 @@ export default new Vuex.Store({
     foodById: {},
     totalRecord: 0,
     loadData: false,
+    loadDialog: false,
   },
   getters: {
     /**
@@ -42,6 +43,9 @@ export default new Vuex.Store({
 
     getLoadData(state){
       return state.loadData;
+    },
+    getLoadDialog(state){
+      return state.loadDialog;
     }
   },
   mutations: {
@@ -77,6 +81,12 @@ export default new Vuex.Store({
     },
     loaded(state){
       state.loadData = true;
+    },
+    loadingDialog(state){
+      state.loadDialog = false;
+    },
+    loadedDialog(state){
+      state.loadDialog = true;
     }
   },
   actions: {
@@ -101,7 +111,7 @@ export default new Vuex.Store({
       await inventoryItemService.getpaging(filterFields).then(response=>{
         context.commit("loaded");
         context.commit("setFoodsPaging", response.data.data);
-       console.log("lấy dữ liệu", response.data.data);
+        console.log("lấy dữ liệu", response.data.data);
 
       });
       console.log("lấy dữ liệu phân trang xong");

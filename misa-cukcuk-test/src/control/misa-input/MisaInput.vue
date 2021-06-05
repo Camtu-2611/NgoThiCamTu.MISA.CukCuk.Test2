@@ -27,12 +27,6 @@ export default Vue.extend({
     id: String,
   },
 
-  // data() {
-  //     return {
-  //         value: ''
-  //     }
-  // },
-
   methods: {
     // onInput(event: InputEvent) {
     //     const input = event.target as HTMLInputElement;

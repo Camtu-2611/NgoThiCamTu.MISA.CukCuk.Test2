@@ -36,6 +36,15 @@
           </a>
         </div>
         <div class="dialog__content">
+          <!-- Loading mask -->
+          <div
+            v-show="isLoadedDialog"
+            class="loadingDialog"
+            style="display: none"
+          >
+            <!-- <div class="loader"></div>
+            <div class="text">Đang nạp dữ liệu</div> -->
+          </div>
           <div class="dialog-food">
             <!-- <span tabindex="1" @focus="tabIndexLast()"></span> -->
             <FoodInfo
@@ -105,7 +114,7 @@ import FoodAddition from "@/components/page/FoodAddition.vue";
 import entity from "../../common/entity";
 import Vue from "vue";
 import commonFunction from "../../common/commonFunction";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import inventoryItemService from "@/services/inventoryItemService";
 
 export default Vue.extend({
@@ -124,7 +133,7 @@ export default Vue.extend({
         inventoryItemCode: "",
         inventoryItemName: "",
         inventoryItemCategoryName: "",
-        inventoryItemTypeName: "",
+        inventoryItemTypeName: "Món khác",
         unit: "",
         salePrice: 0,
         realPrice: 0,
@@ -145,12 +154,16 @@ export default Vue.extend({
       },
       msgValidate: {
         msgWarningEmpty: "",
+        msgFoodCode: "",
       },
     };
   },
   computed: {
     ...mapGetters({
       foodById: "getFoodById",
+    }),
+    ...mapState({
+      isLoadedDialog: "loadDialog",
     }),
   },
   methods: {
@@ -162,7 +175,7 @@ export default Vue.extend({
      * CreatedBy: nctu 13.05.2021
      */
     closeDialog() {
-      console.log("Đóng Dialog");
+      // console.log("Đóng Dialog");
       this.$emit("closeDialog");
       this.resetDialog();
     },
@@ -171,7 +184,7 @@ export default Vue.extend({
      * CreatedBy: nctu 13.05.2021
      */
     showFoodAddition() {
-      console.log("mở sở thích phục vụ");
+      // console.log("mở sở thích phục vụ");
       this.isShowFoodAddition = true;
       this.isShowFoodInfo = false;
     },
@@ -180,7 +193,7 @@ export default Vue.extend({
      * CreatedBy: nctu 13.05.2021
      */
     closeFoodAddition() {
-      console.log("đóng sở thích phục vụ");
+      // console.log("đóng sở thích phục vụ");
       this.isShowFoodAddition = false;
       this.isShowFoodInfo = true;
     },
@@ -221,39 +234,61 @@ export default Vue.extend({
      * CreatedBy: nctu 15.05.2021
      */
     btnSaveOnClick(text: string) {
-      console.log("Cất");
+      // console.log("Cất");
+      var validEmpty = this.checkValidEmpty();
+      var validDuplicate = this.checkDuplicate(this.food.inventoryItemCode);
+      console.log(validEmpty, validDuplicate);
       switch (this.msg) {
         case "post":
         case "replica": {
-          var valid = this.checkValidEmpty();
-          if (valid) {
-            inventoryItemService.post(this.food).then((response) => {
-              console.log("post");
-              console.log(response);
-              if (text == "save") {
-                this.closeDialog();
-              } else if (text == "saveadd") {
-                this.resetDialog();
-              }
-              this.$emit("reloadData");
-            });
+          if (validEmpty && validDuplicate) {
+            // this.$store.commit("loadingDialog");
+            inventoryItemService
+              .post(this.food)
+              .then((response) => {
+                // this.$store.commit("loadedDialog");
+                // console.log("post");
+                // console.log(response);
+                if (text == "save") {
+                  this.closeDialog();
+                } else if (text == "saveadd") {
+                  this.resetDialog();
+                }
+                this.$emit("reloadData");
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           } else {
-            alert("Không thể xóa");
+            console.log("Có lỗi xảy ra");
           }
           break;
         }
         case "put": {
-          inventoryItemService
-            .put(this.food.inventoryItemId, this.food)
-            .then((response) => {
-              console.log(response);
-              if (text == "save") {
-                this.closeDialog();
-              } else if (text == "saveadd") {
-                this.resetDialog();
-              }
-              this.$emit("reloadData");
-            });
+          if (validEmpty && validDuplicate) {
+            // this.$store.commit("loadingDialog");
+            inventoryItemService
+              .put(this.food.inventoryItemId, this.food)
+              .then((response) => {
+                return response;
+              })
+              .then((response) => {
+                // console.log(response);
+                if (text == "save") {
+                // this.$store.commit("loadedDialog");
+                  this.closeDialog();
+                } else if (text == "saveadd") {
+                // this.$store.commit("loadedDialog");
+                  this.resetDialog();
+                }
+                this.$emit("reloadData");
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          } else {
+            console.log("Có lỗi xảy ra");
+          }
           break;
         }
       }
@@ -264,17 +299,89 @@ export default Vue.extend({
      * CreatedBy: nctu 17.05.2021
      */
     checkValidEmpty() {
-      if (
-        this.validate.foodName &&
-        this.validate.foodCode &&
-        this.validate.unit &&
-        this.validate.salePrice
-      ) {
-        return true;
+      var valid = true;
+      if (!this.food.inventoryItemName) {
+        this.validate.foodName = false;
+        valid = false;
       } else {
+        this.validate.foodName = true;
+        valid = true;
+      }
+      if (!this.food.inventoryItemCode) {
+        this.validate.foodCode = false;
+        this.msgValidate.msgFoodCode = "Trường này không được để trống";
+        valid = false;
+      } else {
+        this.validate.foodCode = true;
+        valid = true;
+      }
+      if (!this.food.unit) {
+        this.validate.unit = false;
+        valid = false;
+      } else {
+        this.validate.unit = true;
+        valid = true;
+      }
+      if (!this.food.salePrice) {
+        this.validate.salePrice = false;
+        valid = false;
+      } else {
+        this.validate.salePrice = true;
+        valid = true;
+      }
+      // console.log(valid);
+      return valid;
+    },
+
+    /**
+     * Kiểm tra mã món đã tồn tại hay chưa
+     * CreatedBy: nctu 17.05.2021
+     */
+    checkDuplicate(itemCode: string) {
+      let valid = true;
+      if (this.food.inventoryItemCode) {
+        inventoryItemService
+          .getByCode(itemCode)
+          .then((response) => {
+            if (response.data.errorCode == 0) {
+              if (this.msg == "post" || this.msg == "replica") {
+                this.validate.foodCode = false;
+                this.msgValidate.msgFoodCode = "Mã món đã tồn tại";
+                valid = false;
+              } else if (this.msg == "put") {
+                if (
+                  response.data.data.inventoryItemId !=
+                  this.food.inventoryItemId
+                ) {
+                  this.validate.foodCode = false;
+                  this.msgValidate.msgFoodCode = "Mã món đã tồn tại";
+                  valid = false;
+                }
+              }
+              // console.log(valid);
+            } else {
+              this.validate.foodCode = true;
+              valid = true;
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+      return valid;
+    },
+
+    /**
+     * Kiểm tra price xem có phải là số không
+     * CreatedBy: nctu 17.05.2021
+     */
+    checkNumericMoney(value: number){
+      let regex = /^[0-9]*$/;
+      if (!regex.test(value.toString())){
         return false;
       }
-    },
+      return true;
+    }
   },
   watch: {
     /**
@@ -315,7 +422,7 @@ export default Vue.extend({
       // })
       // this.$nextTick(() => this.focusFirstElement());
     },
-  }
+  },
 });
 </script>
 
@@ -330,7 +437,19 @@ export default Vue.extend({
 }
 
 .dialog {
-  // display: none;
+  .loadingDialog {
+    width: 734px;
+    height: 432px;
+    position: fixed;
+    top: 132px;
+    background-image: url("../../assets/images/loading.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    text-align: center;
+    z-index: 100000;
+  }
 }
 .dialog__modal {
   position: fixed;

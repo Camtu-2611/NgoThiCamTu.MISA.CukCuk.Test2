@@ -3,7 +3,7 @@
     inventoryItemCode :"",
     inventoryItemName : "",
     inventoryItemCategoryName: "",
-    inventoryItemTypeName: "",
+    inventoryItemTypeName: "Món khác",
     unit: "",
     salePrice: 0,
     realPrice: 0,

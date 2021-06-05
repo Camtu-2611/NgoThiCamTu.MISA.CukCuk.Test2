@@ -32,4 +32,7 @@ export default {
     delete(itemId:string){
         return Service.delete(`${resource}/${itemId}`);
     },
+    getByCode(itemCode: string){
+        return Service.get(`${resource}/bycode/${itemCode}`);
+    }
 }

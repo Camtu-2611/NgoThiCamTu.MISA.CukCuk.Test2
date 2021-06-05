@@ -9,15 +9,16 @@
         <div class="row-input field-required">
           <misa-input
             type="text"
+            class="required"
             v-model="food.inventoryItemName"
             tabindex="2"
             id="foodName"
             :class="{ 'border-warning': !validate.foodName }"
-            @blur="checkFoodNameEmpty()"
+            @blur="tab('foodName')"
           ></misa-input>
           <span v-show="!validate.foodName" class="invalid-icon-default">
             <span class="tooltiptext tooltipFoodAddition">
-              {{ msgValidate.msgWarningEmpty }}
+              Trường này không được để trống
             </span>
           </span>
           <!-- v-model="food.inventoryItemName" -->
@@ -31,14 +32,15 @@
         <div class="row-input field-required">
           <misa-input
             type="text"
+            class="required"
             v-model="food.inventoryItemCode"
             tabindex="3"
             :class="{ 'border-warning': !validate.foodCode }"
-            @blur="checkFoodCodeEmpty()"
+            @blur="tab('foodCode')"
           ></misa-input>
           <span v-show="!validate.foodCode" class="invalid-icon-default">
             <span class="tooltiptext tooltipFoodAddition">
-              {{ msgValidate.msgWarningEmpty }}
+              {{ msgValidate.msgFoodCode }}
             </span>
           </span>
           <!-- v-model="food.inventoryItemCode"ryItemCode" -->
@@ -88,11 +90,11 @@
             <select
               name="areacook"
               id="area-cook"
-              class="t-select"
+              class="t-select required"
               v-model="food.unit"
               tabindex="5"
               :class="{ 'border-warning': !validate.unit }"
-              @blur="checkUnitEmpty()"
+              @blur="tab('unit')"
             >
               <!-- v-model="food.unit" -->
               <option v-for="(unit, index) in units" :key="index" :value="unit">
@@ -102,7 +104,7 @@
           </div>
           <span v-show="!validate.unit" class="invalid-icon-default">
             <span class="tooltiptext tooltipFoodAddition">
-              {{ msgValidate.msgWarningEmpty }}
+              Trường này không được để trống
             </span>
           </span>
         </div>
@@ -115,27 +117,17 @@
         <div class="row-input">
           <div class="row-30 field-required">
             <misa-input-money
-              class="input-number"
+              class="input-number required"
               :value="0"
               v-model="food.salePrice"
               tabindex="6"
               :class="{ 'border-warning': !validate.salePrice }"
-              @blur="checkSalePriceEmpty()"
+              @blur="tab('salePrice')"
               type="text"
             ></misa-input-money>
-            <!-- <misa-input
-              type="text"
-              class="input-number"
-              :value="0"
-              v-model="food.salePrice"
-              @keypress="onlyForCurrency()"
-              tabindex="6"
-              :class="{ 'border-warning': !validate.salePrice }"
-              @blur="checkSalePriceEmpty()"
-            ></misa-input> -->
             <span v-show="!validate.salePrice" class="invalid-icon-default">
               <span class="tooltiptext tooltipFoodAddition">
-                {{ msgValidate.msgWarningEmpty }}
+                Trường này không được để trống
               </span>
             </span>
             <!-- v-model="food.salePrice" -->
@@ -297,19 +289,18 @@ export default Vue.extend({
       kitchenName: constFood.KITCHEN_AREA,
     };
   },
-  mounted(){
-    console.log(this.$refs);
-  },
+  // mounted() {
+  //   console.log(this.$refs);
+  // },
   computed: {
     // firstFocus() {
     //   return (this.$refs.foodName as Vue & { focus: () => boolean });
     // },
   },
   methods: {
-    firstForcus(){
+    firstForcus() {
       // let firstFocusEl =  this.$refs.input as HTMLInputElement;
-      return (this.$refs.foodName as Vue & { focus: () => boolean });
-      
+      return this.$refs.foodName as Vue & { focus: () => boolean };
     },
     /**
      * Xử lý sự kiện khi click vào checkbox
@@ -340,71 +331,40 @@ export default Vue.extend({
     },
 
     /**
-     * Kiểm tra mã món trống
-     * CreatedBy: nctu 15.05.2021
+     * Validate các ô trống khi tab/blur
+     * CreatedBy: nctu 16.05.2021
      */
-    checkFoodCodeEmpty() {
-      var valid = true;
-      if (!this.food.inventoryItemCode) {
-        this.validate.foodCode = false;
-        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
-        valid = false;
-      } else {
-        this.validate.foodCode = true;
-        valid = true;
+    tab(text: string) {
+      if (text == "foodName") {
+        if (!this.food.inventoryItemName) {
+          this.validate.foodName = false;
+        } else {
+          this.validate.foodName = true;
+        }
       }
-      return valid;
-    },
-
-    /**
-     * Kiểm tra tên món trống
-     * CreatedBy: nctu 15.05.2021
-     */
-    checkFoodNameEmpty() {
-      var valid = true;
-      if (!this.food.inventoryItemName) {
-        this.validate.foodName = false;
-        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
-        valid = false;
-      } else {
-        this.validate.foodName = true;
-        valid = true;
+      if (text == "foodCode") {
+        if (!this.food.inventoryItemCode) {
+          this.validate.foodCode = false;
+          // this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
+          this.msgValidate.msgFoodCode = "Trường này không được để trống";
+        } else {
+          this.validate.foodCode = true;
+        }
       }
-      return valid;
-    },
-
-    /**
-     * Kiểm tra đơn vị trống
-     * CreatedBy: nctu 15.05.2021
-     */
-    checkUnitEmpty() {
-      var valid = true;
-      if (!this.food.unit) {
-        this.validate.unit = false;
-        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
-        valid = false;
-      } else {
-        this.validate.unit = true;
-        valid = true;
+      if (text == "unit") {
+        if (!this.food.unit) {
+          this.validate.unit = false;
+        } else {
+          this.validate.unit = true;
+        }
       }
-      return valid;
-    },
-
-    /**
-     * Kiểm tra giá bán trống
-     * CreatedBy: nctu 15.05.2021
-     */
-    checkSalePriceEmpty() {
-      var valid = true;
-      if (!this.food.salePrice) {
-        this.validate.salePrice = false;
-        this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
-        valid = false;
-      } else {
-        this.validate.salePrice = true;
-        valid = true;
+      if (text == "salePrice") {
+        if (!this.food.salePrice) {
+          this.validate.salePrice = false;
+        } else {
+          this.validate.salePrice = true;
+        }
       }
-      return valid;
     },
   },
 });
