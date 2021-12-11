@@ -141,6 +141,9 @@
   <data name="NoContent" xml:space="preserve">
     <value>Không có nội dung</value>
   </data>
+  <data name="Non-numeric" xml:space="preserve">
+    <value>không phải là số</value>
+  </data>
   <data name="Success" xml:space="preserve">
     <value>Thành công</value>
   </data>

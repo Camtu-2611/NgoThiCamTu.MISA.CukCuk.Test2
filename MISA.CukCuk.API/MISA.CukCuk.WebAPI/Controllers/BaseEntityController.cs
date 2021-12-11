@@ -11,18 +11,30 @@ using System.Threading.Tasks;
 
 namespace MISA.CukCuk.WebAPI.Controllers
 {
+    /// <summary>
+    /// Base controller - chứa các đầu API chung 
+    /// </summary>
+    /// <typeparam name="T">Thực thể</typeparam>
     [Route("api/v1/[controller]s")]
     [ApiController]
     public class BaseEntityController<T> : ControllerBase
     {
         private IBaseService<T> _baseService;
 
+        #region Khởi tạo
         public BaseEntityController(IBaseService<T> baseService)
         {
             _baseService = baseService;
         }
+        #endregion
 
+        #region API
         // GET: api/<BaseController>
+        /// <summary>
+        /// API lấy toàn bộ danh sách thực thể
+        /// </summary>
+        /// <returns>Danh sách thực thể</returns>
+        /// CreatedBy: nctu 13.05.2021
         [HttpGet]
         public IActionResult Get()
         {
@@ -31,8 +43,13 @@ namespace MISA.CukCuk.WebAPI.Controllers
 
         }
 
-
         // GET api/<BaseController>/5
+        /// <summary>
+        /// API lấy một thực thể theo khóa chính
+        /// </summary>
+        /// <param name="entityId">Khóa chính của thực thể</param>
+        /// <returns></returns>
+        /// CreatedBy: nctu 13.05.2021
         [HttpGet("{entityId}")]
         public IActionResult Get(Guid entityId)
         {
@@ -53,6 +70,12 @@ namespace MISA.CukCuk.WebAPI.Controllers
         }
 
         // POST api/<BaseController>
+        /// <summary>
+        /// API thêm một thực thể
+        /// </summary>
+        /// <param name="entity">Thông tin thực thể cần thêm</param>
+        /// <returns></returns>
+        /// CreatedBy: nctu 13.05.2021
         [HttpPost]
         public IActionResult Post([FromBody] T entity)
         {
@@ -72,6 +95,12 @@ namespace MISA.CukCuk.WebAPI.Controllers
         }
 
         // PUT api/<BaseController>/5
+        /// <summary>
+        /// API sửa thông tin một thực thể
+        /// </summary>
+        /// <param name="entityId">Khóa chính của thực thể</param>
+        /// <param name="entity">Thông tin cần sửa của thực thể</param>
+        /// <returns></returns>
         [HttpPut("{entityId}")]
         public IActionResult Put(Guid entityId, [FromBody] T entity)
         {
@@ -92,6 +121,11 @@ namespace MISA.CukCuk.WebAPI.Controllers
         }
 
         // DELETE api/<BaseController>/5
+        /// <summary>
+        /// Xóa thông tin một thực thể theo khóa chính
+        /// </summary>
+        /// <param name="entityId">Khóa chính của thực thể</param>
+        /// <returns></returns>
         [HttpDelete("{entityId}")]
         public IActionResult Delete(Guid entityId)
         {
@@ -109,5 +143,6 @@ namespace MISA.CukCuk.WebAPI.Controllers
             return StatusCode(StatusCodes.Status200OK, responseResult);
 
         }
+        #endregion
     }
 }

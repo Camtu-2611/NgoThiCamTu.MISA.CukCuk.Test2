@@ -141,6 +141,18 @@ namespace MISA.CukCuk.Core.Services
                 }
             }
 
+            int num1, num2;
+            var isNummeric = int.TryParse(item.SalePrice.ToString(), out num1);
+            var isNummeric2 = int.TryParse(item.RealPrice.ToString(), out num2);
+
+            if (!isNummeric || !isNummeric2)
+            {
+                result.IsSuccess = false;
+                result.ErrorCode = ErrorCode.BADREQUEST;
+                result.DevMsg = Common.Resources.Messages.Non_numeric;
+                result.UserMsg = Common.Resources.Messages.Non_numeric;
+            }
+
             // kiểm tra xem trường nào là duy nhất (có thuộc tính Unique) thì check duplicate
 
             bool checkDuplicateCode = _itemRepository.CheckInventoryItemCode(itemId, item.InventoryItemCode, functionName);

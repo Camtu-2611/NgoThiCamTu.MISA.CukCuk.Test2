@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 
 namespace MISA.CukCuk.WebAPI.Controllers
 {
+    /// <summary>
+    /// InventoryItem Controller - chứa các đầu API của riêng đối tượng inventory item
+    /// CreatedBy: nctu 12.05.2021
+    /// </summary>
     public class InventoryItemController : BaseEntityController<InventoryItem>
     {
         private IInventoryItemService _inventoryService;
@@ -18,23 +22,26 @@ namespace MISA.CukCuk.WebAPI.Controllers
         {
             _inventoryService = inventoryService;
         }
+
+        #region API
         /// <summary>
-        /// 
+        /// API phân trang và lọc dữ liệu
         /// </summary>
-        /// <param name="pageSize"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="inventoryItemTypeName"></param>
-        /// <param name="inventoryItemCode"></param>
-        /// <param name="inventoryItemName"></param>
-        /// <param name="inventoryItemCategoryName"></param>
-        /// <param name="unit"></param>
-        /// <param name="salePrice"></param>
-        /// <param name="changeOutwardPrice"></param>
-        /// <param name="allowAdjustPrice"></param>
-        /// <param name="measureInventoryItemStatus"></param>
-        /// <param name="isShowOnMenu"></param>
-        /// <param name="inActive"></param>
-        /// <returns></returns>
+        /// <param name="pageSize">Số bản ghi / trang</param>
+        /// <param name="pageIndex">Chỉ số trang</param>
+        /// <param name="inventoryItemTypeName">Tên Loại món</param>
+        /// <param name="inventoryItemCode">Mã món</param>
+        /// <param name="inventoryItemName">Tên món</param>
+        /// <param name="inventoryItemCategoryName">Nhóm thực đơn</param>
+        /// <param name="unit">Đơn vị tính</param>
+        /// <param name="salePrice">Giá bán</param>
+        /// <param name="changeOutwardPrice">Thay đổi theo thời giá</param>
+        /// <param name="allowAdjustPrice">Điều chỉnh giá tự do</param>
+        /// <param name="measureInventoryItemStatus">Định lượng NVL</param>
+        /// <param name="isShowOnMenu">Hiển thị trên thực đơn</param>
+        /// <param name="inActive">Ngừng bán</param>
+        /// <returns>Danh sách đã lọc và phân trang</returns>
+        /// CreatedBy: nctu 13.05.2021
         [HttpGet("paging")]
         public IActionResult Get(int pageSize,
             int pageIndex,
@@ -74,11 +81,14 @@ namespace MISA.CukCuk.WebAPI.Controllers
 
             return Ok(responseResult);
         }
+
+
         /// <summary>
-        /// 
+        /// API lấy thông tin một món theo mã món
         /// </summary>
-        /// <param name="inventoryItemCode"></param>
+        /// <param name="inventoryItemCode">Mã món</param>
         /// <returns></returns>
+        /// CreatedBy: nctu 13.05.2021
         [HttpGet("bycode/{inventoryItemCode}")]
         public IActionResult Get(string inventoryItemCode)
         {
@@ -96,4 +106,6 @@ namespace MISA.CukCuk.WebAPI.Controllers
         }
 
     }
+    #endregion
+
 }

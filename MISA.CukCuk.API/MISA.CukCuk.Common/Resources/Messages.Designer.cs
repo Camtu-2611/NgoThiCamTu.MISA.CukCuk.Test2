@@ -133,6 +133,15 @@ namespace MISA.CukCuk.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to không phải là số.
+        /// </summary>
+        public static string Non_numeric {
+            get {
+                return ResourceManager.GetString("Non-numeric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thành công.
         /// </summary>
         public static string Success {
