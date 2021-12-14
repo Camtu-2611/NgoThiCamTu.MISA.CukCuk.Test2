@@ -65,9 +65,8 @@ export default Vue.extend({
   data() {
     return {
       dialogTitle: "CUKCUK - Quản lý nhà hàng",
-      foodselectedId: "00000000-0000-0000-0000-000000000000",
-      foodselectedCode: null,
-      foodselectedName: null,
+      foodselectedCode: "",
+      foodselectedName: "",
     };
   },
   methods: {
@@ -77,22 +76,26 @@ export default Vue.extend({
     },
 
     btnDeleteFood() {
-      inventoryItemService.delete(this.foodselectedId)
-      .then(() => {
-        this.closeDialogDelete();
-        console.log("xóa xong");
-        this.$emit("reloadData");
-      }).catch((error)=>{
-        console.log(error);
-      });
+      inventoryItemService
+        .delete(this.foodselectedCode)
+        .then(() => {
+          this.closeDialogDelete();
+          console.log("xóa xong");
+          this.$emit("reloadData");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
   watch: {
     isShowDialogDelete() {
       var foodselected = this.$store.getters.getFoodById;
-      this.foodselectedId = foodselected.inventoryItemId;
-      this.foodselectedCode = foodselected.inventoryItemCode;
-      this.foodselectedName = foodselected.inventoryItemName;
+      console.log(foodselected.foodCode);
+      if (foodselected) {
+        this.foodselectedCode = foodselected.foodCode;
+        this.foodselectedName = foodselected.foodName;
+      }
     },
   },
 });

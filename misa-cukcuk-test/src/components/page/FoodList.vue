@@ -62,8 +62,8 @@
                       <span class="t-select-arrow"></span>
                     </div>
                     <select
-                      name="foodcategory"
-                      id="foodcategory"
+                      name="foodtype"
+                      id="foodtype"
                       class="t-select filter-content"
                       v-model="filters.inventoryItemTypeName"
                     >
@@ -82,9 +82,7 @@
                   <div class="filter">
                     <div class="filter-type">*</div>
                     <div class="filter-content">
-                      <misa-input
-                        v-model="filters.invenrotyItemCode"
-                      ></misa-input>
+                      <misa-input v-model="filters.foodCode"></misa-input>
                     </div>
                   </div>
                 </div>
@@ -93,9 +91,7 @@
                   <div class="filter">
                     <div class="filter-type">*</div>
                     <div class="filter-content">
-                      <misa-input
-                        v-model="filters.invenrotyItemName"
-                      ></misa-input>
+                      <misa-input v-model="filters.foodName"></misa-input>
                     </div>
                   </div>
                 </div>
@@ -105,7 +101,7 @@
                     <div class="filter-type">*</div>
                     <div class="filter-content">
                       <misa-input
-                        v-model="filters.invenrotyItemCategoryName"
+                        v-model="filters.inventoryItemCategoryName"
                       ></misa-input>
                     </div>
                   </div>
@@ -129,67 +125,6 @@
                         class="txt-num"
                       ></misa-input>
                     </div>
-                  </div>
-                </div>
-                <div class="t-cell w-150">
-                  <div class="title">Thay đổi theo thời giá</div>
-                  <div class="filter">
-                    <div class="select-btn">
-                      <span class="t-select-arrow"></span>
-                    </div>
-                    <select
-                      name="changetotimeprice"
-                      id="changetotimeprice"
-                      class="t-select filter-content"
-                      v-model="filters.changeOutwardPrice"
-                    >
-                      <option
-                        v-for="(status, index) in statusFoods"
-                        :key="index"
-                        :value="status.value"
-                      >
-                        {{ status.statusName }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-                <div class="t-cell w-150">
-                  <div class="title">Điều chỉnh giá tự do</div>
-                  <div class="filter">
-                    <div class="select-btn">
-                      <span class="t-select-arrow"></span>
-                    </div>
-                    <select
-                      name="adjust-price"
-                      id="adjust-price"
-                      class="t-select filter-content"
-                      v-model="filters.allowAdjustPrice"
-                    >
-                      <option
-                        v-for="(status, index) in statusFoods"
-                        :key="index"
-                        :value="status.value"
-                      >
-                        {{ status.statusName }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-                <div class="t-cell w-140">
-                  <div class="title">Định lượng NVL</div>
-                  <div class="filter">
-                    <div class="select-btn">
-                      <span class="t-select-arrow"></span>
-                    </div>
-                    <select
-                      name=""
-                      id=""
-                      class="t-select filter-content"
-                      v-model="filters.measureInventoryItemStatus"
-                    >
-                      <option value="0">Đã thiết lập</option>
-                      <option value="1">Chưa thiết lập</option>
-                    </select>
                   </div>
                 </div>
                 <div class="t-cell w-150">
@@ -221,13 +156,18 @@
                       <span class="t-select-arrow"></span>
                     </div>
                     <select
-                      name=""
+                      name="cb-inactive"
                       id=""
                       class="t-select filter-content"
                       v-model="filters.inActive"
                     >
-                      <option value="0">Không</option>
-                      <option value="1">Có</option>
+                      <option
+                        v-for="(a, index) in inActives"
+                        :key="index"
+                        :value="a.value"
+                      >
+                        {{ a.status }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -249,13 +189,13 @@
                       class="t-row"
                       v-for="(food, index) in foods"
                       :key="index"
-                      @click="rowOnClick(index, food.inventoryItemId)"
+                      @click="rowOnClick(index, food.foodCode)"
                       @dblclick="showDialogFood('put')"
                       :class="{ selected: rowSelected == index }"
                     >
                       <td class="w-160">{{ food.inventoryItemTypeName }}</td>
-                      <td class="w-180">{{ food.inventoryItemCode }}</td>
-                      <td class="w-150">{{ food.inventoryItemName }}</td>
+                      <td class="w-180">{{ food.foodCode }}</td>
+                      <td class="w-150">{{ food.foodName }}</td>
                       <td class="w-150">
                         {{ food.inventoryItemCategoryName }}
                       </td>
@@ -267,40 +207,13 @@
                         <div class="checkbox-data">
                           <input
                             type="button"
-                            id="cb-1"
-                            class="checkbox-default checkbox-checked"
-                            :class="{
-                              'checkbox-checked': food.changeOutwardPrice,
-                            }"
-                          />
-                        </div>
-                      </td>
-                      <td class="w-150">
-                        <div class="checkbox-data">
-                          <input
-                            type="button"
-                            id="cb-2"
-                            class="checkbox-default"
-                            :class="{
-                              'checkbox-checked': food.allowAdjustPrice,
-                            }"
-                          />
-                        </div>
-                      </td>
-                      <td class="w-140">
-                        {{
-                          formatMeasureInventoryItemStatus(
-                            food.measureInventoryItemStatus
-                          )
-                        }}
-                      </td>
-                      <td class="w-150">
-                        <div class="checkbox-data">
-                          <input
-                            type="button"
                             id="cb-3"
                             class="checkbox-default"
-                            :class="{ 'checkbox-checked': food.isShowOnMenu }"
+                            :class="[
+                              food.isShowOnMenu == '1'
+                                ? 'checkbox-checked'
+                                : '',
+                            ]"
                           />
                         </div>
                       </td>
@@ -308,9 +221,11 @@
                         <div class="checkbox-data">
                           <input
                             type="button"
-                            id="cb-3"
+                            id="cb-4"
                             class="checkbox-default"
-                            :class="{ 'checkbox-checked': food.inActive }"
+                            :class="[
+                              food.inActive == '1' ? 'checkbox-checked' : '',
+                            ]"
                           />
                         </div>
                       </td>
@@ -321,8 +236,7 @@
             </div>
           </div>
           <!-- end grid -->
-          <div>
-          </div>
+          <div></div>
         </div>
       </div>
       <!-- endlist -->
@@ -356,7 +270,9 @@
                   @keydown.13="changePage"
                 ></misa-input>
               </div>
-              <div class="x-toolbar-text-default">trên {{ getTotalPage() }}</div>
+              <div class="x-toolbar-text-default">
+                trên {{ getTotalPage() }}
+              </div>
               <div class="t-toolbar-separator"></div>
 
               <div class="t-btn-footer">
@@ -440,18 +356,17 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 import commonFunction from "@/common/commonFunction";
 import constFood from "@/common/constFood";
-import entity from "@/common/entity";
 import FoodDetail from "@/components/page/FoodDetail.vue";
 import DeletePopUp from "@/components/page/DeletePopUp.vue";
 import MisaButton from "@/control/misa-button/MisaButton.vue";
 import MisaInput from "@/control/misa-input/MisaInput.vue";
-import filterFields from "@/common/filterData";
+import filterData, { ConditionsFilter } from "@/common/filterData";
 import inventoryItemService from "@/services/inventoryItemService";
-
-declare var filterPaging: filterFields;
+import axios from "axios";
+import entity from "@/common/entity";
 
 export default Vue.extend({
   components: {
@@ -470,6 +385,7 @@ export default Vue.extend({
 
       typeFoods: constFood.TYPEFOODS,
       statusFoods: constFood.STATUSYESNO,
+      inActives: constFood.ACTIVE,
       filters: entity.filterFields,
 
       noContent: true,
@@ -479,46 +395,148 @@ export default Vue.extend({
       disablePrevPage: true,
       startPosition: 0,
       recordPerPage: 15,
-      availableFood: 15,
+      availableFood: 0,
       currentPage: 1,
       totalPage: 0,
+      filterData: {} as filterData,
+      foods: [],
+      totalRecord: 0,
     };
   },
   created() {
-    this.$store.dispatch("getFoods");
+    this.getAllData();
+    //this.$store.dispatch("getFoods", this.filters);
     this.getTotalPage();
   },
   computed: {
     ...mapState({
-      foods: "foods",
       isLoaded: "loadData",
-      totalRecord:"totalRecord",
     }),
-    // mapState(["foods"])
+  },
+  watch: {
+    "filters.foodCode"() {
+      this.getAllData();
+    },
+    "filters.inventoryItemTypeName"() {
+      this.getAllData();
+    },
+    "filters.foodName"() {
+      this.getAllData();
+    },
+    "filters.inventoryItemCategoryName"() {
+      this.getAllData();
+    },
+    "filters.unit"() {
+      this.getAllData();
+    },
+    "filters.salePrice"() {
+      this.getAllData();
+    },
+    "filters.isShowOnMenu"() {
+      this.getAllData();
+    },
+    "filters.inActive"() {
+      this.getAllData();
+    },
+    recordPerPage() {
+      this.getAllData();
+    },
   },
   methods: {
+    /** build condition filter */
+    buildConditionFilterParam() {
+      let conditions: Array<ConditionsFilter> = [
+        {
+          field: "foodCode",
+          value: this.filters.foodCode,
+          operator: "*",
+          type: "string",
+        },
+        {
+          field: "foodName",
+          value: this.filters.foodName,
+          operator: "*",
+          type: "string",
+        },
+        {
+          field: "inventoryItemTypeName",
+          value: this.filters.inventoryItemTypeName,
+          operator: "*",
+          type: "string",
+        },
+        {
+          field: "inventoryItemCategoryName",
+          value: this.filters.inventoryItemCategoryName,
+          operator: "*",
+          type: "string",
+        },
+        {
+          field: "unit",
+          value: this.filters.unit,
+          operator: "*",
+          type: "string",
+        },
+        {
+          field: "salePrice",
+          value: this.filters.salePrice,
+          operator: "<=",
+          type: "int",
+        },
+        {
+          field: "isShowOnMenu",
+          value: this.filters.isShowOnMenu,
+          operator: "*",
+          type: "string",
+        },
+        {
+          field: "inActive",
+          value: this.filters.inActive,
+          operator: "*",
+          type: "string",
+        },
+      ];
+      return conditions;
+    },
+    /**
+     * Lấy danh sách thực đơn
+     */
+    getAllData() {
+      const param = {
+        conditions: this.buildConditionFilterParam(),
+        page: this.currentPage,
+        limit: this.recordPerPage,
+      } as filterData;
+      this.$store.commit("loading");
+      inventoryItemService
+        .get(param)
+        .then((response) => {
+          this.$store.commit("loaded");
+          if (response && response.data) {
+            this.foods = response.data.data;
+            if (this.foods.length > 0) {
+              this.totalRecord = response.data.total;
+            }
+          }
+          this.rowSelected = null;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     /**
       Hàm lấy lại dữ liệu khi thực hiện xong thêm sửa xóa
      */
     reloadData() {
-      this.$store.commit("loading");
-      inventoryItemService.get().then((response) => {
-        this.$store.commit("loaded");
-        this.$store.commit("setFoods", response.data.data);
-        this.rowSelected = null;
-        console.log("reload");
-      }).catch((error)=>{
-        console.log(error);
-      })
+      this.getAllData();
     },
 
     /**
      * Hàm xử lý sự kiện khi click chọn 1 hàng trên dánh sách
      * CreatedBy: nctu 14.05.2021
      */
-    rowOnClick(index: any, foodId: string) {
+    rowOnClick(index: any, foodCode: string) {
       this.rowSelected = index;
-      this.$store.dispatch("getFoodById", foodId);
+      this.$store.dispatch("getFoodById", foodCode);
     },
 
     /**
@@ -531,7 +549,6 @@ export default Vue.extend({
 
     closeDialogDelete() {
       this.isShowDialogDelete = false;
-      console.log("đóng dialog xóa");
     },
 
     btnFeedbackOnClick() {
@@ -543,7 +560,6 @@ export default Vue.extend({
      * CreatedBy: nctu 13.05.2021
      */
     showDialogFood(text: string) {
-      console.log("Mở dialog");
       this.isShowDialogFood = true;
       this.msg = text;
     },
@@ -557,18 +573,8 @@ export default Vue.extend({
       if (this.rowSelected == null) {
         console.log("please select a record");
       } else {
-        console.log("Xóa món");
         this.isShowDialogDelete = true;
       }
-    },
-
-    /**
-     * Hàm định dạng trạng thái định lượng NVL
-     * CreatedBy: nctu 14.05.2021
-     */
-    formatMeasureInventoryItemStatus(status: number) {
-      if (status == 0) return "Chưa thiết lập";
-      else return "Đã thiết lập";
     },
 
     /**
@@ -583,12 +589,13 @@ export default Vue.extend({
      * CreatedBy: nctu 15.05.2021
      */
     getTotalPage() {
-      var recordLastPage =  this.totalRecord % this.recordPerPage;
-      // console.log(recordLastPage);
+      var recordLastPage = this.totalRecord % this.recordPerPage;
       var lastIndex = Math.floor(this.totalRecord / this.recordPerPage);
       if (recordLastPage == 0) {
+        this.availableFood =this.recordPerPage;
         return lastIndex;
       } else {
+        this.availableFood = recordLastPage;
         return lastIndex + 1;
       }
     },
@@ -638,9 +645,14 @@ export default Vue.extend({
     changePage() {
       // kiểm tra trang hợp lệ
       if (this.currentPage < 1) this.currentPage = 1;
-      if (this.currentPage > this.getTotalPage())
+      // kiểm tra trang cuối cùng
+      if (this.currentPage >= this.getTotalPage()) {
+        // vô hiệu hóa nút prev và first page
+        this.disableNextPage = true;
         this.currentPage = this.getTotalPage();
-
+      } else {
+        this.disableNextPage = false;
+      }
       // kiểm tra trang đầu tiên
       if (this.currentPage <= 1) {
         // vô hiệu hóa nút prev và first page
@@ -648,45 +660,10 @@ export default Vue.extend({
       } else {
         this.disablePrevPage = false;
       }
-
-      // kiểm tra trang cuối cùng
-      if (this.currentPage >= this.getTotalPage()) {
-        // vô hiệu hóa nút prev và first page
-        this.disableNextPage = true;
-      } else {
-        this.disableNextPage = false;
-      }
-
       // thay đổi vị trí bắt đầu
       this.startPosition = (this.currentPage - 1) * this.recordPerPage;
-      // inventoryItemService.getpaging().then(()=>{
-        // this.$store.commit("setFoodsPaging", this.filters);
-      // })
-      console.log("changepaging");
+      this.getAllData();
     },
-    /**
-      Lấy danh sách món phân trang + lọc
-     */
-    getDataPaging(){
-    //   filterPaging = {
-    //   pageIndex: this.index,
-    //   pageSize: this.offset,
-    //   inventoryItemTypeName: this.filters.inventoryItemTypeName,
-    //   invenrotyItemCode: this.filters.invenrotyItemCode,
-    //   invenrotyItemName: this.filters.invenrotyItemName,
-    //   invenrotyItemCategoryName: this.filters.invenrotyItemCategoryName,
-    //   unit: this.filters.unit,
-    //   salePrice: this.filters.salePrice,
-    //   changeOutwardPrice: this.filters.changeOutwardPrice,
-    //   allowAdjustPrice: this.filters.allowAdjustPrice,
-    //   measureInventoryItemStatus: this.filters.measureInventoryItemStatus,
-    //   isShowOnMenu: this.filters.isShowOnMenu,
-    //   inActive: this.filters.inActive,
-    // };
-
-    // this.$store.dispatch("getFoodPaging", filterPaging);
-      this.$store.dispatch('getFoodsPaging', this.filters);
-    }
   },
 });
 </script>

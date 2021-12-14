@@ -33,18 +33,33 @@ const TYPEFOODS = [
 
 const STATUSYESNO = [
     {
-        statusName: "",
-        value: undefined
-    },
-    {
         statusName: "Có",
-        value: 1
+        value: "1"
     },
     {
         statusName: "Không",
-        value: 0
-    },
+        value: "0"
+    }, {
+        statusName: "Tất cả",
+        value: ""
+    }
 ]
+
+
+const ACTIVE = [
+    {
+        status: "Có",
+        value: "1"
+    },
+    {
+        status: "Không",
+        value: "0"
+    }, {
+        status: "Tất cả",
+        value: ""
+    }
+]
+
 
 const TYPE_MSG = {
     INSERT: "post",
@@ -76,15 +91,15 @@ const UNIT = [
 ]
 
 const FOOD_CATEGORY = [
-    "Đồ uống", 
-    "Món Nhật", 
-    "Món Hàn", 
+    "Đồ uống",
+    "Món Nhật",
+    "Món Hàn",
     "Món Trung",
     "Món Việt",
-    "Gà-chim", 
-    "Rau củ", 
-    "Dê", 
-    "Lẩu", 
+    "Gà-chim",
+    "Rau củ",
+    "Dê",
+    "Lẩu",
     "Tráng miệng",
     "Khai vị",
     "Hải sản",
@@ -98,4 +113,6 @@ export default {
     FOOD_CATEGORY,
     KITCHEN_AREA,
     UNIT,
+    TYPE_MSG,
+    ACTIVE
 }

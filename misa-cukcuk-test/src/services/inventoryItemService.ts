@@ -1,36 +1,35 @@
 import Service from './baseService';
 import filterData from '../common/filterData';
-const resource = "/inventoryitems";
+import axios from 'axios';
+const resource = "/menu";
+const optionAxios = {
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+}
 export default {
-    get() {
-        return Service.get(`${resource}`);
+    get(filterdata: filterData) {
+        return axios.get('/menu', {
+            params: {
+              conditions: JSON.stringify(filterdata.conditions) ?? "",
+              page: filterdata.page,
+              limit: filterdata.limit
+            }
+          });
     },
-    getpaging(dataFilter: filterData) {
-        return Service.get(`${resource}/paging?pageIndex=${dataFilter.pageIndex}
-                            &pageSize=${dataFilter.pageSize}
-                            &inventoryItemTypeName=${dataFilter.inventoryItemTypeName}
-                            &inventoryItemCode=${dataFilter.invenrotyItemCode}
-                            &inventoryItemName=${dataFilter.invenrotyItemName}
-                            &inventoryItemCategoryName=${dataFilter.invenrotyItemCategoryName}
-                            &unit=${dataFilter.unit}
-                            &salePrice=${dataFilter.salePrice}
-                            &changeOutwardPrice=${dataFilter.changeOutwardPrice}
-                            &allowAdjustPrice=${dataFilter.allowAdjustPrice}
-                            &measureInventoryItemStatus=${dataFilter.measureInventoryItemStatus}
-                            &isShowOnMenu=${dataFilter.isShowOnMenu}
-                            &inActive=${dataFilter.inActive}`);
-    },
-    getById(itemId:string){
-        return Service.get(`${resource}/${itemId}`);
+    getById(itemCode:string){
+        return Service.get(`${resource}/${itemCode}`,optionAxios);
     },
     post(payload: any){
-        return Service.post(`${resource}`, payload);
+        console.log("payload",payload)
+        return Service.post(`${resource}`, payload, optionAxios);
     },
-    put(itemId: string, payload:any){
-        return Service.put(`${resource}/${itemId}`, payload);
+    put(itemCode: string, payload:any){
+        return Service.put(`${resource}/${itemCode}`, payload, optionAxios);
     },
-    delete(itemId:string){
-        return Service.delete(`${resource}/${itemId}`);
+    delete(itemCode:string){
+        return Service.delete(`${resource}/${itemCode}`);
     },
     getByCode(itemCode: string){
         return Service.get(`${resource}/bycode/${itemCode}`);

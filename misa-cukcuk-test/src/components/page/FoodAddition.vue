@@ -5,7 +5,7 @@
         <span>Món ăn: </span>
       </div>
       <div class="text-bold mg-l4">
-        <span>{{ foodName }}</span>
+        <span>{{ food.foodName }}</span>
       </div>
     </div>
     <div class="addition-note">
@@ -13,150 +13,172 @@
         Ghi lại các sở thích của khách hàng giúp nhân viên phục vụ chọn nhanh
         order.
         <br />
-         VD: không cay/ ít hành/ thêm phomai...
+        VD: không cay/ ít hành/ thêm phomai...
       </div>
     </div>
     <div class="grid-addition-food">
-        <div class="tbl-addition-list">
-            <table :key="key">
-              <thead>
-                <tr>
-                <th>Sở thích phục vụ</th>
-                <th>Thu thêm</th>
-                </tr>
-              </thead>
-              <div>
-              <tbody id="stocksTerminal" style="width: 100%; height: 100%;">
-              <tr :key="item.key" v-for="(item, index) in data">
+      <div class="tbl-addition-list">
+        <table :key="key">
+          <thead>
+            <tr>
+              <th>Sở thích phục vụ</th>
+              <th>Thu thêm</th>
+            </tr>
+          </thead>
+          <div>
+            <tbody id="stocksTerminal" style="width: 100%; height: 100%">
+              <tr
+                :key="index"
+                v-for="(item, index) in data"
+                @click="rowAdditionSelected(index)"
+                :class="{ selected: rowSelected == index }"
+              >
                 <td>
-                  <input type="text" v-model="item.name" class="t-input t-input-default">
-                  <div class="list-addition" :id="item.id" v-for="item2 in data2.filter(el => el.name.includes(item.name))" :key="item2.id" @click="chooseItem(index, item2)">{{item2.name}}</div>
+                  <select name="" id="" v-model="data[index]" class="t-select">
+                    <option
+                      v-for="(op, key) in additionOptions"
+                      :value="op"
+                      :key="key"
+                    >
+                      {{ op.name }}
+                    </option>
+                  </select>
                 </td>
-                <td >{{ item.price }}</td>
+                <td>{{ item.value }}</td>
               </tr>
-              </tbody>
-
-              </div>
-              </table>
-        </div>
+            </tbody>
+          </div>
+        </table>
+      </div>
     </div>
     <div class="grid-dialog-toolbar">
-        <div class="btn-food-addition btn-addrow">
-            <misa-button icon="icon-plus-addition" @click="addRow"> Thêm dòng</misa-button>
-        </div>
-        <div class="btn-food-addition btn-deleterow">
-            <misa-button icon="icon-delete-addition"> Xóa dòng </misa-button>
-        </div>
+      <div class="btn-food-addition btn-addrow">
+        <misa-button icon="icon-plus-addition" @click="addRow">
+          Thêm dòng</misa-button
+        >
+      </div>
+      <div class="btn-food-addition btn-deleterow">
+        <misa-button icon="icon-delete-addition" @click="removeRow()">
+          Xóa dòng
+        </misa-button>
+      </div>
     </div>
 
-    <AddFoodAddition/>
+    <AddFoodAddition />
   </div>
 </template>
 
 <script lang="ts">
 import MisaButton from "@/control/misa-button/MisaButton.vue";
-import AddFoodAddition from '@/components/page/AddFoodAddition.vue';
+import AddFoodAddition from "@/components/page/AddFoodAddition.vue";
 import Vue from "vue";
+import axios from "axios";
 export default Vue.extend({
-  components: { MisaButton, AddFoodAddition, },
+  components: { MisaButton, AddFoodAddition },
   props: {
-    foodSelectedName: String,
+    food: {
+      type: Object,
+    },
   },
   data() {
     return {
       key: 0,
-      foodName: "Gà hấp lá chanh",
-      select: "",
-      data : [{
-        id: 1,
-        name: "Gà hấp lá chanh2",
-        price: 200
-      },
-      {
-        id: 2,
-        name: "Gà hấp lá chanh3",
-        price: 200
-      },
-      {
-        id:3,
-        name: "Gà hấp lá chanh4",
-        price: 200
-      }
+      rowSelected: null,
+      data: [
+        {
+          name: "",
+          value: 0,
+        },
       ],
-      data2 : [{
-        id: 1,
-        name: "Gà hấp lá chanh2",
-        price: 200
-      },
-      {
-        id: 2,
-        name: "Gà hấp lá chanh3",
-        price: 200
-      },
-      {
-        id:3,
-        name: "Gà hấp lá chanh4",
-        price: 200
-      }
-      ]
+      additionOptions: [],
     };
   },
-  methods: {
-    chooseItem(index: number, item: any){
-      console.log(index);
-      console.log(item);
-      console.log(this.data);
-      
-      this.data[index].name = item.name;
-      this.data[index].price = item.price;
-      this.key++;
+  watch: {
+    data() {
+      this.food.foodAdditions = this.data;
     },
-    addRow(){
+  },
+  mounted() {
+    this.getAllAddition();
+    this.data = this.food.foodAdditions
+      ? this.food.foodAdditions
+      : [
+          {
+            name: "",
+            value: 0,
+          },
+        ];
+  },
+  methods: {
+    addRow() {
       this.data.push({
-        id: 5,
         name: "",
-        price: 0
-      })
-    }
-  }
+        value: 0,
+      });
+    },
+    removeRow() {
+      console.log(this.rowSelected)
+      if (!this.rowSelected && this.rowSelected == null) {
+        return
+      }else{
+        this.data.splice(this.rowSelected,1)
+      }
+    },
+    getAllAddition() {
+      axios.get("/addition").then((response) => {
+        if (response && response.data) {
+          this.additionOptions = response.data;
+        }
+      });
+    },
+    rowAdditionSelected(index: any) {
+      this.rowSelected = index;
+    },
+  },
 });
 </script>
 <style lang="scss" scoped>
+/* phần tử được chọn */
+.selected {
+  background-color: #c1ddf1 !important;
+  color: #000;
+  cursor: default !important;
+}
 .food-additon {
   width: 100%;
   height: auto;
   font-size: 13px !important;
 }
-.info-food{
-    display: flex;
-    margin-bottom: 4px;
+.info-food {
+  display: flex;
+  margin-bottom: 4px;
 }
-.addition-note{
-    margin-bottom: 8px;
-    padding-left: 42px;
-    background: url('../../assets/icons/icon-info32-2.png') 3px center no-repeat;
-    background-size: 32px;
+.addition-note {
+  margin-bottom: 8px;
+  padding-left: 42px;
+  background: url("../../assets/icons/icon-info32-2.png") 3px center no-repeat;
+  background-size: 32px;
 }
-.grid-addition-food{
-    width: 100%;
-    height: 215px;
-    margin-bottom: 4px;
-    border: 1px solid #ccc!important;
-    box-sizing: border-box;
+.grid-addition-food {
+  width: 100%;
+  height: 215px;
+  margin-bottom: 4px;
+  border: 1px solid #ccc !important;
+  box-sizing: border-box;
 }
-.tbl-addition-list{
+.tbl-addition-list {
   font-weight: normal;
 }
-.grid-dialog-toolbar{
-    width: 100%;
-    height: 25px;
-    display: flex;
-    .btn-food-addition{
-        margin: 0 2px;
-    }
+.grid-dialog-toolbar {
+  width: 100%;
+  height: 25px;
+  display: flex;
+  .btn-food-addition {
+    margin: 0 2px;
+  }
 }
 
-.list-addition{
+.list-addition {
   display: none;
 }
 </style>

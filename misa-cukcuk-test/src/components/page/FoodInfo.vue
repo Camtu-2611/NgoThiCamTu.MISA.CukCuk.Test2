@@ -1,6 +1,40 @@
 <template>
   <div class="food-info">
     <div class="dialog-left">
+      <div class="dialog-row row-select">
+        <div class="row-label">
+          <span class="d-label">Loại món</span>
+          <span class="text-red"> (*)</span>
+        </div>
+        <div class="row-input field-required">
+          <div class="select-input">
+            <div class="select-btn">
+              <span class="t-select-arrow-default"></span>
+              <div class="btn-add">
+                <button class="t-btn t-btn-default icon-add-blue"></button>
+              </div>
+            </div>
+            <select
+              name="unit"
+              id="unit"
+              class="t-select required"
+              v-model="food.inventoryItemTypeName"
+              tabindex="2"
+              :class="{ 'border-warning': !validate.inventoryItemTypeName }"
+              @blur="tab('inventoryItemTypeName')"
+            >
+              <option v-for="(foodType, index) in foodTypes" :key="index" :value="foodType.value">
+                {{ foodType.typeName }}
+              </option>
+            </select>
+          </div>
+          <span v-show="!validate.unit" class="invalid-icon-default">
+            <span class="tooltiptext tooltipFoodAddition">
+              Trường này không được để trống
+            </span>
+          </span>
+        </div>
+      </div>
       <div class="dialog-row">
         <div class="row-label">
           <span class="d-label">Tên món</span>
@@ -10,8 +44,8 @@
           <misa-input
             type="text"
             class="required"
-            v-model="food.inventoryItemName"
-            tabindex="2"
+            v-model="food.foodName"
+            tabindex="3"
             id="foodName"
             :class="{ 'border-warning': !validate.foodName }"
             @blur="tab('foodName')"
@@ -21,7 +55,6 @@
               Trường này không được để trống
             </span>
           </span>
-          <!-- v-model="food.inventoryItemName" -->
         </div>
       </div>
       <div class="dialog-row">
@@ -33,8 +66,8 @@
           <misa-input
             type="text"
             class="required"
-            v-model="food.inventoryItemCode"
-            tabindex="3"
+            v-model="food.foodCode"
+            tabindex="4"
             :class="{ 'border-warning': !validate.foodCode }"
             @blur="tab('foodCode')"
           ></misa-input>
@@ -62,7 +95,7 @@
             id="area-cook"
             class="t-select t-select-default"
             v-model="food.inventoryItemCategoryName"
-            tabindex="4"
+            tabindex="5"
           >
             <option
               v-for="(cateName, index) in foodCategories"
@@ -88,11 +121,11 @@
               </div>
             </div>
             <select
-              name="areacook"
-              id="area-cook"
+              name="unit"
+              id="unit"
               class="t-select required"
               v-model="food.unit"
-              tabindex="5"
+              tabindex="6"
               :class="{ 'border-warning': !validate.unit }"
               @blur="tab('unit')"
             >
@@ -118,9 +151,8 @@
           <div class="row-30 field-required">
             <misa-input-money
               class="input-number required"
-              :value="0"
               v-model="food.salePrice"
-              tabindex="6"
+              tabindex="7"
               :class="{ 'border-warning': !validate.salePrice }"
               @blur="tab('salePrice')"
               type="text"
@@ -130,7 +162,6 @@
                 Trường này không được để trống
               </span>
             </span>
-            <!-- v-model="food.salePrice" -->
           </div>
         </div>
       </div>
@@ -143,9 +174,8 @@
             <misa-input
               type="text"
               class="input-number"
-              :value="0"
               v-model="food.realPrice"
-              tabindex="7"
+              tabindex="8"
             ></misa-input>
             <!-- v-model="food.realPrice" -->
           </div>
@@ -163,9 +193,8 @@
             cols="5"
             rows="3"
             v-model="food.description"
-            tabindex="8"
+            tabindex="9"
           ></textarea>
-          <!-- v-model="food.description" -->
         </div>
       </div>
       <div class="dialog-row">
@@ -184,7 +213,7 @@
             id="area-cook"
             class="t-select"
             v-model="food.kitchen"
-            tabindex="9"
+            tabindex="10"
           >
             <!-- v-model="food.kitchen" -->
             <option
@@ -207,12 +236,30 @@
             name="d-checkbox"
             id="d-checkbox"
             class="checkbox-default"
-            :class="{ 'checkbox-checking': food.isShowOnMenu == 1 }"
+            :class="[ food.isShowOnMenu == '1'? 'checkbox-checking':'' ]"
             @click="cbOnClick()"
-            tabindex="10"
+            tabindex="11"
           />
           <!-- v-model="food.isShowOnMenu" -->
-          <span class="label-checkbox">Không hiển thị lên thực đơn</span>
+          <span class="label-checkbox">Hiển thị lên thực đơn</span>
+        </div>
+      </div>
+      <div class="dialog-row">
+        <div class="row-label">
+          <span class="d-label"></span>
+        </div>
+        <div class="row-input row-checkbox">
+          <input
+            type="button"
+            name="d-checkbox2"
+            id="d-checkbox2"
+            class="checkbox-default"
+            :class="[ food.inActive == '1'? 'checkbox-checking':'' ]"
+            @click="cbInActiveOnClick()"
+            tabindex="12"
+          />
+          <!-- v-model="food.isShowOnMenu" -->
+          <span class="label-checkbox">Ngừng bán</span>
         </div>
       </div>
     </div>
@@ -243,14 +290,14 @@
             <div class="upfile-button">
               <div class="btn-upload-img">
                 <div class="btn-upload">
-                  <misa-button icon="icon-upload" tabindex="11"></misa-button>
+                  <misa-button icon="icon-upload" tabindex="13"></misa-button>
                 </div>
               </div>
               <div class="btn-remove-img">
                 <div class="btn-remove-img">
                   <misa-button
                     icon="icon-remove-img"
-                    tabindex="12"
+                    tabindex="14"
                   ></misa-button>
                 </div>
               </div>
@@ -283,23 +330,23 @@ export default Vue.extend({
   },
   data() {
     return {
-      // isChecked: false,
+      foodTypes: constFood.TYPEFOODS,
       foodCategories: constFood.FOOD_CATEGORY,
       units: constFood.UNIT,
       kitchenName: constFood.KITCHEN_AREA,
     };
   },
-  // mounted() {
-  //   console.log(this.$refs);
-  // },
   computed: {
     // firstFocus() {
     //   return (this.$refs.foodName as Vue & { focus: () => boolean });
     // },
   },
+  created(){
+    console.log(this.food.salePrice)
+    console.log(this.food.inActive)
+  },
   methods: {
     firstForcus() {
-      // let firstFocusEl =  this.$refs.input as HTMLInputElement;
       return this.$refs.foodName as Vue & { focus: () => boolean };
     },
     /**
@@ -308,10 +355,22 @@ export default Vue.extend({
      */
     cbOnClick() {
       // this.isChecked = !this.isChecked;
-      if (this.food.isShowOnMenu == 0) {
-        this.food.isShowOnMenu = 1;
-      } else if (this.food.isShowOnMenu == 1) {
-        this.food.isShowOnMenu = 0;
+      if (this.food.isShowOnMenu == "0") {
+        this.food.isShowOnMenu = "1";
+      } else if (this.food.isShowOnMenu == "1") {
+        this.food.isShowOnMenu = "0";
+      }
+    },
+
+    /**
+     * Xử lý sự kiện khi click vào checkbox
+     * CreatedBy: nctu 14.05.2021
+     */
+    cbInActiveOnClick() {
+      if (this.food.inActive == "0") {
+        this.food.inActive = "1";
+      } else if (this.food.inActive == "1") {
+        this.food.inActive = "0";
       }
     },
 
@@ -335,17 +394,23 @@ export default Vue.extend({
      * CreatedBy: nctu 16.05.2021
      */
     tab(text: string) {
+      if (text == "typename") {
+        if (!this.food.unit) {
+          this.validate.inventoryItemTypeName = false;
+        } else {
+          this.validate.inventoryItemTypeName = true;
+        }
+      }
       if (text == "foodName") {
-        if (!this.food.inventoryItemName) {
+        if (!this.food.foodName) {
           this.validate.foodName = false;
         } else {
           this.validate.foodName = true;
         }
       }
       if (text == "foodCode") {
-        if (!this.food.inventoryItemCode) {
+        if (!this.food.foodCode) {
           this.validate.foodCode = false;
-          // this.msgValidate.msgWarningEmpty = "Trường này không được để trống";
           this.msgValidate.msgFoodCode = "Trường này không được để trống";
         } else {
           this.validate.foodCode = true;

@@ -1,5 +1,5 @@
 import inventoryItemService from '@/services/inventoryItemService';
-import filterFields from '@/common/filterData';
+import dataFilter from '@/common/filterData';
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -38,13 +38,13 @@ export default new Vuex.Store({
      * @returns 
      */
     getTotalFood(state) {
-      return state.totalRecord =  state.foods.length;
+      return state.totalRecord = state.foods.length;
     },
 
-    getLoadData(state){
+    getLoadData(state) {
       return state.loadData;
     },
-    getLoadDialog(state){
+    getLoadDialog(state) {
       return state.loadDialog;
     }
   },
@@ -72,51 +72,54 @@ export default new Vuex.Store({
      * @param state 
      * @param payload 
      */
-     setFoodsPaging(state, payload){
+    setFoodsPaging(state, payload) {
       state.foods = payload;
       console.log("gán data");
     },
-    loading(state){
+    loading(state) {
       state.loadData = false;
     },
-    loaded(state){
+    loaded(state) {
       state.loadData = true;
     },
-    loadingDialog(state){
+    loadingDialog(state) {
       state.loadDialog = false;
     },
-    loadedDialog(state){
+    loadedDialog(state) {
       state.loadDialog = true;
     }
   },
   actions: {
-    getFoods: async function name(context: any) {
+    getFoods: async function name(context: any, dataFilter: dataFilter) {
       console.log("lấy data");
       context.commit("loading");
-      await inventoryItemService.get().then(response => {
+      await inventoryItemService.get(dataFilter).then(response => {
         context.commit("loaded");
-        context.commit("setFoods", response.data.data);
+        if (response && response.data) {
+          context.commit("setFoods", response.data.data);
+          console.log("lấy dữ liệu", response.data.data);
+        }
       });
     },
-    getFoodById: async function name(context: any, foodId: string) {
+    getFoodById: async function name(context: any, foodCode: string) {
       console.log("lấy 1 món");
-      await inventoryItemService.getById(foodId).then(response => {
-        context.commit("setFoodById", response.data.data);
+      await inventoryItemService.getById(foodCode).then(response => {
+        context.commit("setFoodById", response.data);
       });
 
     },
-    getFoodPaging: async function name(context:any, filterFields: filterFields) {
-      console.log("lấy dữ liệu phân trang");
-      context.commit("loading");
-      await inventoryItemService.getpaging(filterFields).then(response=>{
-        context.commit("loaded");
-        context.commit("setFoodsPaging", response.data.data);
-        console.log("lấy dữ liệu", response.data.data);
+    // getFoodPaging: async function name(context: any, filterFields: filterFields) {
+    //   console.log("lấy dữ liệu phân trang");
+    //   context.commit("loading");
+    //   await inventoryItemService.getpaging(filterFields).then(response => {
+    //     context.commit("loaded");
+    //     context.commit("setFoodsPaging", response.data.data);
+    //     console.log("lấy dữ liệu", response.data.data);
 
-      });
-      console.log("lấy dữ liệu phân trang xong");
+    //   });
+    //   console.log("lấy dữ liệu phân trang xong");
 
-    }
+    // }
   },
   modules: {
   }
