@@ -10,10 +10,8 @@
     </div>
     <div class="addition-note">
       <div class="text-italic">
-        Ghi lại các sở thích của khách hàng giúp nhân viên phục vụ chọn nhanh
-        order.
+        Mô tả về món ăn
         <br />
-        VD: không cay/ ít hành/ thêm phomai...
       </div>
     </div>
     <div class="grid-addition-food">
@@ -25,29 +23,32 @@
               <th>Thu thêm</th>
             </tr>
           </thead>
-          <div>
-            <tbody id="stocksTerminal" style="width: 100%; height: 100%">
-              <tr
-                :key="index"
-                v-for="(item, index) in data"
-                @click="rowAdditionSelected(index)"
-                :class="{ selected: rowSelected == index }"
-              >
-                <td>
-                  <select name="" id="" v-model="data[index]" class="t-select">
-                    <option
-                      v-for="(op, key) in additionOptions"
-                      :value="op"
-                      :key="key"
-                    >
-                      {{ op.name }}
-                    </option>
-                  </select>
-                </td>
-                <td>{{ item.value }}</td>
-              </tr>
-            </tbody>
-          </div>
+          <tbody id="stocksTerminal" style="width: 100%; height: 100%">
+            <tr
+              :key="index"
+              v-for="(item, index) in data"
+              @click="rowAdditionSelected(index)"
+              :class="{ selected: rowSelected == index }"
+            >
+              <td>
+                <select
+                  name=""
+                  id=""
+                  v-model="data[index]"
+                  style="width:100%; outline: none; border: none; background-color: transparent"
+                >
+                  <option
+                    v-for="(op, key) in additionOptions"
+                    :value="op"
+                    :key="key"
+                  >
+                    {{ op.name }}
+                  </option>
+                </select>
+              </td>
+              <td>{{ item.value }}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
@@ -117,11 +118,11 @@ export default Vue.extend({
       });
     },
     removeRow() {
-      console.log(this.rowSelected)
+      console.log(this.rowSelected);
       if (!this.rowSelected && this.rowSelected == null) {
-        return
-      }else{
-        this.data.splice(this.rowSelected,1)
+        return;
+      } else {
+        this.data.splice(this.rowSelected, 1);
       }
     },
     getAllAddition() {
