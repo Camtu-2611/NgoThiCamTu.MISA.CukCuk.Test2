@@ -314,15 +314,7 @@
           <div class="footer__right">
             <div class="footer__right-text">
               <div class="x-toolbar-text-default">
-                Hiển thị
-                <span class="first-record">{{
-                  startPosition + availableFood > 0 ? startPosition + 1 : 0
-                }}</span>
-                -
-                <span class="last-record">{{
-                  startPosition + availableFood
-                }}</span>
-                trên
+                Tổng số bản ghi
                 <span class="total-record"> {{ totalRecord }} </span>
                 kết quả
               </div>
@@ -406,7 +398,6 @@ export default Vue.extend({
   created() {
     this.getAllData();
     //this.$store.dispatch("getFoods", this.filters);
-    this.getTotalPage();
   },
   computed: {
     ...mapState({
@@ -415,30 +406,39 @@ export default Vue.extend({
   },
   watch: {
     "filters.foodCode"() {
+      this.currentPage = 1;
       this.getAllData();
     },
     "filters.inventoryItemTypeName"() {
+      this.currentPage = 1;
       this.getAllData();
     },
     "filters.foodName"() {
+      this.currentPage = 1;
       this.getAllData();
     },
     "filters.inventoryItemCategoryName"() {
+      this.currentPage = 1;
       this.getAllData();
     },
     "filters.unit"() {
+      this.currentPage = 1;
       this.getAllData();
     },
     "filters.salePrice"() {
+      this.currentPage = 1;
       this.getAllData();
     },
     "filters.isShowOnMenu"() {
+      this.currentPage = 1;
       this.getAllData();
     },
     "filters.inActive"() {
+      this.currentPage = 1;
       this.getAllData();
     },
     recordPerPage() {
+      this.currentPage = 1;
       this.getAllData();
     },
   },
@@ -515,6 +515,7 @@ export default Vue.extend({
             this.foods = response.data.data;
             if (this.foods.length > 0) {
               this.totalRecord = response.data.total;
+              this.getTotalPage();
             }
           }
           this.rowSelected = null;
@@ -592,7 +593,7 @@ export default Vue.extend({
       var recordLastPage = this.totalRecord % this.recordPerPage;
       var lastIndex = Math.floor(this.totalRecord / this.recordPerPage);
       if (recordLastPage == 0) {
-        this.availableFood =this.recordPerPage;
+        this.availableFood = this.recordPerPage;
         return lastIndex;
       } else {
         this.availableFood = recordLastPage;

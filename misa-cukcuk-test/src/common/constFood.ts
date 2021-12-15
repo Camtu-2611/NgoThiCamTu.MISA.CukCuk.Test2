@@ -92,21 +92,29 @@ const UNIT = [
 
 const FOOD_CATEGORY = [
     "Đồ uống",
+    "Tráng miệng",
+    "Khai vị",
+    "Hải sản",
+    "Rau củ",
+    "Gà-chim",
+    "Dê",
+    "Lẩu",
+    "Cá",
+    "Heo",
+    "Bò",
     "Món Nhật",
     "Món Hàn",
     "Món Trung",
     "Món Việt",
-    "Gà-chim",
-    "Rau củ",
-    "Dê",
-    "Lẩu",
-    "Tráng miệng",
-    "Khai vị",
-    "Hải sản",
-    "Cá",
-    "Heo",
-    "Bò",
 ]
+const TYPENAMES = [
+    "Món ăn",
+    "Đồ uống",
+    "Đồ uống đóng chai",
+    "Set đồ ăn",
+    "Combo",
+    "Set lẩu",
+    "Mặt hàng khác"]
 export default {
     TYPEFOODS,
     STATUSYESNO,
@@ -114,5 +122,6 @@ export default {
     KITCHEN_AREA,
     UNIT,
     TYPE_MSG,
-    ACTIVE
+    ACTIVE,
+    TYPENAMES
 }

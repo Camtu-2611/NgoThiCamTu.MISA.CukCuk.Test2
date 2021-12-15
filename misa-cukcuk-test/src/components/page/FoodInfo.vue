@@ -15,20 +15,20 @@
               </div>
             </div>
             <select
-              name="unit"
-              id="unit"
+              name="inventoryItemTypeName"
+              id="inventoryItemTypeName"
               class="t-select required"
               v-model="food.inventoryItemTypeName"
               tabindex="2"
               :class="{ 'border-warning': !validate.inventoryItemTypeName }"
               @blur="tab('inventoryItemTypeName')"
             >
-              <option v-for="(foodType, index) in foodTypes" :key="index" :value="foodType.value">
-                {{ foodType.typeName }}
+              <option v-for="(foodType, index) in foodTypes" :key="index" :value="foodType">
+                {{ foodType }}
               </option>
             </select>
           </div>
-          <span v-show="!validate.unit" class="invalid-icon-default">
+          <span v-show="!validate.inventoryItemTypeName" class="invalid-icon-default">
             <span class="tooltiptext tooltipFoodAddition">
               Trường này không được để trống
             </span>
@@ -240,7 +240,6 @@
             @click="cbOnClick()"
             tabindex="11"
           />
-          <!-- v-model="food.isShowOnMenu" -->
           <span class="label-checkbox">Hiển thị lên thực đơn</span>
         </div>
       </div>
@@ -330,20 +329,11 @@ export default Vue.extend({
   },
   data() {
     return {
-      foodTypes: constFood.TYPEFOODS,
+      foodTypes: constFood.TYPENAMES,
       foodCategories: constFood.FOOD_CATEGORY,
       units: constFood.UNIT,
       kitchenName: constFood.KITCHEN_AREA,
     };
-  },
-  computed: {
-    // firstFocus() {
-    //   return (this.$refs.foodName as Vue & { focus: () => boolean });
-    // },
-  },
-  created(){
-    console.log(this.food.salePrice)
-    console.log(this.food.inActive)
   },
   methods: {
     firstForcus() {
@@ -354,11 +344,10 @@ export default Vue.extend({
      * CreatedBy: nctu 14.05.2021
      */
     cbOnClick() {
-      // this.isChecked = !this.isChecked;
-      if (this.food.isShowOnMenu == "0") {
-        this.food.isShowOnMenu = "1";
-      } else if (this.food.isShowOnMenu == "1") {
-        this.food.isShowOnMenu = "0";
+      if (this.food.isShowOnMenu == '0' || !this.food.isShowOnMenu) {
+        this.food.isShowOnMenu = '1';
+      } else if (this.food.isShowOnMenu == '1') {
+        this.food.isShowOnMenu = '0';
       }
     },
 
@@ -367,19 +356,11 @@ export default Vue.extend({
      * CreatedBy: nctu 14.05.2021
      */
     cbInActiveOnClick() {
-      if (this.food.inActive == "0") {
-        this.food.inActive = "1";
-      } else if (this.food.inActive == "1") {
-        this.food.inActive = "0";
+      if (this.food.inActive == '0'|| !this.food.isShowOnMenu) {
+        this.food.inActive = '1';
+      } else if (this.food.inActive == '1') {
+        this.food.inActive = '0';
       }
-    },
-
-    /**
-     * Hàm xử lý chỉ cho phép nhập số trong ô giá tiền
-     * CreatedBy: nctu 14.05.2021
-     */
-    onlyForCurrency() {
-      console.log("curreny");
     },
     /**
      * Hàm định dạng giá tiền

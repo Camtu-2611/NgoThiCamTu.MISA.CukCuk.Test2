@@ -245,7 +245,8 @@ export default Vue.extend({
             kitchen: this.food.kitchen,
             isShowOnMenu: this.food.isShowOnMenu,
             inActive: this.food.inActive,
-            FoodAdditions: this.food.foodAdditions
+            FoodAdditions: this.food.foodAdditions,
+            createdAt: this.food.createdAt,
           }
           content.realPrice = parseFloat(this.food.realPrice);
           content.salePrice = parseFloat(this.food.salePrice)
@@ -284,7 +285,8 @@ export default Vue.extend({
             kitchen: this.food.kitchen,
             isShowOnMenu: this.food.isShowOnMenu,
             inActive: this.food.inActive,
-            FoodAdditions: this.food.foodAdditions
+            FoodAdditions: this.food.foodAdditions,
+            updatedAt: this.food.updatedAt
           }
           content.realPrice = parseFloat(this.food.realPrice);
           content.salePrice = parseFloat(this.food.salePrice)
